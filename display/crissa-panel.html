@@ -1,0 +1,1249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Control Panel</title>
+<!--
+  The Control Panel, lifted 2026-10-06 from the house's annunciator panel with its Control Panel fix:
+  units are legend tiles, normal is quiet, trouble lights up, and the master legend answers the question you
+  walk up with. While All OS Off is in force the header says "OS off · N paused", never "All normal".
+  Every service name on this page comes from the server (this install's discovered units and its settings).
+  The tuning demo talks only to its loopback helper. Static, no external loads.
+-->
+<style>
+:root{
+  --void:#0A0C0F; --face:#24272D; --face-2:#1B1E23; --well:#0E1013; --edge:#121417; --hi:rgba(255,255,255,.07);
+  --ink:#DEE2E7; --silk:#99A0A9; --silk-2:#838A94;
+  --lamp-g:#63C083; --lamp-a:#E9A63F; --lamp-r:#DC5A4C;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --sans:"Barlow Condensed","Roboto Condensed","Arial Narrow",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--void);color:var(--ink);font-family:var(--mono);font-size:14px}
+.deck{max-width:none;min-height:100vh;margin:0;padding:16px 18px 24px;background:var(--void);border:none;
+  border-radius:0;box-shadow:none}
+/* THE LOG HAS A BOUNDED SIZE (the User 2026-10-10, on a 3440 px ultrawide: "the log container needs resizing, it
+   crowds the tiles"): the tiles take the width and keep their grid; the journal is one column of clamp(340px, 30vw,
+   720px), sticky, as tall as the screen at most, with its own scroll; Hide log folds it to its header (each viewer's
+   own choice, kept in this browser). Narrow: the journal goes under the tiles, half the screen tall. */
+:root{--logw:clamp(340px,30vw,720px)}
+.work{display:grid;grid-template-columns:minmax(0,1fr) var(--logw);gap:16px;align-items:start}
+.work #logPane{margin-top:0;position:sticky;top:12px;max-height:calc(100vh - 24px);display:flex;flex-direction:column;
+  min-width:0;overflow:hidden}
+.work #logPane header{flex-wrap:wrap}
+.work pre{flex:1 1 auto;min-height:240px;height:calc(100vh - 140px);max-height:none;overflow:auto}
+/* THE LOG WRAPS AND THE PAGE FILLS (round 15, .101 13:37: the log pane cut its lines at the right behind a horizontal
+   scroll, a white scrollbar sat on the dark page, a large empty area stood under the tiles and the unit table was
+   squeezed below the log): the log's lines wrap inside its column, the unit list and the Off card sit under the tiles in
+   the left column (the log keeps the right one), and every scrollbar wears the page's colours */
+.work #logPane pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:hidden}
+#leftCol{min-width:0}
+#leftCol .pane{margin-top:16px}
+html,pre,#regBody,#powerBody{scrollbar-width:thin;scrollbar-color:#3a3e46 var(--well)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--well)}
+::-webkit-scrollbar-thumb{background:#3a3e46;border-radius:5px;border:2px solid var(--well)}
+::-webkit-scrollbar-thumb:hover{background:#4a505a}
+::-webkit-scrollbar-corner{background:var(--well)}
+.work.log-folded{grid-template-columns:minmax(0,1fr) max-content}
+.work.log-folded #logPane > :not(header){display:none}
+.work.log-folded #logPane header > :not(#tape):not(#bLogFold){display:none}
+@media (max-width:900px){
+  .work,.work.log-folded{grid-template-columns:minmax(0,1fr)}
+  .work #logPane{position:static;max-height:none}
+  .work pre{min-height:40vh;height:50vh;max-height:70vh}
+}
+h1{font-family:var(--sans);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--silk);
+  font-size:15px;margin:0 0 12px}
+.master{display:flex;gap:14px;align-items:center;background:var(--well);border-radius:8px;padding:12px 14px;
+  border:1px solid var(--edge)}
+.lamp{width:22px;height:22px;border-radius:50%;background:var(--lamp-g);box-shadow:0 0 12px rgba(99,192,131,.5);flex:none}
+.lamp.warn{background:var(--lamp-a);box-shadow:0 0 12px rgba(233,166,63,.6)}
+.lamp.bad{background:var(--lamp-r);box-shadow:0 0 14px rgba(220,90,76,.7)}
+.lamp.off{background:#3a3e46;box-shadow:none}
+/* the server is gone (round 16): every tile and lamp grey, nothing lit, no key pressable */
+body.gone .unit,body.gone .jr,body.gone #powerPane,body.gone #ears{filter:grayscale(1);opacity:.45}
+body.gone .unit .pip,body.gone .jr .pip{background:#2b2f36 !important;border-color:#444a53 !important}
+body.gone .key{pointer-events:none;opacity:.45}
+body.gone #masterWord{color:var(--silk)}
+#masterWord{font-family:var(--sans);font-size:24px;font-weight:600;letter-spacing:.04em}
+#svcFleet{color:var(--silk);font-size:13px;margin-top:2px;cursor:pointer}
+.keys{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px;align-items:center}
+.key{font-family:var(--sans);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);
+  background:var(--face-2);border:1px solid #33373f;border-radius:6px;padding:7px 12px;cursor:pointer}
+.key:hover{border-color:#4a505a}
+a.key{text-decoration:none;display:inline-block}
+.key.lit{border-color:var(--lamp-g);box-shadow:inset 0 0 0 1px var(--lamp-g)}
+.key.off{border-color:var(--lamp-a);color:var(--lamp-a)}
+.key.pending{border-style:dashed}
+.key[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.key.small{font-size:12px;padding:3px 8px}
+/* A SWITCH SAYS WHAT IT IS NOW (round 26, the User 2026-10-16: "press for what I want? or are we in that mode now? ...
+   a toggle switch? One cycles so that should list mode we are in"): a two-state key carries its state in a badge
+   (Mic [on], Wall [off]), lit green when on; a key that cycles says the mode it is in (Security [ID-only]); a plain
+   key is a one-shot action (All OS Off). A press shows "…" until the answer. */
+.key .sv{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:9px;font-size:.8em;letter-spacing:.04em;
+  background:#2b2f36;color:var(--silk);text-transform:none}
+.key.lit .sv,.key.sw-on .sv{background:var(--lamp-g);color:#0A0C0F}
+.key.busy .sv{background:var(--lamp-a);color:#0A0C0F}
+#secKeys .tip{margin:0 0 0 6px}
+.keys .grpLab{font-family:var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--silk);font-size:12px;
+  margin-right:2px}
+.sep{width:1px;height:26px;background:#3a3e46;margin:0 6px}
+.tip{color:var(--silk-2);font-size:12px;margin:2px 0 10px;min-height:16px}
+.grp{display:flex;align-items:center;gap:10px;margin:16px 0 6px;font-family:var(--sans);text-transform:uppercase;
+  letter-spacing:.14em;color:var(--silk);font-size:13px}
+.grp i{flex:1;height:1px;background:#3a3e46}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(210px,11vw,330px),1fr));gap:8px}
+/* USE THE WIDTH (the User 2026-10-10, .101 at 3440x1440: small tiles in wide empty space, and the launcher's tile tall
+   with its note in a narrow column): tiles grow with the screen (up to 330 px), and a tile whose note is long spans two
+   columns with the note on its own line under the name */
+.unit.long{grid-column:span 2}
+.unit.long .top{display:block}
+.unit.long .st{display:block;text-align:left;margin-top:2px;white-space:normal}
+@media (min-width:2400px){ .unit .nm{font-size:18px} .unit .role{font-size:13px} .unit .st{font-size:12px} }
+.unit{position:relative;background:var(--face-2);border:1px solid var(--edge);border-radius:6px;padding:8px 10px 7px 26px;
+  cursor:pointer;min-height:56px}
+.unit:focus,.unit.sel{outline:1px solid #6b7280}
+.unit .pip{position:absolute;left:9px;top:12px;width:9px;height:9px;border-radius:50%;background:#2b2f36;border:1px solid #444a53}
+.unit .pip.ok{background:var(--lamp-g);border-color:var(--lamp-g)}
+.unit.warn .pip,.unit .pip.warn{background:var(--lamp-a);border-color:var(--lamp-a)}
+.unit.bad .pip,.unit .pip.bad{background:var(--lamp-r);border-color:var(--lamp-r)}
+.unit.parked{opacity:.6}
+.unit.parked .pip{background:transparent;border-color:var(--lamp-a)}
+.unit.removed{text-decoration:line-through;opacity:.5}
+/* THE ADD-ON SLOT (the User 2026-10-06): the bottom section holds what an installed add-on registered. A slot with
+   nothing installed is a placeholder in the clock's own manner for a missing camera ("no beam sig"): the off mark
+   and a few plain words in muted ink, no key, nothing lit, not a service. */
+/* NOT ON THIS COMPUTER (2026-10-10, lib/crissa_capability): what this machine cannot run, folded into one group at the
+   end, greyed, each with its one reason - never a live key or an error */
+#naGroup{margin:18px 0 6px;color:var(--silk-2)}
+#naGroup summary{cursor:pointer;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+#naGroup ul{margin:8px 0 0;padding:0 0 0 2px;list-style:none}
+#naGroup li{padding:3px 0;opacity:.75}
+#naGroup li b{font-weight:600;color:var(--silk)}
+.unit.ph{cursor:default;background:transparent;border-style:dashed;opacity:.62}
+.unit.ph .pip{background:transparent;border-color:var(--silk-2)}
+.unit.ph .nm{color:var(--silk)}
+.unit.ph .st{color:var(--silk-2)}
+.unit.link .st{color:var(--silk)}
+.unit .top{display:flex;justify-content:space-between;gap:6px}
+.unit .nm{font-family:var(--sans);font-size:16px;font-weight:600}
+.unit .st{color:var(--lamp-a);font-size:11px;text-align:right}
+.unit .role{color:var(--silk);font-size:12px}
+.unit .sub{color:var(--silk-2);font-size:11px;margin-top:2px}
+.pane{margin-top:16px;background:var(--well);border:1px solid var(--edge);border-radius:8px}
+.pane header{display:flex;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--edge)}
+.pane header b{font-family:var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--silk);flex:1}
+pre{margin:0;padding:10px;max-height:360px;overflow:auto;white-space:pre;font-size:12px;color:#c9ced6}
+.jr{display:grid;grid-template-columns:16px minmax(180px,30%) 1fr auto;gap:8px;padding:4px 10px;font-size:12px;
+  border-bottom:1px solid #16191d;align-items:start}
+.jr .pip{width:9px;height:9px;border-radius:50%;margin-top:3px;background:var(--lamp-g)}
+.jr .pip.warn{background:var(--lamp-a)} .jr .pip.bad{background:var(--lamp-r)}
+.jr small{display:block;color:var(--silk-2)}
+.jnote{padding:8px 10px;color:var(--silk);font-size:12px}
+#svcWhy{color:var(--lamp-r);border-bottom:1px solid var(--edge)}
+a.key{text-decoration:none;display:inline-block}
+h4{margin:10px 10px 4px;font-family:var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--silk);font-size:13px}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111418;border:1px solid #3a3e46;
+  padding:8px 14px;border-radius:6px;display:none;max-width:80vw}
+#toast.bad{border-color:var(--lamp-r)}
+.linknote{font-size:.68rem; opacity:.8; margin:-.2rem 0 .45rem}
+.linknote.bad{color:var(--lamp-r, #e5534b); opacity:1}
+#ears{margin:14px 0 6px}
+#ears .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#ears .st{color:var(--silk);font-size:12px}
+#scriptDrawer[hidden]{display:none}
+#scriptDrawer .row{margin-top:8px}
+#lineBox{margin-top:10px}
+#lineBox summary{cursor:pointer}
+#lineBox .k{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--silk)}
+#lineBox .lineNote{margin:4px 0 8px;font-size:12px;color:var(--silk-2)}
+.lineRow{margin:8px 0;padding-top:6px;border-top:1px solid #2a2d33}
+.lineRow .q{font-size:13px;margin-bottom:4px}
+.lineRow .lv{font-size:12px;margin-left:6px;color:var(--silk)}
+#dScript{display:inline-block;width:9px;height:9px;border-radius:50%;background:#2b2f36;border:1px solid #444a53}
+#dMic{display:inline-block;width:9px;height:9px;border-radius:50%;background:#2b2f36;border:1px solid #444a53}
+#dMic.ok{background:var(--lamp-g);border-color:var(--lamp-g)}
+#dMic.warn{background:var(--lamp-a);border-color:var(--lamp-a)}
+#dMic.bad{background:var(--lamp-r);border-color:var(--lamp-r)}
+#dAec{display:inline-block;width:9px;height:9px;border-radius:50%;background:#2b2f36;border:1px solid #444a53}
+#dAec.ok{background:var(--lamp-g);border-color:var(--lamp-g)}
+#dAec.warn{background:var(--lamp-a);border-color:var(--lamp-a)}
+#dScript.ok{background:var(--lamp-g);border-color:var(--lamp-g)}
+#dScript.warn{background:var(--lamp-a);border-color:var(--lamp-a)}
+#dScript.bad{background:var(--lamp-r);border-color:var(--lamp-r)}
+</style>
+</head>
+<body>
+<section class="deck">
+  <h1 id="title">Control Panel</h1>
+  <div class="master">
+    <div class="lamp" id="masterLamp"></div>
+    <div><div id="masterWord">Reading</div><div id="svcFleet" title="all journals">the services have not answered yet</div></div>
+  </div>
+  <!-- ACTIONS, THEN SECURITY (round 26, the User 2026-10-16: "Messy top section"; the top row ran off the right edge
+       with the Security switch on it): one row of what to do, Security as its own group under it -->
+  <div class="keys" id="keys">
+    <button class="key" id="bHouse" type="button" data-act="os_off"><span id="bHouseWord">All OS Off</span></button>
+    <span id="vHouse" class="tip"></span>
+    <button class="key" id="bAgent" type="button" hidden title="Crissa the agent: she stops listening and speaking and her window closes; the Wall stays">Agent</button>
+    <button class="key" id="bWall" type="button" hidden title="The desk Wall: closed on purpose, it stays closed until you open it again">Wall</button>
+    <a class="key" id="bWallHere" target="_top" hidden title="Her Wall in this window">Open the Wall in this window</a>
+    <a class="key" id="bConnect" target="_top" hidden title="Which agent she talks through (round 26: the Wall's Control Panel key opens this panel now)">Connect</a>
+    <span class="sep" id="gpuSep" hidden></span>
+    <span id="gpuKeys"></span>
+  </div>
+  <div class="tip" id="tipHouse"></div>
+  <div class="keys" id="secKeys">
+    <span class="grpLab">Security</span>
+    <span id="bSecurity" hidden></span>
+    <button class="key" id="bSecure" type="button" title="Click turns Secure on or off. A second click within a moment asks for a password and holds it.">Secure</button>
+    <span id="vSecure" class="tip">—</span>
+  </div>
+  <div id="ears">
+    <div class="grp">Ears and mouth<i></i></div>
+    <p class="lineNote" id="micNote">The Mic key turns her microphone on and off. The Voices row carries the announcer and the voice log.</p>
+    <div class="row">
+      <i id="dMic"></i>
+      <span class="st" id="vMic">reading</span>
+      <button type="button" class="key small" id="bVoice" data-act="voice" aria-pressed="false" title="Mic off — click to turn on">Mic</button>
+    </div>
+    <div class="row">
+      <i id="dAec"></i>
+      <span class="st" id="vAec">reading</span>
+      <button type="button" class="key small" id="bAec" aria-pressed="false" title="Echo cancel keeps her own voice out of her microphone. On by itself when the microphone has none of its own.">Echo cancel</button>
+    </div>
+    <div class="row">
+      <i id="dScript"></i>
+      <span class="st" id="vScript">off</span>
+      <button type="button" class="key small" id="bDevMode" aria-pressed="false" title="Opens the tuning demo. Off hides those controls and keeps the scripted lap off.">Dev mode</button>
+    </div>
+    <div id="scriptDrawer" hidden>
+      <div class="row">
+        <button type="button" class="key small" id="bDemo" aria-pressed="false" title="Plays your recorded lines on the speakers. On starts it. Off stops at the next beat. A question with no recording is skipped. Listening stays as it is.">Demo</button>
+        <button type="button" class="key small" id="bScriptHold" aria-pressed="false" title="Holds the next beat so you can speak. Does not pause Listening and does not home the wall. Leave it off and the demo keeps going.">Hold</button>
+        <button type="button" class="key small" id="bScriptDev" aria-pressed="false" title="Optional beats on the next lap. A fail stays on this line. Off, they do not run.">Extra beats</button>
+      </div>
+      <details id="lineBox">
+        <summary class="k">Record your lines</summary>
+        <p class="lineNote">Record each question in your own voice. Level shows while you speak. Play listens back. A question with no recording is skipped.</p>
+        <div id="lineList"></div>
+      </details>
+    </div>
+  </div>
+  <div class="work">
+  <div id="leftCol">
+  <div id="svcRow"></div>
+  <div class="pane" id="regPane">
+    <header><b>Every unit this panel watches</b><button class="key small" type="button" id="bRefresh">Look again</button></header>
+    <div id="regBody"><div class="jnote">reading…</div></div>
+  </div>
+  <div class="pane" id="powerPane" hidden>
+    <header><b id="powerHead">Last switch</b></header>
+    <div id="powerBody"></div>
+  </div>
+  </div>
+
+  <div class="pane" id="logPane">
+    <header><b id="tape">journal · every service</b>
+      <button class="key small" type="button" id="bLogFold" aria-expanded="true" aria-controls="svcJ"
+        title="Hide the log (this browser remembers it)">Hide log</button>
+      <button class="key small" type="button" id="bEarlier" hidden title="read the page of log lines before these">Earlier</button>
+      <button class="key small" type="button" id="bFollow" hidden title="back to the newest lines, live">Follow</button>
+      <a class="key small" id="bWhole" hidden target="_blank" rel="noopener" title="the whole log, every line, as text">Whole log</a>
+      <span id="fileKeys"></span>
+      <button class="key small" type="button" id="bOpen" hidden>Open</button>
+      <button class="key small" type="button" id="bScript" hidden>Script</button>
+      <button class="key small" type="button" id="bRestart" hidden>Restart</button>
+      <button class="key small" type="button" id="bRun" hidden>Run now</button>
+      <button class="key small" type="button" id="bOff" hidden>Off</button>
+      <button class="key small" type="button" id="bStart" hidden>Start</button>
+      <button class="key small" type="button" id="bStop" hidden>Stop</button>
+      <button class="key small" type="button" id="bVoiceKey" hidden></button>
+    </header>
+    <div class="jnote" id="svcWhy" hidden></div>
+    <pre id="svcJ">tap a tile to read its journal</pre>
+  </div>
+  </div>
+
+</section>
+<div id="toast"></div>
+<script>
+(function(){
+"use strict";
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function j(url){ return fetch(url,{cache:"no-store"}).then(function(r){ return r.json(); }); }
+var toastT=null;
+function toast(msg,bad){ var t=$("toast"); t.textContent=msg; t.className=bad?"bad":""; t.style.display="block";
+  clearTimeout(toastT); toastT=setTimeout(function(){ t.style.display="none"; }, 4200); }
+/* A Restart (or a timer's Run now) answers at once with a job; the outcome - a new run that stays up and answers its
+   port, or the reason it did not - comes from /v1/restart-report and is said on screen. */
+function followJob(job, n){
+  n=n||0;
+  j("/v1/restart-report?job="+encodeURIComponent(job)).then(function(r){
+    if(r && r.state==="done"){ toast(r.note||(r.ok?"done":"failed"), !r.ok); paint(); if(svcOpen) refreshTape(); return; }
+    if(n<600) setTimeout(function(){ followJob(job, n+1); }, 1000);
+  }).catch(function(){ if(n<600) setTimeout(function(){ followJob(job, n+1); }, 2000); });
+}
+function act(payload){
+  return fetch("/v1/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      /* round 20: All OS Off greys this page at once - the server waits for it (OFF_DRAW_S) before anything stops */
+      if(d && d.ok && d.started && /^(os_off|house_off)$/.test(String((payload||{}).action||""))){ paintGone(true, true); return d; }
+      toast(d.note||d.error||(d.ok?"done":"failed"), !d.ok); setTimeout(paint, 600);
+      setTimeout(powerPoll, 900); setTimeout(function(){ regPoll(false); }, 1200);
+      if(d && d.ok && d.job) followJob(d.job); return d; })
+    .catch(function(){ toast("the panel did not answer", true); });
+}
+
+var SVC=null, CAPS={}, svcOpen=null, svcTileId=null;
+var SWITCH="All OS Off", ON="Turn On All Services";
+
+/* the server marks a unit All OS Off stopped as parked: off by design, never red */
+function isParked(s){ return !!(s && (s.parked || /^parked in /.test(s.note||""))); }
+function groupHead(label){
+  var el=document.createElement("div"); el.className="grp";
+  var t=document.createElement("span"); t.textContent=label||"";
+  el.appendChild(t); el.appendChild(document.createElement("i")); return el;
+}
+/* A legend tile. The unit's own name is the legend; the unit and port are the small print. */
+function unitTile(s){
+  s=s||{};
+  var parked=isParked(s);
+  var el=document.createElement("div");
+  el.className="unit"+(parked?" parked":(s.health==="warn"?" warn":(s.health==="bad"?" bad":"")))+(s.removed?" removed":"");
+  el.setAttribute("data-unit", s.unit||""); el.setAttribute("role","button"); el.setAttribute("tabindex","0");
+  var parts=String(s.label||s.unit||"?").split(" - ");
+  var faint=(s.unit||"")+(s.port?(" :"+s.port):"");
+  var st=(s.active||"—")+(s.sub?("/"+s.sub):"");
+  var say = s.note ? s.note : ((s.health && s.health!=="ok") ? st :
+    (s.restarts ? (s.restarts===1?"restarted once":("restarted ×"+s.restarts)) : ""));
+  el.title=(s.label||s.unit||"")+" · "+st+(s.note?(" · "+s.note):"")+(s.why?(" · found by: "+s.why):"");
+  el.innerHTML='<i class="pip '+esc(s.health||"")+'"></i><div class="top"><span class="nm">'+esc(parts[0])+
+    '</span><span class="st">'+esc(say)+'</span></div>'+(parts.length>1?('<div class="role">'+esc(parts.slice(1).join(" - "))+'</div>'):'')+
+    '<div class="sub">'+esc(faint)+'</div>';
+  if(String(say||"").length > 60) el.classList.add("long");
+  if(svcOpen && svcOpen===s.unit) el.classList.add("sel");
+  if(s.href) el.setAttribute("data-href", s.href);
+  if(s.id) el.setAttribute("data-id", s.id);
+  if(!s.unit){ el.removeAttribute("data-unit"); }
+  if(s.link){ el.classList.add("link"); el.querySelector(".st").textContent="open ↗"; }
+  return el;
+}
+/* A slot nothing has filled: the off mark and its words. No data-unit, no role, no tab stop - nothing to press. */
+function placeholderTile(p){
+  var el=document.createElement("div"); el.className="unit ph"; el.setAttribute("data-slot", p.slot||"");
+  el.title=(p.label||"")+" · "+(p.note||"");
+  el.innerHTML='<i class="pip"></i><div class="top"><span class="nm">'+esc(p.label||p.slot||"")+
+    '</span></div><div class="role">'+esc((p.mark||"○")+" "+(p.note||"not installed"))+'</div>';
+  return el;
+}
+/* The Voices section (lib/crissa_voice_panel.py): Chatterbox (Turbo), Multilingual V3 when installed or offered,
+   Pocket. State only: on/off, the GPU, and the failure named. No key: the launcher starts the voices. */
+function voiceTile(v){
+  var el=document.createElement("div"); el.className="unit voice"+(v.state==="bad"?" bad":(v.state==="warn"?" warn":""))+
+    (v.offer?" ph":""); el.setAttribute("data-voice", v.id||"");
+  el.title=(v.label||"")+" · "+(v.note||"")+(v.gpu?(" · GPU: "+v.gpu):"");
+  el.innerHTML='<i class="pip'+(v.state==="ok"?" ok":"")+'"></i><div class="top"><span class="nm">'+esc(v.label||v.id||"")+
+    '</span></div><div class="role">'+esc((v.mark||"○")+" "+(v.note||""))+'</div>'+
+    (v.gpu?('<div class="role">GPU: '+esc(v.gpu)+'</div>'):'')+
+    (v.language?('<div class="role">language: '+esc(v.language)+'</div>'):'')+
+    (v.voice?('<div class="role">voice: '+esc(v.voice)+'</div>'):'')+
+    (v.id==="warm"?('<div class="role">last warm: '+esc(v.last_ok||"never")+' · every '+esc(String(v.interval_s||""))+' s</div>'):'')+
+    ((v.id==="audio8"||v.id==="warm")?'<div class="role">tap: log · '+(v.id==="warm"?"Run now":"Restart")+'</div>':'');
+  return el;
+}
+function paintVoices(box){
+  var vo=(SVC&&SVC.voices)||{}; if(!vo.tiles||(!vo.tiles.length&&!vo.error)) return;
+  box.appendChild(groupHead(vo.section||"Voices"));
+  var grid=document.createElement("div"); grid.className="tiles"; grid.id="voiceRow";
+  (vo.tiles||[]).forEach(function(v){ if(!v.blank) grid.appendChild(voiceTile(v)); });   /* blank: folded below */
+  if(vo.error) grid.appendChild(voiceTile({id:"error", label:"Voices", state:"bad", mark:"◐", note:vo.error}));
+  box.appendChild(grid);
+}
+function osOff(){ return (SVC&&SVC.os_off)||{}; }
+/* While All OS Off is in force the header says so, never "All normal". */
+function osOffHeader(o){
+  var n=o.n||(o.paused||[]).length||0, names=(o.paused||[]).map(function(u){ return u.replace(/\.service$/,""); });
+  var list=names.slice(0,6).join(", ")+(names.length>6?(" +"+(names.length-6)+" more"):"");
+  var failed=o.failed||[];
+  return {state: failed.length?"bad":"", w:"OS off · "+n+" paused",
+    s:(failed.length?(failed.length+" did not stop: "+failed.slice(0,3).join(", ")+" · "):"")+
+      (list?("paused: "+list+" · "):"")+"only the Control Panel is on · "+ON+" brings them back"};
+}
+function modeName(m){
+  var g=(SVC&&SVC.gpu)||{};
+  if(m==="off") return g.off_label||"Park GPU";
+  var hit=(g.modes||[]).find(function(x){ return x.id===m; });
+  return hit?hit.label:(m||"");
+}
+function paintMaster(){
+  var lampEl=$("masterLamp"), word=$("masterWord"), sub=$("svcFleet");
+  var oo=osOff();
+  lampEl.classList.remove("warn","bad");
+  if(oo.in_force){
+    var h=osOffHeader(oo);
+    lampEl.classList.add(h.state==="bad"?"bad":"warn"); word.textContent=h.w; sub.textContent=h.s; return;
+  }
+  var fl=(SVC&&SVC.fleet)||{}, total=fl.total||0, warn=fl.warn||0, down=fl.down||0, parked=fl.parked||0;
+  var g=(SVC&&SVC.gpu)||null, lit=down+warn, w, s;
+  if(SVC && SVC.systemd==="unreachable"){
+    lampEl.classList.add("warn"); word.textContent="Cannot read systemd";
+    sub.textContent="this session has no systemd user manager - the tiles show what is installed, not whether it runs";
+    return;
+  }
+  /* the count is of the tiles shown, and each one is named (2026-10-10): fleet_of() in the server */
+  var dn=(fl.down_names||[]).join(", "), wn=(fl.warn_names||[]).join(", ");
+  /* "N units running" is THE ONE COUNT both panels say (2026-10-10, round 5): the launcher's own table, read by
+     lib/crissa_procs.running_count in the server; the tiles' count only where no launcher ran */
+  var running=(typeof fl.running==="number")?fl.running:(total-parked);
+  if(down){ lampEl.classList.add("bad"); w=down===1?"1 unit down":(down+" units down");
+    s="down: "+(dn||down)+(warn?(" · warn: "+(wn||warn)):"")+" · tap "+(lit===1?"the":"a")+" lit tile to read its log"; }
+  else if(warn){ lampEl.classList.add("warn"); w=warn===1?"1 unit warn":(warn+" units warn");
+    s="warn: "+(wn||warn)+" · tap "+(lit===1?"the":"a")+" lit tile to read its log"; }
+  else if(total && g && g.mode==="off"){ w="GPU parked";
+    s=running+" units running · "+(g.park_what||"the GPU tenants")+" off the card · press "+modeName("off")+" to return to "+modeName(g.return_mode||""); }
+  else if(total){ w="All normal"; s=running+" units running · nothing is asking for you"; }
+  else { w="Reading"; s="the services have not answered yet"; }
+  word.textContent=w; sub.textContent=s; sub.title=fl.running_what||"";
+}
+function paintHouse(o){
+  var b=$("bHouse"), off=!!o.in_force;
+  b.setAttribute("data-act", off?"os_on":"os_off"); b.setAttribute("aria-pressed", off?"true":"false");
+  b.classList.toggle("off", off);
+  $("bHouseWord").textContent = off ? ON : SWITCH;
+  var hasGpu=!!(SVC&&SVC.gpu);
+  $("tipHouse").textContent = off ?
+    ("Everything is off: "+(o.n||0)+" services paused, only this Control Panel is on. "+ON+" brings back exactly what was on"+(hasGpu?(", in "+modeName(o.return_mode)):"")+".") :
+    ("Every service off — every tile and every timer — except this Control Panel, so you can turn it all back on."+(hasGpu?" The GPU parks too.":"")+" "+ON+" brings back exactly what was on.");
+  $("vHouse").textContent = off ? ("off since "+String(o.since||"").slice(11,16)+" · "+(o.n||0)+" paused"+((o.failed||[]).length?(" · "+o.failed.length+" did not stop"):"")) : "";
+}
+function paintGpu(){
+  var g=(SVC&&SVC.gpu)||null, box=$("gpuKeys");
+  $("gpuSep").hidden=!g; box.textContent="";
+  if(!g) return;
+  var houseOff=!!osOff().in_force;
+  (g.modes||[]).concat([{id:"off",label:g.off_label||"Park GPU"}]).forEach(function(m){
+    var b=document.createElement("button"); b.type="button"; b.className="key"; b.textContent=m.label;
+    b.setAttribute("data-act","mode_"+m.id);
+    var on=g.mode===m.id; b.classList.toggle("lit", on && m.id!=="off"); b.classList.toggle("off", on && m.id==="off");
+    b.setAttribute("aria-pressed", on?"true":"false");
+    if(houseOff){ b.setAttribute("aria-disabled","true"); b.title=SWITCH+" is in force - "+ON+" first"; }
+    else if(m.id==="off") b.title = g.mode==="off" ? ("GPU parked. Click to return to "+modeName(g.return_mode||"")+", or pick any mode.")
+      : (m.label+" — "+(g.park_what||"the GPU tenants")+" off the card. Everything else keeps running. Press it again to return to the mode you were in.");
+    box.appendChild(b);
+  });
+}
+function paintServices(d){
+  SVC=d||{};
+  if(SVC.title){ $("title").textContent=SVC.title; document.title=SVC.title; }
+  paintMaster(); paintHouse(osOff()); paintGpu();
+  var box=$("svcRow"); box.textContent="";
+  var order=[], bucket={}, ad=SVC.addons||{};
+  var addonNames={};
+  (ad.sections||[]).forEach(function(s){ if(s) addonNames[s]=1; });
+  (ad.missing||[]).forEach(function(p){ if(p.section) addonNames[p.section]=1; });
+  (SVC.services||[]).forEach(function(s){ if(s.addon && s.section) addonNames[s.section]=1; });
+  (SVC.services||[]).forEach(function(s){
+    var g=s.section||"Wall services";
+    if(!bucket[g]){ bucket[g]=[]; order.push(g); }
+    bucket[g].push(s);
+  });
+  Object.keys(addonNames).forEach(function(g){
+    if(!bucket[g]){ bucket[g]=[]; order.push(g); }
+  });
+  var addonOrder=order.filter(function(g){ return addonNames[g]; });
+  order=order.filter(function(g){ return !addonNames[g]; }).concat(addonOrder);
+  var voicesDone=false, slotPlaced=false, miss=(ad.missing||[]).filter(function(p){ return !p.blank; });
+  order.forEach(function(g){
+    var addon=!!addonNames[g];
+    if(addon && !(bucket[g]||[]).length && !miss.filter(function(p){ return (p.section||ad.section)===g; }).length){
+      if(!voicesDone){ paintVoices(box); voicesDone=true; }
+      return;                               /* an add-on this computer does not have: in "Not on this computer" */
+    }
+    if(addon && !voicesDone){ paintVoices(box); voicesDone=true; }
+    box.appendChild(groupHead(g));
+    if(addon && !slotPlaced) box.appendChild(linkNote(ad.link));
+    var grid=document.createElement("div"); grid.className="tiles";
+    if(addon && !slotPlaced){ grid.id="addonSlot"; slotPlaced=true; }
+    (bucket[g]||[]).forEach(function(s){ grid.appendChild(unitTile(s)); });
+    if(addon) miss.filter(function(p){ return (p.section||ad.section)===g; })
+      .forEach(function(p){ grid.appendChild(placeholderTile(p)); });
+    box.appendChild(grid);
+  });
+  if(!voicesDone) paintVoices(box);
+  paintUnavailable(box);
+}
+/* CLOSE THE WALL / OPEN THE WALL (2026-10-10): the desk Wall closed on purpose stays closed (lib/crissa_watch) */
+var WALL={};
+function paintWall(){
+  /* OPEN THE WALL IN THIS WINDOW (the User 2026-10-12: "Only if they want the wall it should be available"): with the
+     desk Wall up the dock opens this panel in her window, and her browser Wall is one press away */
+  var h=document.getElementById("bWallHere");
+  var cn=document.getElementById("bConnect");
+  if(cn && WALL.page){ try{ cn.href=new URL("/connect", WALL.page).href; cn.hidden=false; }catch(_e){} }
+  if(h){ h.hidden=!WALL.page; if(WALL.page) h.href=WALL.page;
+    h.title=(WALL.present&&!WALL.closed)?"Her Wall in this window too; the Wall on your desktop stays as it is":"Her Wall in this window"; }
+  var b=document.getElementById("bWall"); if(!b) return;
+  if(!WALL.present){ b.hidden=true; return; }
+  b.hidden=false;
+  if(!WALL_BUSY){ b.innerHTML='Wall<span class="sv">'+(WALL.closed?"off":"on")+'</span>'; b.classList.remove("busy"); }
+  b.setAttribute("data-wall", WALL.action||""); b.classList.toggle("sw-on", !WALL.closed); b.classList.remove("off");
+  b.title=WALL.closed?("Closed by you"+(WALL.by?(" ("+WALL.by+")"):"")+". Open it again."):"Close the desk Wall; it stays closed until you open it";
+}
+function readWall(){
+  fetch("/v1/wall",{cache:"no-store"}).then(function(r){ return r.json(); }).then(function(d){ WALL=d||{}; paintWall(); })
+    .catch(function(){});
+}
+var WALL_BUSY=0;
+(function wallKey(){
+  var b=document.getElementById("bWall"); if(!b) return;
+  b.addEventListener("click", function(){
+    var act=b.getAttribute("data-wall")||"";
+    if(WALL_BUSY) return;
+    if(act==="wall_close" && !confirm("Close the desk Wall? Crissa keeps running; it stays closed until you open it again.")) return;
+    /* round 26 (.101: "button does not work", then it opened late with nothing on the key): the press says so at once */
+    WALL_BUSY=Date.now(); b.classList.add("busy");
+    b.innerHTML='Wall<span class="sv">'+(act==="wall_close"?"closing\u2026":"opening\u2026")+'</span>';
+    var done=function(){ WALL_BUSY=0; readWall(); };
+    fetch("/v1/wall",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:act})})
+      .then(function(r){ return r.json(); }).then(function(d){ if(d&&d.error&&typeof toast==="function") toast(d.error,true);
+        setTimeout(done, d&&d.ok?2500:0); })
+      .catch(done);
+  });
+  readWall(); setInterval(readWall, 5000);
+})();
+/* CLOSE AGENT / OPEN AGENT (the User 2026-10-12: "Close Agent vs OS off"): the agent goes, the Wall stays; All OS
+   Off (beside it) is everything off. The same key as the Crissa menus' (lib/crissa_menu.agent_state) */
+var AGENT={};
+function paintAgent(){
+  var b=document.getElementById("bAgent"); if(!b) return;
+  if(AGENT.ok!==true){ b.hidden=true; return; }
+  b.hidden=false; b.innerHTML='Agent<span class="sv">'+(AGENT.closed?"off":"on")+'</span>';   /* round 26: a switch */
+  b.setAttribute("data-agent", AGENT.action||""); b.classList.toggle("sw-on", !AGENT.closed); b.classList.remove("off");
+  b.title=AGENT.closed?("Closed"+(AGENT.by?(" by "+AGENT.by):"")+": she does not listen or speak. Open Agent brings her back."):
+    "Crissa stops listening and speaking and her window closes; the Wall stays as your desktop";
+}
+function readAgent(){
+  fetch("/v1/agent",{cache:"no-store"}).then(function(r){ return r.json(); }).then(function(d){ AGENT=d||{}; paintAgent(); })
+    .catch(function(){});
+}
+(function agentKey(){
+  var b=document.getElementById("bAgent"); if(!b) return;
+  b.addEventListener("click", function(){
+    var act=b.getAttribute("data-agent")||"";
+    if(act==="agent_close" && !confirm(AGENT.ask||"Close Agent? Crissa stops listening and speaking; the Wall stays.")) return;
+    fetch("/v1/agent",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:act})})
+      .then(function(r){ return r.json(); }).then(function(d){ if(d&&(d.error||d.note)&&typeof toast==="function") toast(d.error||d.note, !!d.error); readAgent(); })
+      .catch(function(){});
+  });
+  readAgent(); setInterval(readAgent, 5000);
+})();
+/* the log's fold, each viewer's own (localStorage; a private window simply starts open) */
+(function linesFold(){                 /* Record your lines: closed until opened, each viewer's own (2026-10-10) */
+  var d=document.getElementById("lineBox"); if(!d) return;
+  try{ d.open = localStorage.getItem("crissa.panel.linesOpen")==="1"; }catch(e){}
+  d.addEventListener("toggle", function(){ try{ localStorage.setItem("crissa.panel.linesOpen", d.open?"1":"0"); }catch(e){} });
+})();
+(function logFold(){
+  var b=document.getElementById("bLogFold"), w=document.querySelector(".work"), KEY="crissa.panel.logFolded";
+  if(!b||!w) return;
+  function set(f){ w.classList.toggle("log-folded", f); b.textContent=f?"Show log":"Hide log";
+    b.setAttribute("aria-expanded", f?"false":"true"); b.title=f?"Show the log":"Hide the log (this browser remembers it)"; }
+  /* round 26 (the User: the journal "is mostly empty ... squeezes the tiles"): folded until a tile is tapped or Show
+     log is pressed; a viewer's own Show log is kept */
+  var f=true; try{ var kept=localStorage.getItem(KEY); if(kept!==null) f=kept==="1"; }catch(e){}
+  set(f);
+  window.unfoldLog=function(){ if(w.classList.contains("log-folded")) set(false); };
+  b.addEventListener("click", function(){ var n=!w.classList.contains("log-folded"); set(n);
+    try{ localStorage.setItem(KEY, n?"1":"0"); }catch(e){} });
+})();
+/* NOT ON THIS COMPUTER: one folded group, last, from the one answer the menu shares (lib/crissa_capability) */
+function paintUnavailable(box){
+  var na=((SVC&&SVC.capability)||{}).unavailable||[];
+  if(!na.length) return;
+  var d=document.createElement("details"); d.id="naGroup";
+  var sm=document.createElement("summary"); sm.textContent="Not on this computer ("+na.length+")"; d.appendChild(sm);
+  var ul=document.createElement("ul");
+  na.forEach(function(x){
+    var li=document.createElement("li"); li.setAttribute("data-feature", x.id||"");
+    var b=document.createElement("b"); b.textContent=x.label||x.id||""; li.appendChild(b);
+    li.appendChild(document.createTextNode(" - "+(x.why||""))); ul.appendChild(li);
+  });
+  d.appendChild(ul); box.appendChild(d);
+}
+/* THE ADD-ON LINK (the User 2026-10-06): whether the other plugin is live, so the watchers know what they watch.
+   Live: its pieces are watched too, and a piece down is named here. Not: "<add-on> not installed - watching
+   Crissa only", nothing lit. The table says who crosses over, and only while both sides are live. */
+function linkNote(lk){
+  var el=document.createElement("div"); el.className="linknote"; el.id="addonLink";
+  lk=lk||{};
+  var ls=lk.links||[], down=[];
+  ls.forEach(function(x){ (x.down||[]).forEach(function(d){ down.push(d); }); });
+  el.textContent=(lk.note||"watching Crissa only")+(down.length?(" · down: "+down.join(", ")):"");
+  if(down.length) el.classList.add("bad");
+  var t=(lk.table||[]).map(function(r){ return r.watcher+": "+r.watches+(r.crosses?(" + "+r.cross.join(", ")):" (Crissa only)")+" · watched by "+r.watched_by; });
+  el.title=t.join("\n")+(lk.checked?("\nchecked "+new Date(lk.checked*1000).toTimeString().slice(0,8)+" by "+(lk.source||"")):"");
+  return el;
+}
+function hrefOf(unit){
+  var hit=((SVC&&SVC.services)||[]).find(function(s){ return s.unit===unit && s.href; });
+  return hit?hit.href:"";
+}
+var journalTimer=null, tape={unit:"all", file:"", lines:[], earlier:null, paged:false};
+/* Audio8 and the keep-warm: their log, and one key each (Restart / Run now) through /v1/voices/action. */
+var VOICE_KEYS={audio8:{act:"restart", label:"Restart"}, warm:{act:"run", label:"Run now"}};
+function openVoiceLog(vid){
+  svcOpen=null; if(journalTimer){ clearInterval(journalTimer); journalTimer=null; }
+  $("tape").textContent="log · "+(vid==="warm"?"keep-warm":"Audio8");
+  ["bOpen","bScript","bRestart","bRun","bOff","bStart","bStop","bEarlier","bFollow","bWhole"].forEach(function(id){ $(id).hidden=true; });
+  var k=$("bVoiceKey"), spec=VOICE_KEYS[vid]; k.hidden=false; k.textContent=spec.label;
+  k.onclick=function(){
+    if(spec.act==="restart" && !confirm("Restart Audio8?")) return;
+    k.disabled=true;
+    fetch("/v1/voices/action",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({id:vid, act:spec.act})}).then(function(r){ return r.json(); })
+      .then(function(d){ toast(d.ok?(spec.label+": done"):(spec.label+" failed: "+(d.why||"no reason given")), !d.ok); setTimeout(paint, 600); })
+      .catch(function(){ toast("the panel did not answer", true); })
+      .then(function(){ k.disabled=false; });
+  };
+  var pre=$("svcJ"); pre.textContent="reading…";
+  function refresh(){
+    j("/v1/voices/log?id="+encodeURIComponent(vid)).then(function(d){
+      pre.textContent=(d&&d.text)?d.text:((d&&d.error)||"Nothing logged yet.");
+      pre.scrollTop=pre.scrollHeight;
+    }).catch(function(e){ pre.textContent="Could not read the log."; });
+  }
+  refresh(); journalTimer=setInterval(refresh, 3000);
+}
+function tileOf(unit){ return ((SVC&&SVC.services)||[]).find(function(s){ return s.unit===unit; })||null; }
+function openTile(){
+  if(svcTileId){
+    var hit=((SVC&&SVC.services)||[]).find(function(s){ return s.id===svcTileId; });
+    if(hit) return hit;
+  }
+  return tileOf(svcOpen);
+}
+function jurl(extra){
+  return "/v1/journal?unit="+encodeURIComponent(tape.unit)+(tape.file!==""?("&file="+encodeURIComponent(tape.file)):"")+(extra||"");
+}
+function paintTape(d, keepScroll){
+  var pre=$("svcJ");
+  var stick=pre.scrollTop+pre.clientHeight>=pre.scrollHeight-8;
+  tape.earlier=(d&&d.earlier!=null&&d.earlier!=="")?d.earlier:null;
+  var body=(tape.lines&&tape.lines.length)?tape.lines.join("\n"):((d&&d.error)||"No log lines.");
+  pre.textContent=(tape.earlier!=null?((d.marker||"── earlier lines not shown · Earlier reads them ──")+"\n"):"")+body;
+  $("bEarlier").hidden=tape.earlier==null;
+  if(!keepScroll && stick) pre.scrollTop=pre.scrollHeight;
+  var fk=$("fileKeys"); fk.textContent="";
+  /* a Crissa unit's live log is its own file (the server reads it by default, file_index); "journal" is systemd's */
+  var onFile=(tape.file!==""&&tape.file!=="journal")||(d&&d.file_index!=null&&tape.file!=="journal");
+  if(onFile){ var jb=document.createElement("button"); jb.type="button"; jb.className="key small";
+    jb.textContent="journal"; jb.title="systemd's own lines for this unit (started, stopped)";
+    jb.onclick=function(){ tape.file="journal"; tape.paged=false; refreshTape(); }; fk.appendChild(jb); }
+  ((d&&d.files)||[]).forEach(function(f,i){
+    var b=document.createElement("button"); b.type="button"; b.className="key small"; b.textContent="file "+i;
+    b.title=f; b.onclick=function(){ tape.file=String(i); tape.paged=false; refreshTape(); }; fk.appendChild(b); });
+  var w=$("bWhole"); w.hidden=false;
+  w.href="/v1/log-file?unit="+encodeURIComponent(tape.unit)+(tape.file!==""?("&file="+encodeURIComponent(tape.file)):"");
+  if(tape.unit==="all") w.hidden=true;
+}
+function refreshTape(){
+  if(tape.paged) return;                                          /* reading back: the page holds still until Follow */
+  j(jurl("")).then(function(d){ tape.lines=(d&&d.lines)||[]; paintTape(d); })
+    .catch(function(){ $("svcJ").textContent="Could not read the log."; });
+}
+function readEarlier(){
+  if(tape.earlier==null) return;
+  tape.paged=true; $("bFollow").hidden=false;
+  var pre=$("svcJ"), h=pre.scrollHeight;
+  j(jurl("&before="+encodeURIComponent(tape.earlier))).then(function(d){
+    tape.lines=((d&&d.lines)||[]).concat(tape.lines); paintTape(d, true);
+    pre.scrollTop=pre.scrollHeight-h;                             /* stay on the line you were reading */
+  });
+}
+function openJournal(unit, tileId){
+  unit=unit||"all"; svcOpen=unit==="all"?null:unit; svcTileId=tileId||null; $("bVoiceKey").hidden=true;
+  if(svcOpen && window.unfoldLog) window.unfoldLog();      /* round 26: a tapped tile opens the journal */
+  if(journalTimer){ clearInterval(journalTimer); journalTimer=null; }
+  tape={unit:unit, file:"", lines:[], earlier:null, paged:false};
+  var t=openTile();
+  $("tape").textContent = unit==="all" ? "journal · every service" : ((/^proc:/.test(unit)?"log · ":"journal · ")+unit.replace(/^proc:/,""));
+  ["bScript","bRestart","bStart","bStop"].forEach(function(id){ $(id).hidden = unit==="all"; });
+  var run=t&&t.run&&t.run.unit, off=t&&t.off;
+  $("bRun").hidden=!run;
+  $("bOff").hidden=!off;
+  if(off){ $("bOff").textContent=t.off_now?"On":"Off"; }
+  $("bRestart").textContent = /\.timer$/.test(unit) ? "Run now" : "Restart";
+  $("bRestart").title = /\.timer$/.test(unit) ? "run the service this timer starts, once, and say how it ended" : "restart it and check it comes back";
+  $("bOpen").hidden = unit==="all" || !hrefOf(unit);
+  $("bFollow").hidden=true; $("bEarlier").hidden=true;
+  var why=$("svcWhy");
+  if(t && t.health && t.health!=="ok" && t.note){ why.hidden=false; why.textContent=(t.health==="bad"?"Down: ":"")+t.note; }
+  else { why.hidden=true; why.textContent=""; }
+  $("svcJ").textContent="reading "+unit+"…";
+  refreshTape(); journalTimer=setInterval(refreshTape, 2000);
+  document.querySelectorAll(".unit").forEach(function(t){ t.classList.toggle("sel", t.getAttribute("data-unit")===svcOpen); });
+}
+function openScript(unit){
+  j("/v1/script?unit="+encodeURIComponent(unit)).then(function(d){
+    var pre=$("svcJ"); if(journalTimer){ clearInterval(journalTimer); journalTimer=null; }
+    $("bEarlier").hidden=true; $("bFollow").hidden=true;
+    $("tape").textContent="script · "+unit+(d.script?(" · "+d.script):"");
+    pre.textContent=(d.unit_file||"")+"\n\n"+(d.text!=null?d.text:("(no script shown"+(d.why?(": "+d.why):"")+")"));
+  });
+}
+function janRow(level, name, what, extra){
+  return '<div class="jr"><i class="pip '+esc(level)+'"></i><span>'+esc(name)+'</span><span>'+what+
+    (extra?('<small>'+extra+'</small>'):'')+'</span><span></span></div>';
+}
+function paintRegistry(d){
+  var h=[];
+  if(d.systemd==="unreachable") h.push('<div class="jnote"><b>systemd cannot be reached from this session</b> (no user manager). The list below is read from the unit files; start, stop and state need a logged-in session or lingering.</div>');
+  var r=d.rules||{};
+  h.push('<div class="jnote">'+(d.n||0)+' units, found by: '+esc([].concat((r.name||[]).map(function(x){return "name "+x+"*";}),
+    (r.exec||[]).map(function(x){return "program in "+x;}), r.folder?["installed in "+r.folder]:[], r.agent?[r.agent]:[]).join(" · ")||"no rules")+
+    (d.updated?(' · list looked '+esc(String(d.updated).replace("T"," ").slice(0,16))):'')+
+    (d.states_at?(' · states read '+esc(String(d.states_at).replace("T"," ").slice(11,19))):'')+'</div>');
+  var ch=(d.changes||[]).slice().reverse();
+  if(ch.length){ h.push('<h4>New and removed (last days)</h4>');
+    ch.forEach(function(c){ h.push(janRow(c.change==="removed"?"warn":"ok", c.unit, '<i>'+esc(c.change)+'</i> · '+esc(c.why||("last seen "+(c.last_seen||"?"))),
+      esc(String(c.ts||"").replace("T"," ")+" · by "+(c.by||"")))); }); }
+  if((d.notes_without_units||[]).length) h.push('<div class="jnote">Notes for units this machine does not have (not obeyed): '+esc(d.notes_without_units.join(", "))+'</div>');
+  h.push('<h4>Units</h4>');
+  (d.units||[]).forEach(function(u){
+    var lv = u.active==="failed" ? "bad" : (u.active==="active" ? "ok" : (u.role==="service" && u.active!=="unknown" ? "warn" : ""));
+    h.push(janRow(lv, u.unit+(u.new_since?" · new":""), esc(u.role)+' · '+esc(u.active)+(u.sub?("/"+esc(u.sub)):'')+' · '+esc(u.why||""), esc(u.description||"")));
+  });
+  if(!(d.units||[]).length) h.push('<div class="jnote">No units found yet. Install one (for this panel: <code>python3 scripts/crissa-panel-server.py --unit</code>) and press Look again.</div>');
+  $("regBody").innerHTML=h.join("");
+}
+function paintPower(d){
+  var last=(d&&d.last)||{};
+  if(!last.action){ $("powerPane").hidden=true; return; }
+  $("powerPane").hidden=false;
+  $("powerHead").textContent=(last.headline||"Last switch")+(last.ts?(" · "+String(last.ts).replace("T"," ").slice(0,16)):"");
+  var h=[];
+  (last.failed||[]).forEach(function(f){ h.push(janRow("bad", f.unit, '<b>'+esc(f.why||"")+'</b>', esc(f.state||""))); });
+  (last.kept||[]).forEach(function(k){ h.push(janRow("ok", k.unit, "left on · "+esc(k.why||""), esc(k.note||""))); });
+  (last.stopped||[]).forEach(function(s){ h.push(janRow("warn", s.unit, "stopped", esc(s.was||""))); });
+  (last.back||[]).forEach(function(s){ h.push(janRow("ok", s.unit, "back", "")); });
+  (last.extra||[]).forEach(function(u){ h.push(janRow("warn", u, "also came up (not in the snapshot)", "")); });
+  (last.cron_still_scheduled||[]).forEach(function(c){ h.push(janRow("", "cron", esc(c), "not a service: still scheduled")); });
+  $("powerBody").innerHTML=h.join("")||'<div class="jnote">nothing to list</div>';
+}
+/* SECURE ON A CAMERA THAT CANNOT TURN (round 17, 2026-10-13; the User on .101's fixed camera): presence's lamp info
+   carries secure_offer {ok, why, about} (modules/presence fixed_cam.secure_offer). Not offered: the key greys with the
+   reason in its tip and beside it, and a click sends nothing - the first one in this browser says what Secure is and
+   why it needs a camera that can turn to the door, later ones the reason. No offer (an older presence, the switch
+   RAIL_FIXED_CAM_SECURE=0): the key as before. */
+var SECURE_NA=null;
+/* ONE TOGGLE (round 17 follow-ups, the User 2026-10-13): Security is one setting - Off, ID-only, On, and on a camera
+   that turns Secure and Double Secure above On (lib/crissa_home). /v1/house carries it (`security`): its positions are
+   keys here, the current one marked; a choice goes to POST /v1/security (the Crissa menu's own action). On a camera that
+   does not turn presence says `hide`: the Secure key is not drawn at all, the toggle stands in its place. On a camera
+   that turns the Secure key stays, a view of the same toggle (presence writes its every edge back). While Security is
+   On or above (`lock`), every key but a stop needs his face: the page says the ask first (SEC_ASK below). */
+var SEC=null;
+function paintSecurity(h){
+  var box=$("bSecurity"); if(!box) return;
+  SEC=(h && h.security) || null;
+  if(!SEC || !SEC.modes){ box.hidden=true; return; }
+  box.hidden=false; box.textContent="";
+  /* ONE KEY THAT CYCLES (round 26, the User 2026-10-16: "One cycles so that should list mode we are in"): it says the
+     mode it is in; a press moves to the next one up the ladder (Off, ID-only, On, then Secure and Double Secure where
+     the camera turns), and from the top back to Off */
+  var LADDER=["off","id_only","on","secure","double_secure"];
+  var have=SEC.modes.map(function(x){ return x.mode; });
+  var cyc=LADDER.filter(function(x){ return have.indexOf(x)>=0; });
+  var cur=SEC.modes.filter(function(x){ return x.on; })[0]||SEC.modes[0];
+  var nm=cyc[(cyc.indexOf(cur.mode)+1)%cyc.length];
+  [SEC.modes.filter(function(x){ return x.mode===nm; })[0]].forEach(function(m){
+    var k=document.createElement("button"); k.type="button"; k.className="key";
+    k.innerHTML=esc(String(cur.label||cur.mode))+'<span class="sv">next: '+esc(String(m.label||m.mode))+'</span>';
+    k.title="Now: "+String(cur.label||cur.mode)+". "+String(cur.about||"")+"\nPress for "+String(m.label||m.mode)+": "+String(m.about||"");
+    k.id="bSecCycle";
+    k.addEventListener("click", function(e){
+      e.stopPropagation();
+      if(m.on) return;
+      k.classList.add("busy");
+      var body={mode:m.mode};
+      if(m.password){ var pw=window.prompt("Double Secure: this computer's login password (never stored)"); if(!pw) return; body.password=pw; pw=null; }
+      if(m.face && SEC.ask) toast(SEC.ask);
+      fetch("/v1/security",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ toast(d.note||d.error||(d.ok?"done":"failed"), !d.ok); setTimeout(paint, 600); })
+        .catch(function(){ toast("the panel did not answer", true); });
+      body=null;
+    });
+    box.appendChild(k);
+  });
+  if(SEC.note){ var n=document.createElement("span"); n.className="tip"; n.textContent=String(SEC.note); box.appendChild(n); }
+}
+/* the ask before a key that needs his face (the server runs the face-match sequence; a stop never asks) */
+function secOpenKey(url, body){
+  var b={}; try{ b=JSON.parse(body||"{}")||{}; }catch(e){}
+  if(/\/v1\/(screen|security)$/.test(url)) return true;
+  if(/\/v1\/mic$/.test(url)) return !b.on;
+  if(/\/v1\/(wall|agent)$/.test(url)) return /_close$/.test(String(b.action||""));
+  if(/\/v1\/action$/.test(url)) return /^(stop|os_off|house_off|mark_off|visit_click|visit_hold)$/.test(String(b.action||""));
+  return false;
+}
+(function(){
+  var f=window.fetch;
+  window.fetch=function(u, o){
+    try{ if(SEC && SEC.lock && o && String(o.method||"").toUpperCase()==="POST" && !secOpenKey(String(u), o.body)) toast(SEC.ask||"Look at the camera for a moment."); }catch(e){}
+    return f.apply(this, arguments);
+  };
+})();
+function paintSecure(h){
+  paintSecurity(h);
+  var b=$("bSecure"), v=$("vSecure");
+  if(!b || !v) return;
+  if(!h || !h.visit_lamp){ b.textContent="Secure"; v.textContent="—"; return; }
+  var lamp=String(h.visit_lamp).toLowerCase();
+  var info=h.visit_lamp_info||{};
+  var word=lamp==="sage"?"Secure":"not Secure";
+  if(lamp==="sage" && info.hold===true) word="Secure · held";
+  var so=info.secure_offer;
+  var hide=!!(so && so.hide && lamp!=="sage");
+  b.hidden=hide; v.hidden=hide;                     /* one toggle: a camera that does not turn draws no Secure key */
+  if(hide){ SECURE_NA=so; return; }
+  SECURE_NA=(so && so.ok===false && lamp!=="sage") ? so : null;
+  if(SECURE_NA){
+    b.textContent="Secure"; b.setAttribute("aria-disabled","true"); b.title=String(SECURE_NA.why||"");
+    v.textContent="off · "+String(SECURE_NA.why||""); return;
+  }
+  b.removeAttribute("aria-disabled");
+  b.title="Click turns Secure on or off. A second click within a moment asks for a password and holds it.";
+  b.textContent=word;
+  v.textContent=word;
+}
+function secureNote(na){
+  var seen=false;
+  try{ seen=!!localStorage.getItem("crissa.secureNote"); }catch(e){}
+  if(!seen){
+    try{ localStorage.setItem("crissa.secureNote", String(Date.now())); }catch(e){}
+    window.alert(String(na.about||na.why||"Secure needs a camera that can turn to the door."));
+    return;
+  }
+  toast(String(na.why||"Secure needs a camera that can turn to the door."), true);
+}
+/* THE PAGE KNOWS WHEN ITS SERVER IS GONE (round 16, .101 00:57: All OS Off from the Crissa menu stops this panel too, and
+   its open page froze all green, "states read 00:50:36"): a services read that fails twice in a row (the second try a
+   second later, each with its own 2.5 s limit) greys every tile and says plainly that the Control Panel stopped; the
+   page keeps asking, and the first answer brings it back as it was. */
+var GONE={misses:0, on:false, retry:null, hold:0};
+function jTimed(url, ms){
+  if(typeof AbortController==="undefined") return j(url);
+  var c=new AbortController(), t=setTimeout(function(){ c.abort(); }, ms||2500);
+  return fetch(url,{cache:"no-store", signal:c.signal}).then(function(r){ clearTimeout(t); return r.json(); },
+    function(e){ clearTimeout(t); throw e; });
+}
+function paintGone(on, going){
+  GONE.on=on; document.body.classList.toggle("gone", on);
+  if(on && going) GONE.hold=Date.now()+20000;   /* round 20: the server answers a little longer while units stop */
+  if(!on) return;
+  var lampEl=$("masterLamp"); lampEl.classList.remove("warn","bad"); lampEl.classList.add("off");
+  $("masterWord").textContent="Control Panel stopped (All OS Off)";
+  $("svcFleet").textContent=going
+    ? "All OS Off: every service is stopping, this Control Panel with them, and this window closes with her. Start her again from her dock icon."
+    : "this page has lost its server: Crissa and her Control Panel are off. Start her again from her dock icon; this page comes back by itself.";
+}
+function paint(){
+  jTimed("/v1/services", 2500).then(function(d){
+    if(GONE.on && Date.now()<GONE.hold) return;   /* round 20: All OS Off is under way - stay "stopped" */
+    GONE.misses=0; if(GONE.on){ paintGone(false); $("masterLamp").classList.remove("off"); regPoll(false); powerPoll(); }
+    paintServices(d);
+  }).catch(function(){
+    GONE.misses+=1;
+    if(GONE.misses>=2){ paintGone(true); return; }
+    $("masterWord").textContent="No answer";
+    clearTimeout(GONE.retry); GONE.retry=setTimeout(paint, 1000);       /* once more, a second later */
+  });
+  j("/v1/house").then(paintSecure).catch(function(){});
+}
+(function(){
+  var b=$("bSecure");
+  if(!b) return;
+  var last=0;
+  b.addEventListener("click", function(e){
+    e.stopPropagation();
+    if(SECURE_NA){ secureNote(SECURE_NA); return; }          /* round 17: no Secure on this camera */
+    var now=Date.now(), gap=now-last; last=now;
+    if(gap>0 && gap<450){
+      var pw=window.prompt("Hold Secure: account password (never stored)");
+      if(!pw) return;
+      act({action:"visit_hold", payload:{op:"hold", password:pw}});
+      pw=null;
+      return;
+    }
+    act({action:"visit_click"});
+  });
+})();
+function regPoll(force){ j("/v1/registry"+(force?"?refresh=1":"")).then(paintRegistry).catch(function(){}); }
+function powerPoll(){ j("/v1/os_power").then(paintPower).catch(function(){}); }
+
+document.addEventListener("click", function(e){
+  var t=e.target.closest&&e.target.closest(".unit");
+  if(t && t.classList.contains("ph")) return;                          /* a placeholder has no key */
+  if(t && t.classList.contains("voice")){                               /* a voice tile with a log opens it */
+    var vid=t.getAttribute("data-voice"); if(vid==="audio8"||vid==="warm") openVoiceLog(vid); return; }
+  if(t && !t.getAttribute("data-unit")){                                /* a link tile opens its page */
+    if(t.getAttribute("data-href")) window.open(t.getAttribute("data-href"), "_blank", "noopener");
+    return; }
+  if(t){ openJournal(t.getAttribute("data-unit"), t.getAttribute("data-id")); return; }
+  var k=e.target.closest&&e.target.closest("[data-act]");
+  if(k){
+    if(k.getAttribute("aria-disabled")==="true"){ toast(k.title||"not now", true); return; }
+    var a=k.getAttribute("data-act");
+    if(a==="os_off" && !confirm(SWITCH+": stop every service except this Control Panel?")) return;
+    act({action:a}).then(function(){ setTimeout(powerPoll, 1500); });
+  }
+});
+$("svcFleet").onclick=function(){ openJournal("all"); };
+$("bEarlier").onclick=readEarlier;
+$("bFollow").onclick=function(){ tape.paged=false; tape.lines=[]; $("bFollow").hidden=true; refreshTape(); };
+$("bScript").onclick=function(){ if(svcOpen) openScript(svcOpen); };
+$("bOpen").onclick=function(){ var h=svcOpen&&hrefOf(svcOpen); if(h) window.open(h, "_blank", "noopener"); };
+$("bRun").onclick=function(){ var t=openTile(); if(!t||!t.id) return;
+  act({action:"run_now", id:t.id}).then(function(){ setTimeout(paint, 400); }); };
+$("bOff").onclick=function(){ var t=openTile(); if(!t||!t.id) return;
+  act({action:t.off_now?"mark_on":"mark_off", id:t.id}).then(function(){ setTimeout(paint, 400); }); };
+["Restart","Start","Stop"].forEach(function(v){
+  $("b"+v).onclick=function(){ if(!svcOpen) return;
+    var word=(v==="Restart" && /\.timer$/.test(svcOpen))?"Run the service of":v;
+    if(v!=="Start" && !confirm(word+" "+svcOpen.replace(/^proc:/,"")+"?")) return;
+    act({action:v.toLowerCase(), unit:svcOpen}); };
+});
+$("bRefresh").onclick=function(){ regPoll(true); setTimeout(paint, 800); };
+document.addEventListener("keydown", function(e){
+  if(e.key!=="Enter" && e.key!==" ") return;
+  var t=document.activeElement;
+  if(t && t.classList && t.classList.contains("unit") && t.getAttribute("data-unit")){ e.preventDefault(); openJournal(t.getAttribute("data-unit")); }
+});
+j("/v1/caps").then(function(c){ CAPS=c||{}; SWITCH=CAPS.switch_name||SWITCH; ON=CAPS.on_name||ON; paint(); }).catch(paint);
+/* A HIDDEN PANEL ASKS NOTHING (round 13, 2026-10-12, .101): a background tab's timers fire once a minute, all at once,
+   and each poll asked systemd about every unit - five unit-file listings at :21 of every minute. The polls skip while
+   the tab is hidden and run at once when it is shown again; the Off/On card is polled every 30 s (the server keeps its
+   plan 60 s; a press re-reads both). */
+function whenShown(f){ return function(){ if(!document.hidden) f(); }; }
+setInterval(whenShown(paint), 3000); regPoll(false); setInterval(whenShown(function(){ regPoll(false); }), 30000);
+powerPoll(); setInterval(whenShown(powerPoll), 30000);
+document.addEventListener("visibilitychange", function(){ if(!document.hidden){ paint(); regPoll(false); powerPoll(); } });
+/* Dev mode. The buttons talk to the loopback helper. A down helper leaves the lap alone.
+   Dev mode off hides the tuning demo. */
+var DEMO_HOLD="__VO_DEMO__";   /* the server writes this install's demo helper in at serve time */
+function markScript(kind){
+  var el=$("dScript");
+  if(!el) return;
+  el.className = kind || "";
+}
+function paintScript(d){
+  var gate=$("bDevMode"), demo=$("bDemo"), b=$("bScriptHold"), dev=$("bScriptDev"), v=$("vScript");
+  var drawer=$("scriptDrawer");
+  if(!gate || !demo || !b || !dev || !v || !drawer) return;
+  if(!d || d.ok===false){
+    markScript("warn");
+    v.textContent = "helper down";
+    v.title = "Dev mode needs the helper on " + DEMO_HOLD.replace(/^https?:\/\//, "") + ".";
+    drawer.hidden = true;
+    return;
+  }
+  var on=!!d.mode;
+  gate.innerHTML='Dev mode<span class="sv">'+(on?"on":"off")+'</span>';   /* round 26: a switch */
+  gate.classList.toggle("lit", on);
+  gate.setAttribute("aria-pressed", on ? "true" : "false");
+  drawer.hidden = !on;
+  b.classList.toggle("lit", !!d.hold);
+  b.setAttribute("aria-pressed", d.hold ? "true" : "false");
+  b.textContent = d.hold ? "Your turn" : "Hold";
+  dev.classList.toggle("lit", !!d.dev);
+  dev.setAttribute("aria-pressed", d.dev ? "true" : "false");
+  demo.classList.toggle("lit", !!d.demo);
+  demo.setAttribute("aria-pressed", d.demo ? "true" : "false");
+  demo.textContent = d.stopping ? "Stopping" : (d.demo ? "Demo on" : "Demo");
+  if(!on){
+    markScript("");
+    v.textContent = "off";
+    v.title = "Dev mode is off. The tuning demo stays hidden and the lap stays off.";
+    window._linesShown = false;
+    return;
+  }
+  if(!window._linesShown && typeof loadLines==="function"){
+    window._linesShown = true;
+    loadLines();
+  }
+  var fails=d.fails||[];
+  var tail="";
+  if(fails.length){
+    var last=fails[0]||{};
+    tail=" · fail "+(last.beat||"beat")+(last.why?(": "+String(last.why).slice(0,48)):"");
+    v.title=fails.map(function(f){return (f.beat||"?")+": "+(f.why||"fail");}).join("\n");
+  } else if(d.note){
+    v.title=String(d.note);
+  } else {
+    v.title="No fail rows in the latest ledger.";
+  }
+  if(d.stopping){
+    markScript("warn");
+    v.textContent = "stopping at the next beat" + tail;
+  } else if(d.demo && d.hold){
+    markScript("warn");
+    v.textContent = "demo on · held for you" + tail;
+  } else if(d.demo){
+    markScript("ok");
+    v.textContent = "demo on" + tail;
+  } else if(d.note){
+    markScript("bad");
+    v.textContent = String(d.note).slice(0, 72);
+  } else {
+    markScript(fails.length ? "bad" : "");
+    v.textContent = "demo off" + tail;
+  }
+}
+function pollScript(){
+  try{
+    fetch(DEMO_HOLD+"/v1/demo-hold", {cache:"no-store"})
+      .then(function(r){return r.json();})
+      .then(paintScript)
+      .catch(function(){ paintScript(null); });
+  }catch(e){ paintScript(null); }
+}
+function setScript(body){
+  fetch(DEMO_HOLD+"/v1/demo-hold", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(body)
+  }).then(function(r){return r.json();}).then(function(d){
+    paintScript(d);
+    if(body.mode===true) toast("Dev mode on. The demo stays off until you start it.");
+    else if(body.mode===false) toast("Dev mode off. The scripted lap stays off.");
+    else if(body.demo===true) toast("Demo on. Your recorded lines play on the speakers. A question with no recording is skipped.");
+    else if(body.demo===false) toast("Demo off. It stops at the next beat.");
+    else if(body.hold===true) toast("Held. Speak when you want. Listening stays as it is.");
+    else if(body.hold===false) toast("Demo continues");
+    else if(body.dev===true) toast("Extra beats on for the next lap. A fail stays on the list.");
+    else if(body.dev===false) toast("Extra beats off");
+  }).catch(function(){ toast("Dev mode helper is not up", true); paintScript(null); });
+}
+$("bDevMode").addEventListener("click", function(e){
+  e.preventDefault(); e.stopPropagation();
+  var on=$("bDevMode").getAttribute("aria-pressed")==="true";
+  setScript({mode: !on});
+});
+$("bDemo").addEventListener("click", function(e){
+  e.preventDefault(); e.stopPropagation();
+  var on=$("bDemo").getAttribute("aria-pressed")==="true";
+  var stopping=$("bDemo").textContent==="Stopping";
+  setScript({demo: !(on || stopping)});
+});
+$("bScriptHold").addEventListener("click", function(e){
+  e.preventDefault(); e.stopPropagation();
+  var on=$("bScriptHold").getAttribute("aria-pressed")==="true";
+  setScript({hold: !on});
+});
+$("bScriptDev").addEventListener("click", function(e){
+  e.preventDefault(); e.stopPropagation();
+  var on=$("bScriptDev").getAttribute("aria-pressed")==="true";
+  setScript({dev: !on});
+});
+pollScript(); setInterval(pollScript, 1500);
+/* Record your lines. The mic stays in this page. The wav is stored by the helper. */
+var recState=null;
+function rmsDb(chunk){
+  var s=0;
+  for(var i=0;i<chunk.length;i++) s+=chunk[i]*chunk[i];
+  var ms=s/Math.max(1,chunk.length);
+  if(ms<=1e-12) return -90;
+  return 10*Math.log10(ms);
+}
+function downTo16k(samples, rate){
+  if(rate===16000) return samples;
+  var n=Math.max(1, Math.floor(samples.length*16000/rate));
+  var out=new Float32Array(n);
+  for(var i=0;i<n;i++){
+    var x=i*rate/16000, j=Math.floor(x), f=x-j;
+    var a=samples[Math.min(j, samples.length-1)];
+    var b=samples[Math.min(j+1, samples.length-1)];
+    out[i]=a+(b-a)*f;
+  }
+  return out;
+}
+function encodeWav(samples, rate){
+  var n=samples.length, buf=new ArrayBuffer(44+n*2), v=new DataView(buf);
+  function str(o,s){ for(var i=0;i<s.length;i++) v.setUint8(o+i, s.charCodeAt(i)); }
+  str(0,"RIFF"); v.setUint32(4, 36+n*2, true); str(8,"WAVE");
+  str(12,"fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, rate, true); v.setUint32(28, rate*2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+  str(36,"data"); v.setUint32(40, n*2, true);
+  var o=44;
+  for(var i=0;i<n;i++){
+    var x=Math.max(-1, Math.min(1, samples[i]));
+    v.setInt16(o, x<0 ? x*0x8000 : x*0x7FFF, true);
+    o+=2;
+  }
+  return new Blob([buf], {type:"audio/wav"});
+}
+function concatFloats(chunks){
+  var n=0;
+  chunks.forEach(function(c){ n+=c.length; });
+  var out=new Float32Array(n), o=0;
+  chunks.forEach(function(c){ out.set(c, o); o+=c.length; });
+  return out;
+}
+function lineLevel(id, text){
+  var lv=document.querySelector('.lineRow[data-line="'+id+'"] .lv');
+  if(lv) lv.textContent=text;
+}
+function paintLines(d){
+  var box=$("lineList");
+  if(!box) return;
+  if(!d || !d.lines){ box.textContent="No questions."; return; }
+  var h="";
+  d.lines.forEach(function(row){
+    var id=String(row.id||"");
+    var rec=!!row.recorded;
+    var level=rec && row.level_db!=null ? ("saved "+row.level_db+" dB") : "no recording — skipped";
+    h+='<div class="lineRow" data-line="'+esc(id)+'">'+
+      '<div class="q">'+esc(row.say||"")+'</div>'+
+      '<div class="row">'+
+      '<button type="button" class="key small" data-rec="'+esc(id)+'">'+(rec?"Re-record":"Record")+'</button>'+
+      '<button type="button" class="key small" data-play="'+esc(id)+'"'+(rec?"":" disabled")+'>Play</button>'+
+      '<span class="lv">'+esc(level)+'</span></div></div>';
+  });
+  box.innerHTML=h;
+}
+function loadLines(){
+  if(recState) return;
+  fetch(DEMO_HOLD+"/v1/demo-lines", {cache:"no-store"})
+    .then(function(r){ return r.json(); })
+    .then(paintLines)
+    .catch(function(){ var box=$("lineList"); if(box) box.textContent="Record helper is not up."; });
+}
+function stopRec(upload){
+  if(!recState) return;
+  var st=recState; recState=null;
+  try{ st.node.disconnect(); }catch(e){}
+  try{ st.mute.disconnect(); }catch(e){}
+  try{ st.stream.getTracks().forEach(function(t){ t.stop(); }); }catch(e){}
+  try{ st.ctx.close(); }catch(e){}
+  if(!upload){ loadLines(); return; }
+  var samples=downTo16k(concatFloats(st.chunks), st.rate);
+  var wav=encodeWav(samples, 16000);
+  fetch(DEMO_HOLD+"/v1/demo-lines", {
+    method:"POST",
+    headers:{"Content-Type":"audio/wav", "X-Demo-Line": st.id},
+    body: wav
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if(!d || d.ok!==true){
+      var why=d && d.error==="too quiet" ? "Too quiet. Record that question again." : ((d && d.error) || "Not saved");
+      toast(why, true);
+    }
+    loadLines();
+  }).catch(function(){ toast("Record helper is not up", true); loadLines(); });
+}
+function startRec(id){
+  if(recState && recState.id===id){ stopRec(true); return; }
+  if(recState) stopRec(false);
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    toast("This browser has no microphone", true);
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({audio:{channelCount:1, echoCancellation:true}})
+    .then(function(stream){
+      var ctx=new AudioContext();
+      var src=ctx.createMediaStreamSource(stream);
+      var node=ctx.createScriptProcessor(4096, 1, 1);
+      var mute=ctx.createGain();
+      mute.gain.value=0;
+      var chunks=[];
+      recState={id:id, stream:stream, ctx:ctx, node:node, mute:mute, chunks:chunks, rate:ctx.sampleRate, t0:Date.now()};
+      node.onaudioprocess=function(ev){
+        if(!recState || recState.id!==id) return;
+        var ch=ev.inputBuffer.getChannelData(0);
+        chunks.push(new Float32Array(ch));
+        lineLevel(id, "level "+rmsDb(ch).toFixed(0)+" dB");
+        if(Date.now()-recState.t0>20000) stopRec(true);
+      };
+      src.connect(node); node.connect(mute); mute.connect(ctx.destination);
+      var btn=document.querySelector('[data-rec="'+id+'"]');
+      if(btn) btn.textContent="Stop";
+    }).catch(function(){ toast("Microphone was not allowed", true); });
+}
+function playLine(id){
+  fetch(DEMO_HOLD+"/v1/demo-lines/"+encodeURIComponent(id), {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error("none"); return r.blob(); })
+    .then(function(b){ var a=new Audio(URL.createObjectURL(b)); return a.play(); })
+    .catch(function(){ toast("No recording for that question", true); });
+}
+/* THE MIC KEY (the User 2026-10-10): the feed's panel Mic key, here - the ear's voice master lock through
+   GET/POST /v1/mic. Off, she does not hear anyone. An ear that does not answer is said, never shown as on. */
+var MIC={on:false, ear:false};
+function paintMic(m){
+  MIC=m||MIC;
+  var b=$("bVoice"); if(!b) return;
+  b.innerHTML='Mic<span class="sv">'+(!MIC.ear?"no ear":(MIC.on?"on":"off"))+'</span>';   /* round 26: a switch */
+  b.classList.toggle("lit", !!MIC.on);
+  b.classList.remove("off");
+  b.setAttribute("aria-pressed", MIC.on?"true":"false");
+  b.setAttribute("title", MIC.on ? "Mic on — click to turn off" : "Mic off — click to turn on");
+  var d=$("dMic"); if(d) d.className = MIC.ear ? (MIC.on?"ok":"warn") : "bad";
+  var v=$("vMic"); if(v) v.textContent = !MIC.ear ? "the ear is not answering" : (MIC.on ? "listening" : "off");
+  var n=$("micNote"); if(n) n.textContent = "The Mic key is her microphone: " + (!MIC.ear ? "the ear is not answering, so she does not hear you."
+    : (MIC.on ? "on, she hears you." : "off, she does not hear you.")) + " The Voices row carries the announcer and the voice log.";
+}
+function micPoll(){ j("/v1/mic").then(paintMic).catch(function(){ paintMic({on:false, ear:false}); }); }
+if($("bVoice")) $("bVoice").addEventListener("click", function(){
+  var want=!MIC.on;
+  fetch("/v1/mic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({on:want})})
+    .then(function(r){ return r.json(); })
+    .then(function(r){ if(r && r.ok){ paintMic({on:!!r.on, ear:true}); toast(want?"Mic on":"Mic off"); }
+                       else { toast((r&&r.error)||"the Mic key did not take", true); micPoll(); } })
+    .catch(function(){ toast("the panel is not answering", true); });
+});
+micPoll(); setInterval(micPoll, 3000);
+/* ECHO CANCEL (round 14): the ear's echo canceller, the house's way (module-echo-cancel, webrtc) between her microphone
+   and her speaker. The key is the setting: lit = on by itself where needed (auto), dark = off. Changing it restarts her ear. */
+var AEC={setting:"auto", on:false};
+function paintAec(a){
+  AEC=a||AEC;
+  var b=$("bAec"); if(!b) return;
+  var lit = AEC.setting!=="off";
+  b.innerHTML='Echo cancel<span class="sv">'+(AEC.on?"on":(lit?"waiting":"off"))+'</span>';   /* round 26: a switch */
+  b.classList.toggle("lit", !!AEC.on); b.classList.remove("off");
+  b.setAttribute("aria-pressed", lit?"true":"false");
+  var d=$("dAec"); if(d) d.className = AEC.on ? "ok" : (lit ? "warn" : "");
+  var v=$("vAec"); if(v) v.textContent = AEC.on ? "echo cancel on" : (lit ? (AEC.why || "echo cancel waiting") : "echo cancel off");
+  b.setAttribute("title", AEC.on ? "On: her voice is taken out of her microphone. Click to turn it off."
+    : (lit ? ("Not running: " + (AEC.why || "her ear has not started it") + ". Click to turn it off.")
+           : "Off: her microphone hears her speakers. Click to turn it on."));
+}
+function aecPoll(){ j("/v1/aec").then(paintAec).catch(function(){}); }
+var _bAec=$("bAec");
+if(_bAec) _bAec.addEventListener("click", function(){
+  var want = AEC.setting==="off" ? "auto" : "off";
+  fetch("/v1/aec",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({setting:want})})
+    .then(function(r){return r.json();}).then(function(r){
+      if(r && r.ok){ paintAec(r); toast(want==="off" ? "Echo cancel off. Her ear restarts." : "Echo cancel on. Her ear restarts."); }
+      else toast((r&&r.error)||"Echo cancel did not change", true);
+    }).catch(function(){ toast("The Control Panel did not answer", true); });
+});
+aecPoll(); setInterval(aecPoll, 5000);
+var lineList=$("lineList");
+if(lineList) lineList.addEventListener("click", function(e){
+  var t=e.target;
+  if(!t || !t.getAttribute) return;
+  var rec=t.getAttribute("data-rec");
+  var play=t.getAttribute("data-play");
+  if(rec){ e.preventDefault(); startRec(rec); }
+  else if(play){ e.preventDefault(); playLine(play); }
+});
+})();
+</script>
+</body>
+</html>

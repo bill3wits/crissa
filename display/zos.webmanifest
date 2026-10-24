@@ -1,0 +1,12 @@
+{
+  "name": "Crissa",
+  "short_name": "ZOS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10131A",
+  "theme_color": "#D9A05B",
+  "icons": [
+    { "src": "/zos.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/zos.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

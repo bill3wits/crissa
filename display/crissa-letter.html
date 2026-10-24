@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crissa's sheet</title>
+<!--
+  THE SHEET (2026-10-16, lib/crissa_display): the document she shows, as a letter, in an 8.5 x 11 window of her own on
+  the right of the screen. It reads the card beside her (GET /v1/screen) every 1.5 s; when the card comes down, the
+  window closes itself. A web address never opens here: the window goes to the address instead.
+-->
+<style>
+:root { --paper: #fbfaf6; --ink: #1d1c1a; --muted: #6d6a62; --line: #e4e1d8; }
+html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink); }
+body { font: 17px/1.55 Georgia, "Iowan Old Style", "Times New Roman", serif; }
+main { box-sizing: border-box; min-height: 100%; padding: 7% 9% 9%; }
+h1 { font-size: 1.45em; line-height: 1.25; margin: 0 0 .9em; padding-bottom: .5em; border-bottom: 1px solid var(--line); }
+#t { white-space: pre-wrap; overflow-wrap: anywhere; }
+#gone { color: var(--muted); font: 15px/1.4 system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<main><h1 id="h"></h1><div id="t"></div><p id="gone" hidden>Nothing to show.</p></main>
+<script>
+let seen = null;
+async function tick() {
+  let c = null;
+  try { c = (await (await fetch("/v1/screen", { cache: "no-store" })).json()).screen || {}; } catch (e) { return; }
+  if (!c.up || !(c.doc || c.notes)) {
+    if (seen !== null) { window.close(); }
+    document.getElementById("gone").hidden = false;
+    return;
+  }
+  const key = (c.at || 0) + "|" + (c.doc_title || c.title || "");
+  if (key === seen) return;
+  seen = key;
+  document.getElementById("gone").hidden = true;
+  const title = c.doc_title || c.notes_title || c.title || "";
+  document.getElementById("h").textContent = title;
+  document.getElementById("h").hidden = !title;
+  document.title = title || "Crissa's sheet";
+  document.getElementById("t").textContent = c.doc || c.notes || "";
+  window.scrollTo(0, 0);
+}
+tick();
+setInterval(tick, 1500);
+</script>
+</body>
+</html>

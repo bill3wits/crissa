@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Document</title>
+<style>
+/* The document surface (Claude 2026-08-13). Copied 2026-10-06 for the Control Panel
+   (scripts/crissa-panel-server.py serves it at /doc); the original sheet stays as it is.
+
+   This is NOT part of the wall. scripts/crissa-doc-window.sh opens it in its own sheet-sized
+   window on top, because the right side of the room — the dial, the seat
+   markers, where the speaker is — is the interesting stuff and nothing may
+   cover it. When the doc clears, this window closes itself and the wall is
+   exactly as it was.
+
+   Same palette as the wall so it reads as the same house, not a web page that
+   wandered in. Letter proportions: an 8 1/2 sheet. */
+:root{
+  --ground:#10131A; --ground-2:#151922; --hair:#242A37;
+  --ink:#E9E5DB; --ink-2:#8B93A6; --ink-3:#4A5163;
+  --ember:#D9A05B; --ember-2:#F0C489; --ember-deep:#7A5223;
+  --mono: ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --serif: ui-serif,Georgia,"Iowan Old Style","Times New Roman",serif;
+  --u: calc(100vw / 46);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--mono);font-size:var(--u);
+  overflow:hidden;-webkit-font-smoothing:antialiased;
+}
+.sheet{
+  height:100%;display:flex;flex-direction:column;
+  padding:2.2em 2.4em 1.6em;
+  background:
+    linear-gradient(180deg,rgba(217,160,91,.045) 0%,rgba(217,160,91,0) 34%),
+    var(--ground);
+}
+.head{flex:0 0 auto;border-bottom:1px solid var(--ember-deep);padding-bottom:.9em}
+.kicker{font-size:.62em;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)}
+.title{
+  font-family:var(--serif);font-size:1.7em;line-height:1.18;margin-top:.34em;
+  text-wrap:balance;color:var(--ink);
+}
+.body{
+  flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:auto;margin-top:1.3em;
+  scrollbar-width:thin;scrollbar-color:var(--ink-3) transparent;
+  font-size:.78em;line-height:1.62;
+}
+.body h1,.body h2{
+  font-family:var(--serif);font-weight:400;color:var(--ember-2);
+  margin:1.5em 0 .5em;line-height:1.25;
+}
+.body h1{font-size:1.34em}
+.body h2{font-size:1.13em}
+.body h1:first-child,.body h2:first-child{margin-top:0}
+.body p{margin:0 0 .95em}
+.body ul{margin:0 0 .95em;padding-left:1.3em;list-style:none}
+.body li{position:relative;margin:0 0 .34em}
+.body li::before{
+  content:"—";position:absolute;left:-1.3em;color:var(--ember-deep);
+}
+.body hr{border:0;border-top:1px solid var(--hair);margin:1.4em 0}
+.body code{
+  font-family:var(--mono);font-size:.92em;color:var(--ember-2);
+  background:var(--ground-2);border:1px solid var(--hair);
+  border-radius:2px;padding:.06em .34em;
+}
+.body strong{color:var(--ember-2);font-weight:600}
+.body em{color:var(--ink);font-style:italic}
+.foot{
+  flex:0 0 auto;margin-top:1em;padding-top:.8em;border-top:1px solid var(--hair);
+  font-size:.58em;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:1em;
+}
+.empty{
+  height:100%;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-3);font-size:.7em;letter-spacing:.2em;text-transform:uppercase;
+}
+/* Hover × — same muscle as the wall letter sheet. TTL and session-end
+   should already close this; the X is the backstop if it gets left. */
+.doc-close{
+  position:fixed;top:.55em;right:.55em;z-index:3;
+  width:1.7em;height:1.7em;padding:0;line-height:1.55;
+  font-family:var(--mono);font-size:1.05em;font-weight:400;
+  border-radius:2px;cursor:pointer;
+  background:rgba(16,19,26,.55);border:1px solid var(--hair);color:var(--ink-2);
+  opacity:0;pointer-events:none;
+  transition:opacity .32s ease,border-color .2s ease,color .2s ease;
+}
+body.chrome .doc-close, body:hover .doc-close{
+  opacity:1;pointer-events:auto;
+}
+.doc-close:hover,.doc-close:focus-visible{
+  border-color:var(--ember);color:var(--ember-2);outline:none;
+}
+</style>
+</head>
+<body>
+<button type="button" class="doc-close" id="docClose" title="Put this document away" aria-label="Close document">×</button>
+<style>
+/* The mug sits above the text, centred, with the sheet's own paper feel.
+   Capped by viewport height so a tall crop cannot push the words off the
+   sheet — the picture is the hook, the words are the point. */
+.mug{display:flex;justify-content:center;margin:0 0 .9em}
+/* WANTED, for 2.2s. Everything here is transition-based so the settle back to
+   the ordinary sheet is the same motion in reverse — no reflow, no second
+   render, and the text never moves under a reader who started reading. */
+.sheet{transition:box-shadow .5s ease}
+.sheet .mug img{transition:max-height .55s cubic-bezier(.2,.8,.2,1),
+                           max-width .55s cubic-bezier(.2,.8,.2,1),
+                           filter .55s ease}
+.sheet.wanted{box-shadow:0 0 0 3px #2b2117, 0 .5em 2em rgba(0,0,0,.5)}
+.sheet.wanted .mug img{max-width:86%;max-height:52vh;filter:grayscale(1) contrast(1.35)}
+.sheet.wanted .title::before{
+  content:"WANTED";
+  display:block;text-align:center;letter-spacing:.42em;
+  font-size:1.5em;line-height:1.1;margin:0 0 .12em;
+  /* the poster word, not a new font payload — the sheet's own face, spaced */
+  font-weight:700;color:#3a2c1d;
+}
+.sheet .title::before{
+  content:"";display:block;overflow:hidden;
+  max-height:0;opacity:0;transition:max-height .45s ease,opacity .45s ease;
+}
+.sheet.wanted .title::before{max-height:2.2em;opacity:1}
+.mug img{
+  max-width:62%;max-height:38vh;object-fit:contain;
+  border:1px solid rgba(0,0,0,.35);border-radius:2px;
+  filter:grayscale(1) contrast(1.12);      /* it is a mug shot, after all */
+  box-shadow:0 .3em 1.1em rgba(0,0,0,.35);
+}
+</style>
+<div class="sheet" id="sheet">
+  <div class="head" id="head">
+    <div class="kicker" id="kicker">Document</div>
+    <div class="title" id="title"></div>
+  </div>
+  <div class="body" id="body"></div>
+  <div class="foot"><span id="footL">Crissa</span><span id="footR"></span></div>
+</div>
+<div class="empty" id="empty" hidden>no document</div>
+
+<script>
+"use strict";
+(function(){
+
+/* Formatting without innerHTML.
+
+   This carries task bodies and tool output — untrusted text — so every node is
+   built and filled with textContent. A markdown-ish subset is plenty for what
+   this surface is for: headings, bullets, rules, bold, code. */
+function inline(parent, text){
+  // **bold**, *emphasis* and `code`, one pass, literal text everywhere else.
+  // Double-star must be tried before single or "**x**" matches as "*" + "*x*".
+  var re=/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|`[^`]+`)/g, last=0, m;
+  while((m=re.exec(text))!==null){
+    if(m.index>last) parent.appendChild(document.createTextNode(text.slice(last,m.index)));
+    var tok=m[0], el;
+    if(tok.charAt(0)==="`"){ el=document.createElement("code"); el.textContent=tok.slice(1,-1); }
+    else if(tok.slice(0,2)==="**"){ el=document.createElement("strong"); el.textContent=tok.slice(2,-2); }
+    else { el=document.createElement("em"); el.textContent=tok.slice(1,-1); }
+    parent.appendChild(el);
+    last=m.index+tok.length;
+  }
+  if(last<text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+}
+
+function mdlite(src){
+  var frag=document.createDocumentFragment();
+  var lines=String(src||"").replace(/\r/g,"").split("\n");
+  var list=null, para=null;
+
+  function endPara(){ if(para){ frag.appendChild(para); para=null; } }
+  function endList(){ if(list){ frag.appendChild(list); list=null; } }
+
+  for(var i=0;i<lines.length;i++){
+    var ln=lines[i], t=ln.trim();
+    if(!t){ endPara(); endList(); continue; }
+    if(/^---+$/.test(t)){
+      endPara(); endList();
+      frag.appendChild(document.createElement("hr")); continue;
+    }
+    var h=/^(#{1,2})\s+(.*)$/.exec(t);
+    if(h){
+      endPara(); endList();
+      var el=document.createElement(h[1].length===1?"h1":"h2");
+      inline(el, h[2]); frag.appendChild(el); continue;
+    }
+    var b=/^[-*+]\s+(.*)$/.exec(t);
+    if(b){
+      endPara();
+      if(!list) list=document.createElement("ul");
+      var li=document.createElement("li"); inline(li, b[1]); list.appendChild(li); continue;
+    }
+    endList();
+    if(!para) para=document.createElement("p");
+    else para.appendChild(document.createTextNode(" "));
+    inline(para, t);
+  }
+  endPara(); endList();
+  return frag;
+}
+
+var lastRev=null, missCount=0;
+
+function paint(d){
+  var has = !!(d && d.doc);
+  document.getElementById("sheet").hidden = !has;
+  document.getElementById("empty").hidden = has;
+  if(!has) return;
+  if(d.rev===lastRev) return;          // nothing new; don't rebuild mid-scroll
+  lastRev=d.rev;
+  document.getElementById("title").textContent = d.doc_title || "Document";
+  var body=document.getElementById("body");
+  body.textContent="";
+  /* One picture, and it arrives as a TAG rather than markup. This page builds
+     everything with textContent on purpose (see mdlite above) — an <img> made
+     here through createElement keeps that rule: nothing from the wire is ever
+     parsed as HTML, and the src is a fixed same-origin route that only ever
+     resolves to one incident's face.jpg. */
+  /* The gag: WANTED for a beat, then it settles into the log item it always
+     was. Opt-in from the Control Panel, and the flash is the ONLY thing the
+     toggle changes — the picture, the record and the card are identical
+     either way. A joke may not alter what the house keeps. */
+  var sheet=document.getElementById("sheet");
+  sheet.classList.remove("wanted");
+  clearTimeout(window.__wantedT);
+  if(d.doc_mug && d.doc_gag){
+    sheet.classList.add("wanted");
+    window.__wantedT = setTimeout(function(){
+      sheet.classList.remove("wanted");
+    }, 2200);
+  }
+  if(d.doc_mug){
+    var fig=document.createElement("div");
+    fig.className="mug";
+    var im=document.createElement("img");
+    im.alt="";                       // decorative; the text carries the meaning
+    im.src="/mug/"+encodeURIComponent(d.doc_mug);
+    im.onerror=function(){ fig.remove(); };   // no picture, no empty frame
+    fig.appendChild(im);
+    body.appendChild(fig);
+  }
+  body.appendChild(mdlite(d.doc));
+  document.getElementById("footR").textContent =
+    new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+}
+
+/* It closes itself. A document that needs a human to dismiss it is exactly the
+   thing that ends up sitting on the glass, which is what started all this. */
+function tick(){
+  fetch("/v1/doc", {cache:"no-store"})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.doc){
+        // Two clean misses, then go. One is enough to be a blip mid-post.
+        if(++missCount>=2){ window.close(); return; }
+      } else { missCount=0; }
+      paint(d);
+    })
+    .catch(function(){ /* server blip: hold what's on the sheet */ });
+}
+tick();
+setInterval(tick, 1500);
+
+function dismiss(){
+  fetch("/v1/screen",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({clear:["doc"]})})
+    .catch(function(){})
+    .then(function(){ window.close(); });
+}
+var chromeTimer=null;
+function chromeShow(){
+  document.body.classList.add("chrome");
+  clearTimeout(chromeTimer);
+  chromeTimer=setTimeout(function(){ document.body.classList.remove("chrome"); }, 4000);
+}
+addEventListener("mousemove", chromeShow, {passive:true});
+document.getElementById("docClose").addEventListener("click", function(e){
+  e.preventDefault(); e.stopPropagation(); dismiss();
+});
+// Esc always gets out, whatever else is going on.
+addEventListener("keydown", function(e){ if(e.key==="Escape") dismiss(); });
+})();
+</script>
+</body>
+</html>

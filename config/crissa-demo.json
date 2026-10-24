@@ -1,0 +1,723 @@
+{
+  "hold_max_s": 90,
+  "home": "listen",
+  "note": "Say beats play the wav recorded for that question. No file, and the clone voice reads the question (DEMO_CLONE_TTS=0 skips it instead). Recordings and the clone cache live in the Crissa data folder. The lap opens on a live reading, then her own work. In SPOKEN announcer lines the adjective is spelled 'lyve' (the User 2026-10-20 listened: 'lyve' reads as the adjective on Pocket and Audio8 both, plain 'live' came out as the verb); the written lower third keeps 'live'.",
+  "opener": "Crissa is lyve. She is an AI. She is reading lyve, and she answers lyve, in her own voice.",
+  "clone": {
+    "voice": "{USER}"
+  },
+  "paths": {
+    "ear_log": "logs/ear.jsonl",
+    "daily": "daily.json"
+  },
+  "beats": [
+    {
+      "id": "melville",
+      "kind": "read",
+      "cue": "listen",
+      "ttl": 0,
+      "lead_add_semis": 4,
+      "notice": "Reading lyve, from Melville.",
+      "after": "That reading was lyve. Next is her own work, and she answers lyve.",
+      "note_title": "Reading live",
+      "note": "Moby-Dick, opening. Her mouth is on this voice, not a rendered track.",
+      "text": "Call me Ishmael. Some years ago, never mind how long precisely, having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen, and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me that it requires a strong moral principle to prevent me from deliberately stepping into the street and methodically knocking people's hats off, then I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship."
+    },
+    {
+      "id": "to-listen",
+      "kind": "home",
+      "cue": "listen",
+      "ttl": 0,
+      "watch_s": 6
+    },
+    {
+      "id": "daily",
+      "kind": "pull",
+      "limit_s": 75,
+      "ask": "Show me the House Daily. show_me what=daily. Then one sentence with the headline.",
+      "say": "Show me the House Daily.",
+      "expect": {
+        "answer": [
+          "daily|house-daily|up|broken|watch|improv|landed|measured"
+        ],
+        "answer_not": [
+          "did not work",
+          "ran out of steps",
+          "nothing changed"
+        ]
+      }
+    },
+    {
+      "id": "what-this-is",
+      "kind": "say",
+      "take": "what-this-is",
+      "limit_s": 40,
+      "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+      "expect": {
+        "answer": [
+          "crissa|wall|voice|avatar|character|desktop"
+        ]
+      }
+    },
+    {
+      "id": "open-and-custom",
+      "kind": "say",
+      "take": "open-and-custom",
+      "limit_s": 40,
+      "say": "Crissa, what's open source here, and what's a custom job?",
+      "expect": {
+        "answer": [
+          "open|custom"
+        ]
+      }
+    },
+    {
+      "id": "two-people",
+      "kind": "say",
+      "take": "two-people",
+      "limit_s": 40,
+      "say": "Crissa, can we take two people at once, or one at a time?",
+      "expect": {
+        "answer": [
+          "two|one|people"
+        ]
+      }
+    },
+    {
+      "id": "before-more-work",
+      "kind": "say",
+      "take": "before-more-work",
+      "limit_s": 40,
+      "say": "Crissa, what are we asking people for before we build more packs?",
+      "expect": {
+        "answer": [
+          "interest|notify|sign|spec|feedback|ask|tell us|before|open"
+        ]
+      }
+    }
+  ],
+  "dev_beats": [
+    {
+      "id": "dev-limits",
+      "kind": "dev",
+      "dev": true,
+      "required": false,
+      "limit_s": 40,
+      "ask": "In one sentence, name one limit of this setup. Do not invent a product.",
+      "expect": {
+        "answer": [
+          "limit|cannot|can't|one|two|not"
+        ]
+      }
+    }
+  ],
+  "sets_doc": "Broadcast beat sets (the live loop, 2026-10-17; reworked by the demo thread 2026-10-20, docs/plans/DEMO-REWORK-20261021.md): a broadcast lap (CRISSA_DEMO_BROADCAST=1) plays set (lap mod 3). Every set: the listen loop under the disclosure lower third; synth beats (kind synth, beat cua|team|report|memory|mid|lookup: a question MADE by the question-maker, asked in the synthetic copy of the User's voice, answered live with her tools, graded on air; each carries its fallback say beat, the old recorded line, played when the synth switch is off or the buffer has none for that beat); a reading; the House Daily; home; a vetted live question. Set b keeps one krew placeholder (the show-off drill beats). A lap with the user in the chair, or CRISSA_DEMO_SETS=0, plays `beats` as before. Still beats (CRISSA_DEMO_STILLS, three a lap, 12 s each, the credit on the lower third): the User 2026-10-20 'someone cranked up the res and it looked great ... more of it'; every still is sized to the glass's art budget (config/demo-stills.json). Render beats (CRISSA_DEMO_RENDER, one a lap after the Daily, themed from config/demo-synth.json themes[].render): order live, score the next finished take live on CPU, verdict on the Wall; never draws in the lap, never installs. 2026-10-23 (the User: 'a great demo that shows off her various capabilities ... Creativity'): every set opens with chat-1 (small talk in the clone voice, her brain, no tools; kind chat, CRISSA_DEMO_CHAT), q-legal became q-case (she reads a whole public-domain opinion and briefs it; theme case-brief, seed rows only so it never goes empty), q-today follows the Daily (her browser on today's front page, the report dated today; theme today), chat-2 after the render (the next chat shape, often a loose ask she must pin down), and still-3 is the live clock (kind clock, CRISSA_DEMO_CLOCK).",
+  "live_questions": "live-questions.jsonl",
+  "question_lead": "A question from the room.",
+  "sets": [
+    {
+      "id": "a",
+      "beats": [
+        {
+          "id": "open-listen",
+          "kind": "show",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 20,
+          "note_title": "Live",
+          "note": "Crissa is live. She is an AI. crissa.ai"
+        },
+        {
+          "id": "chat-1",
+          "kind": "chat",
+          "shape": "small-talk"
+        },
+        {
+          "id": "q-lookup",
+          "kind": "synth",
+          "beat": "lookup",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "what-this-is",
+            "kind": "say",
+            "take": "what-this-is",
+            "limit_s": 40,
+            "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+            "expect": {
+              "answer": [
+                "crissa|wall|voice|avatar|character|desktop"
+              ]
+            }
+          }
+        },
+        {
+          "id": "q-teach",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "teaching",
+          "pointer": true,
+          "think_cap_s": 0
+        },
+        {
+          "id": "q-cua",
+          "kind": "synth",
+          "beat": "cua",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "open-and-custom",
+            "kind": "say",
+            "take": "open-and-custom",
+            "limit_s": 40,
+            "say": "Crissa, what's open source here, and what's a custom job?",
+            "expect": {
+              "answer": [
+                "open|custom"
+              ]
+            }
+          }
+        },
+        {
+          "id": "still-1",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "q-team",
+          "kind": "synth",
+          "beat": "team",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "two-people",
+            "kind": "say",
+            "take": "two-people",
+            "limit_s": 40,
+            "say": "Crissa, can we take two people at once, or one at a time?",
+            "expect": {
+              "answer": [
+                "two|one|people"
+              ]
+            }
+          }
+        },
+        {
+          "id": "melville",
+          "kind": "read",
+          "cue": "listen",
+          "ttl": 0,
+          "lead_add_semis": 4,
+          "notice": "Reading lyve, from Melville.",
+          "after": "That reading was lyve. Next is her own work, and she answers lyve.",
+          "note_title": "Reading live",
+          "note": "Moby-Dick, opening. Her mouth is on this voice, not a rendered track.",
+          "text": "Call me Ishmael. Some years ago, never mind how long precisely, having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen, and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me that it requires a strong moral principle to prevent me from deliberately stepping into the street and methodically knocking people's hats off, then I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship.",
+          "breath_s": 1.2
+        },
+        {
+          "id": "still-2",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "daily",
+          "kind": "pull",
+          "limit_s": 75,
+          "ask": "Show me the House Daily. show_me what=daily. Then one sentence with the headline.",
+          "say": "Show me the House Daily.",
+          "expect": {
+            "answer": [
+              "daily|house-daily|up|broken|watch|improv|landed|measured"
+            ],
+            "answer_not": [
+              "did not work",
+              "ran out of steps",
+              "nothing changed"
+            ]
+          }
+        },
+        {
+          "id": "q-today",
+          "kind": "synth",
+          "beat": "cua",
+          "theme": "today",
+          "think_cap_s": 60
+        },
+        {
+          "id": "q-case",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "case-brief",
+          "think_cap_s": 0
+        },
+        {
+          "id": "render",
+          "kind": "render",
+          "fallback": {
+            "id": "what-this-is",
+            "kind": "say",
+            "take": "what-this-is",
+            "limit_s": 40,
+            "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+            "expect": {
+              "answer": [
+                "crissa|wall|voice|avatar|character|desktop"
+              ]
+            }
+          }
+        },
+        {
+          "id": "chat-2",
+          "kind": "chat"
+        },
+        {
+          "id": "krew",
+          "kind": "krew",
+          "note": "In place: the show-off beats (a drill task the announcer reads, answered live with her tools, graded on air; broadcast-marked read-only tasks only). Off or absent: one skipped row."
+        },
+        {
+          "id": "q-mid",
+          "kind": "synth",
+          "beat": "mid",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "before-more-work",
+            "kind": "say",
+            "take": "before-more-work",
+            "limit_s": 40,
+            "say": "Crissa, what are we asking people for before we build more packs?",
+            "expect": {
+              "answer": [
+                "interest|notify|sign|spec|feedback|ask|tell us|before|open"
+              ]
+            }
+          }
+        },
+        {
+          "id": "clock",
+          "kind": "clock",
+          "watch_s": 12
+        },
+        {
+          "id": "to-listen",
+          "kind": "home",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 6
+        },
+        {
+          "id": "live-question",
+          "kind": "question",
+          "limit_s": 60,
+          "expect": {}
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "beats": [
+        {
+          "id": "open-listen",
+          "kind": "show",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 20,
+          "note_title": "Live",
+          "note": "Crissa is live. She is an AI. crissa.ai"
+        },
+        {
+          "id": "chat-1",
+          "kind": "chat",
+          "shape": "small-talk"
+        },
+        {
+          "id": "q-memory",
+          "kind": "synth",
+          "beat": "memory",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "two-people",
+            "kind": "say",
+            "take": "two-people",
+            "limit_s": 40,
+            "say": "Crissa, can we take two people at once, or one at a time?",
+            "expect": {
+              "answer": [
+                "two|one|people"
+              ]
+            }
+          }
+        },
+        {
+          "id": "q-report",
+          "kind": "synth",
+          "beat": "report",
+          "think_cap_s": 90,
+          "fallback": {
+            "id": "before-more-work",
+            "kind": "say",
+            "take": "before-more-work",
+            "limit_s": 40,
+            "say": "Crissa, what are we asking people for before we build more packs?",
+            "expect": {
+              "answer": [
+                "interest|notify|sign|spec|feedback|ask|tell us|before|open"
+              ]
+            }
+          }
+        },
+        {
+          "id": "still-1",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "q-cua",
+          "kind": "synth",
+          "beat": "cua",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "what-this-is",
+            "kind": "say",
+            "take": "what-this-is",
+            "limit_s": 40,
+            "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+            "expect": {
+              "answer": [
+                "crissa|wall|voice|avatar|character|desktop"
+              ]
+            }
+          }
+        },
+        {
+          "id": "dickens",
+          "kind": "read",
+          "cue": "listen",
+          "ttl": 0,
+          "lead_add_semis": 4,
+          "notice": "Reading lyve, from Dickens.",
+          "after": "That reading was lyve.",
+          "note_title": "Reading live",
+          "note": "A Tale of Two Cities, opening. Her mouth is on this voice, not a rendered track.",
+          "text": "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.",
+          "breath_s": 1.2
+        },
+        {
+          "id": "still-2",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "daily",
+          "kind": "pull",
+          "limit_s": 75,
+          "ask": "Show me the House Daily. show_me what=daily. Then one sentence with the headline.",
+          "say": "Show me the House Daily.",
+          "expect": {
+            "answer": [
+              "daily|house-daily|up|broken|watch|improv|landed|measured"
+            ],
+            "answer_not": [
+              "did not work",
+              "ran out of steps",
+              "nothing changed"
+            ]
+          }
+        },
+        {
+          "id": "q-today",
+          "kind": "synth",
+          "beat": "cua",
+          "theme": "today",
+          "think_cap_s": 60
+        },
+        {
+          "id": "q-case",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "case-brief",
+          "think_cap_s": 0
+        },
+        {
+          "id": "render",
+          "kind": "render",
+          "fallback": {
+            "id": "two-people",
+            "kind": "say",
+            "take": "two-people",
+            "limit_s": 40,
+            "say": "Crissa, can we take two people at once, or one at a time?",
+            "expect": {
+              "answer": [
+                "two|one|people"
+              ]
+            }
+          }
+        },
+        {
+          "id": "chat-2",
+          "kind": "chat"
+        },
+        {
+          "id": "q-lookup",
+          "kind": "synth",
+          "beat": "lookup",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "open-and-custom",
+            "kind": "say",
+            "take": "open-and-custom",
+            "limit_s": 40,
+            "say": "Crissa, what's open source here, and what's a custom job?",
+            "expect": {
+              "answer": [
+                "open|custom"
+              ]
+            }
+          }
+        },
+        {
+          "id": "q-teach",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "teaching",
+          "pointer": true,
+          "think_cap_s": 0
+        },
+        {
+          "id": "krew",
+          "kind": "krew",
+          "note": "In place: the show-off beats (a drill task the announcer reads, answered live with her tools, graded on air; broadcast-marked read-only tasks only). Off or absent: one skipped row."
+        },
+        {
+          "id": "clock",
+          "kind": "clock",
+          "watch_s": 12
+        },
+        {
+          "id": "to-listen",
+          "kind": "home",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 6
+        },
+        {
+          "id": "live-question",
+          "kind": "question",
+          "limit_s": 60,
+          "expect": {}
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "beats": [
+        {
+          "id": "open-listen",
+          "kind": "show",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 20,
+          "note_title": "Live",
+          "note": "Crissa is live. She is an AI. crissa.ai"
+        },
+        {
+          "id": "chat-1",
+          "kind": "chat",
+          "shape": "small-talk"
+        },
+        {
+          "id": "q-lookup",
+          "kind": "synth",
+          "beat": "lookup",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "what-this-is",
+            "kind": "say",
+            "take": "what-this-is",
+            "limit_s": 40,
+            "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+            "expect": {
+              "answer": [
+                "crissa|wall|voice|avatar|character|desktop"
+              ]
+            }
+          }
+        },
+        {
+          "id": "q-teach",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "teaching",
+          "pointer": true,
+          "think_cap_s": 0
+        },
+        {
+          "id": "q-team",
+          "kind": "synth",
+          "beat": "team",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "two-people",
+            "kind": "say",
+            "take": "two-people",
+            "limit_s": 40,
+            "say": "Crissa, can we take two people at once, or one at a time?",
+            "expect": {
+              "answer": [
+                "two|one|people"
+              ]
+            }
+          }
+        },
+        {
+          "id": "still-1",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "q-mid",
+          "kind": "synth",
+          "beat": "mid",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "before-more-work",
+            "kind": "say",
+            "take": "before-more-work",
+            "limit_s": 40,
+            "say": "Crissa, what are we asking people for before we build more packs?",
+            "expect": {
+              "answer": [
+                "interest|notify|sign|spec|feedback|ask|tell us|before|open"
+              ]
+            }
+          }
+        },
+        {
+          "id": "austen",
+          "kind": "read",
+          "cue": "listen",
+          "ttl": 0,
+          "lead_add_semis": 4,
+          "notice": "Reading lyve, from Austen.",
+          "after": "That reading was lyve.",
+          "note_title": "Reading live",
+          "note": "Pride and Prejudice, opening. Her mouth is on this voice, not a rendered track.",
+          "text": "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered the rightful property of some one or other of their daughters.",
+          "breath_s": 1.2
+        },
+        {
+          "id": "still-2",
+          "kind": "still",
+          "watch_s": 12
+        },
+        {
+          "id": "daily",
+          "kind": "pull",
+          "limit_s": 75,
+          "ask": "Show me the House Daily. show_me what=daily. Then one sentence with the headline.",
+          "say": "Show me the House Daily.",
+          "expect": {
+            "answer": [
+              "daily|house-daily|up|broken|watch|improv|landed|measured"
+            ],
+            "answer_not": [
+              "did not work",
+              "ran out of steps",
+              "nothing changed"
+            ]
+          }
+        },
+        {
+          "id": "q-today",
+          "kind": "synth",
+          "beat": "cua",
+          "theme": "today",
+          "think_cap_s": 60
+        },
+        {
+          "id": "q-case",
+          "kind": "synth",
+          "beat": "lookup",
+          "theme": "case-brief",
+          "think_cap_s": 0
+        },
+        {
+          "id": "render",
+          "kind": "render",
+          "fallback": {
+            "id": "what-this-is",
+            "kind": "say",
+            "take": "what-this-is",
+            "limit_s": 40,
+            "say": "Crissa, say what this is: the wall, the voice, and who you are, in two sentences.",
+            "expect": {
+              "answer": [
+                "crissa|wall|voice|avatar|character|desktop"
+              ]
+            }
+          }
+        },
+        {
+          "id": "chat-2",
+          "kind": "chat"
+        },
+        {
+          "id": "krew",
+          "kind": "krew",
+          "note": "In place: the show-off beats (a drill task the announcer reads, answered live with her tools, graded on air; broadcast-marked read-only tasks only). Off or absent: one skipped row."
+        },
+        {
+          "id": "q-cua",
+          "kind": "synth",
+          "beat": "cua",
+          "think_cap_s": 60,
+          "fallback": {
+            "id": "open-and-custom",
+            "kind": "say",
+            "take": "open-and-custom",
+            "limit_s": 40,
+            "say": "Crissa, what's open source here, and what's a custom job?",
+            "expect": {
+              "answer": [
+                "open|custom"
+              ]
+            }
+          }
+        },
+        {
+          "id": "clock",
+          "kind": "clock",
+          "watch_s": 12
+        },
+        {
+          "id": "to-listen",
+          "kind": "home",
+          "cue": "listen",
+          "ttl": 0,
+          "watch_s": 6
+        },
+        {
+          "id": "live-question",
+          "kind": "question",
+          "limit_s": 60,
+          "expect": {}
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "_doc": "NO LITERAL LIMITS (the User 2026-10-21: 'why do we limit her to four sentences? Remove.'; 'hate those hard coded limits'). Every limit on what she says or how long a beat may wait is a dial here, with what it guards and the measurement; a speech dial at 0 = off. lib/xspaces_live.limits() reads it per call; absent = LIMIT_DEFAULTS.",
+    "speak_sentences": 0,
+    "_speak_sentences": "sentences she says from a hands result; 0 = all (was 1: the first sentence only)",
+    "speak_chars": 0,
+    "_speak_chars": "characters; 0 = no cap (was 480, set so a 90 s speech wait would finish; that wait now scales with the text)",
+    "hold_wait_s": 25,
+    "_hold_wait_s": "how long a beat waits for the room to clear (a line on air, a hands run); guards a stuck flag; measured: real holds end in 2-12 s",
+    "speaker_wait_s": 16,
+    "_speaker_wait_s": "how long a line retries while the speakers say mic_busy; the house's post-speech cooldown is 12 s",
+    "hands_timeout_s": 0,
+    "_hands_timeout_s": "lap-side cap on a hands job (was 58 s); 0 = none, her hands' own run budget (config/crissa-hands.json) ends a hung job",
+    "speak_wait_floor_s": 90,
+    "speak_wait_per_char_s": 0.1,
+    "_speak_wait": "the wait for house-speak to finish a line: max(floor, 40 + chars x per_char); measured 397 chars = 28 s; guards a hung speaker, never cuts a playing line"
+  }
+}

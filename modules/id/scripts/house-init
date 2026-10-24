@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# house-init - master identity init for this room (2026-10-09)
+# Same as: modules/id/scripts/house-enroll init ...
+#
+#   modules/id/scripts/house-init
+#   modules/id/scripts/house-init --from voice
+#   modules/id/scripts/house-init --person <regular_id>
+#   modules/id/scripts/house-init --from room-refs
+#
+# Also accepts house-enroll subcommands (same stack): doctor, status, asr-ab ...
+set -euo pipefail
+ENROLL="$(dirname "$0")/house-enroll"
+if [[ $# -eq 0 ]]; then
+  exec "$ENROLL" init
+fi
+case "${1:-}" in
+  init|add-regular|asr-ab|init-site|doctor|status|legend|person|voice|voice-register|face|family|room-refs|coach|import-clips|wake-corpus)
+    exec "$ENROLL" "$@"
+    ;;
+  --*)
+    exec "$ENROLL" init "$@"
+    ;;
+  *)
+    exec "$ENROLL" init "$@"
+    ;;
+esac

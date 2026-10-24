@@ -1,0 +1,2 @@
+# The presence module builds its own env from modules/presence/locks on first use
+# (python3 modules/presence/scripts/crissa-presence.py --install); nothing to pip install here.
