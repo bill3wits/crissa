@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.log
+.DS_Store
+# her library comes from the release download (scripts/get-library.sh), never from git
+display/lila-poses/
+*.mp4
+*.wav

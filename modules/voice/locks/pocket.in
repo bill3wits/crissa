@@ -1,0 +1,5 @@
+# The Pocket TTS env (modules/voice/crissa_voice/pocket_setup.py): Kyutai Pocket TTS on the CPU (code MIT;
+# weights CC BY 4.0, fetched at install by hash). No phonemizer, no espeak: Pocket reads text with its own tokenizer.
+pocket-tts==3.3.0
+torch==2.14.1
+numpy==2.5.3

@@ -1,0 +1,88 @@
+{
+  "schema": "house_site/v1",
+  "site_id": "office-example",
+  "display": "Example room (copied to site.json by the first run)",
+  "notes": "Per-room config: devices for THIS room; the speak, presence and camera addresses come from this install's port table unless named here. Lives in the identity store (<state home>/identity/site.json); Init fills it in.",
+  "audio": {
+    "mic": "REPLACE_WITH_pactl_list_short_sources",
+    "sink": null,
+    "speak_url": null,
+    "speak_voice": "announcer",
+    "speak_enabled": true
+  },
+  "rails": {
+    "presence": null,
+    "camera": null,
+    "note": "null = this install's own, from the port table (crissa_id.paths); name an address only for another machine's"
+  },
+  "room_refs": {
+    "dir": "site/reference-frames",
+    "stops_json": null,
+    "empty_polls": 6,
+    "empty_interval_sec": 5
+  },
+  "voice": {
+    "seconds": 5.5,
+    "beep_sec": 0.4,
+    "min_peak": 500,
+    "encoder": "wespeaker",
+    "model": "wespeaker/english_resnet221",
+    "dim": 256
+  },
+  "enroll": {
+    "user_id": "REPLACE_PRIMARY_USER_ID",
+    "default_plan": "quality",
+    "sit_station": "desk",
+    "rest_station": "door",
+    "settle_sec": 1.2,
+    "snap_face": true,
+    "coach_ui": true,
+    "coach_port": 8196,
+    "desk_pan": 0,
+    "desk_tilt": 0,
+    "door_pan": null,
+    "door_tilt": 0,
+    "note": "sit_station=sitting beam (desk). rest_station=ingress home (door). Sections: face quality then voice.",
+    "use_facefinder": false
+  },
+  "news": {
+    "schema": "house_news_topics/v1",
+    "topics": [
+      "general"
+    ],
+    "freeform": "",
+    "pending": [],
+    "updated_at": null
+  },
+  "camera": {
+    "orientation": "REPLACE_true_handed_or_mirrored",
+    "hflip_at_grabber": true,
+    "verified": null
+  },
+  "stations": {
+    "schema": "site_stations/v2",
+    "term": "beam",
+    "camera": "clock_center",
+    "door_beam": null,
+    "camera_door_beam": null,
+    "mic_az_residual_deg": null,
+    "illegal": [],
+    "legal": [],
+    "regulars": [
+      {
+        "person_id": "REPLACE_PRIMARY_USER_ID",
+        "home_beam": null,
+        "prior": 1.0,
+        "kind": "user"
+      }
+    ],
+    "guests_pool": [],
+    "guest_beams": [],
+    "media_hour": null,
+    "sitters": {},
+    "guests": [],
+    "pets": [],
+    "user_beam": null
+  },
+  "training_window": "REPLACE_HH:MM-HH:MM"
+}

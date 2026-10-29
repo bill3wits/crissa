@@ -1,0 +1,12 @@
+{
+  "_doc": "Where her render sits while a card is up (lib/crissa_layout.py, 2026-10-06). Later wins: this file, then <crissa home>/wall-layout.json. Boxes are [x, y, w, h]. anchor \"center\" (round 27, the User 10-16): she sits large and centred left of the letter sheet; \"camera_box\" is the Oracle live tile.",
+  "card_render": {
+    "move": true,
+    "anchor": "center",
+    "fallback": "pip",
+    "anchors_file": "house-wall-ascii.anchors.json",
+    "unit": "screen_px",
+    "box_if_no_wall": [0.004, 0.811, 0.16, 0.16],
+    "box_if_no_wall_unit": "fraction"
+  }
+}

@@ -1,0 +1,7162 @@
+{
+ "_about": "Measured 2026-10-10: every phrase spoken by the pack's shipped voices (Pocket TTS stock voices, Kokoro), transcribed by the pack's own speech-to-text (ARK-ASR 0.6B INT8, modules/voice) in a sandbox, clean and as the room hears it (16 kHz, 0.3 s lead, white noise at 15 dB SNR). `heard` is the transcript; `woke` is the wake grammar's answer when the fixture was cut. tests/ear/bridge/test_wake.py replays it.",
+ "asr": "Edge0/ark-asr-0.6b-int8-onnx @ ced3e6c0cc45eda7f718b885e9fd9562ed3ec94d",
+ "voices": {
+  "pocket": [
+   "alba",
+   "anna",
+   "azelma",
+   "caro_davy",
+   "charles",
+   "eponine",
+   "eve",
+   "fantine",
+   "george",
+   "jane",
+   "javert",
+   "marius",
+   "mary",
+   "michael",
+   "paul",
+   "peter_yearsley",
+   "stuart_bell",
+   "vera"
+  ],
+  "kokoro": [
+   "af_bella",
+   "af_heart",
+   "am_michael",
+   "bf_emma"
+  ]
+ },
+ "rows": [
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisen.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_bella",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Kristy yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Kristy yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "af_heart",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the Crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Kressa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "am_michael",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Kressa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa! What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissar, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissar, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "kokoro",
+   "voice": "bf_emma",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrysa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa, turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "alba",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal queer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Vikissa, can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "anna",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Alissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chriso, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisso, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Krista. Can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Co, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Kokrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "azelma",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "caro_davy",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa, what time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa, what time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissar. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "charles",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eponine",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Krista. Can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "eve",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Quissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa! Turn my music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "fantine",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Prista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Alisa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prissa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Krista. Can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "george",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Prisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the Crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "jane",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa, what time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa, what time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa, turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa, turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Grissa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "javert",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Grissa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Acris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "Crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Kirsta said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "That's coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Lisa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Carissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Corissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Priss is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chris.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Person.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prissa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Chris, can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chris. Can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Krista, show me the board.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chris. Show me the board.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa, turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "marius",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Prissa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the Crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Krisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chris. Can you hear me?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "mary",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Krisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissel. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Kissa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "michael",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "paul",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Carissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Prisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Prisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrisa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "peter_yearsley",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Krisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the Crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey Chris, what time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissar, what time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Chrisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "Okay, Chrissa. Show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "Okay, Chrissa, show me the board.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "stuart_bell",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "clean",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "I had lunch with Christa yesterday.",
+   "cond": "noisy",
+   "heard": "I had lunch with Krista yesterday.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "clean",
+   "heard": "Put the lettuce in the CRISPR drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Put the lettuce in the crisper drawer.",
+   "cond": "noisy",
+   "heard": "Put the lettuce in the crisper drawer.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Hey Chris, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chris. What time is it?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "clean",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "The crisis is over now.",
+   "cond": "noisy",
+   "heard": "The crisis is over now.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "clean",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Krista said she would call back.",
+   "cond": "noisy",
+   "heard": "Krista said she would call back.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "clean",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "That glass is crystal clear.",
+   "cond": "noisy",
+   "heard": "That glass is crystal clear.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "clean",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Melissa is coming over tonight.",
+   "cond": "noisy",
+   "heard": "Melissa is coming over tonight.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "clean",
+   "heard": "Hey, Clarissa, are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Hey Clarissa, are you coming?",
+   "cond": "noisy",
+   "heard": "Hey, Carissa! Are you coming?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "clean",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "The bacon is nice and crisp.",
+   "cond": "noisy",
+   "heard": "The bacon is nice and crisp.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "clean",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "nowake",
+   "phrase": "Chris is on the phone.",
+   "cond": "noisy",
+   "heard": "Chris is on the phone.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "clean",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa.",
+   "cond": "noisy",
+   "heard": "Chrisa.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "clean",
+   "heard": "Hey, Chrissa. What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa, what time is it?",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! What time is it?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "clean",
+   "heard": "Chris, what's on my calendar today?",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa, what's on my calendar today?",
+   "cond": "noisy",
+   "heard": "Crisa, what's on my calendar today?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "clean",
+   "heard": "Hi, Chrissa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hi Crissa, can you hear me?",
+   "cond": "noisy",
+   "heard": "Hi, Chrisa. Can you hear me?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "clean",
+   "heard": "A.K. Chrisa, show me the board.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Okay Crissa, show me the board.",
+   "cond": "noisy",
+   "heard": "A.K. Chrisa, show me the board.",
+   "woke": false
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "clean",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Hey Crissa, turn the music down.",
+   "cond": "noisy",
+   "heard": "Hey, Chrissa! Turn the music down.",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "clean",
+   "heard": "Chrisa, are you there?",
+   "woke": true
+  },
+  {
+   "engine": "pocket",
+   "voice": "vera",
+   "kind": "wake",
+   "phrase": "Crissa, are you there?",
+   "cond": "noisy",
+   "heard": "Chrysa, are you there?",
+   "woke": true
+  }
+ ]
+}

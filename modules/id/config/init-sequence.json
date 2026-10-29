@@ -1,0 +1,104 @@
+{
+ "schema": "init_sequence/v2",
+ "_doc": "The id module's copy of a pack's ONE first-boot walk (the User 2026-10-10): Connect, the machine-check card, Voice ID (the Register coach's routine), face photos, Your room, Your hours (the User 2026-10-11), done - landing on the listen loop. The walk itself is the player's lib/crissa_init.py, which reads config/init-sequence-pack.json; crissa_id.init_wizard's entries hand over to it, and this file names the same steps in the same order (tests/test_crissa_id_init.py holds the two equal). The house's own routine is the house's (its 13 steps never ship).",
+ "steps": [
+  {
+   "id": "connect",
+   "kind": "connect",
+   "eyebrow": "Agent",
+   "title": "Connect an agent",
+   "body": "Crissa answers through any agent that speaks the OpenAI chat-completions API: a model on this computer, a hosted API, or an agent's gateway. Fill in its address, key and model, then Test. You can also set it up later on the Connect page.",
+   "timeout_s": 60
+  },
+  {
+   "id": "machine",
+   "kind": "machine",
+   "eyebrow": "This computer",
+   "quick": true,
+   "_doc": "The machine check's permission card (the User 2026-10-10): its words come from lib/crissa_machine.card, worked out on this computer; quick = Init's check, the full one is the command line's. After the card: the voice, then the word aligner (lib/crissa_init.aligner_after_voice)."
+  },
+  {
+   "id": "voice_id",
+   "kind": "register",
+   "eyebrow": "Voice ID",
+   "title": "Voice ID",
+   "ask": "What should Crissa call you?",
+   "body": "Four short recordings at this computer: the sentence on the screen and a count to six, each facing the camera and then turned away, each at its beep. Crissa learns your voice from them. They stay on this computer.",
+   "body_verbal": "Four short recordings at this computer, by ear: you hear a count to six, then count the same way at the beep, facing forward and then with your head turned a little to each side. Nothing to read. Your face photos are taken while you count. Crissa learns your voice from them. They stay on this computer.",
+   "films": [
+    "lila-reg-okay",
+    "lila-reg-listen",
+    "lila-reg-turn",
+    "lila-reg-thanks"
+   ],
+   "_films": "the Register coach's routine plays these (modules/id house_enroll/voice_register.py HOST_CLIPS); the walk names them so the pack ships them",
+   "timeout_s": 240
+  },
+  {
+   "id": "face",
+   "kind": "face",
+   "eyebrow": "Face photos",
+   "title": "Face photos",
+   "body": "Look at the camera, then to the left, and Crissa takes a photo each time so she knows your face. The photos stay on this computer.",
+   "no_camera": "Crissa runs with no camera on this computer, so there are no face photos to take. She knows you by your voice.",
+   "no_camera_s": 4,
+   "timeout_s": 180
+  },
+  {
+   "id": "room",
+   "kind": "room",
+   "eyebrow": "Your room",
+   "title": "Your room",
+   "body": "The clock is your room seen from above: the camera is the middle of the clock and you are at 6 o'clock. Each mark starts at its default. Pick a mark, then tap its hour; change only what is different here, or skip.",
+   "films": [
+    "lila-ob-seats",
+    "lila-ob-sound-hour",
+    "lila-ob-wave",
+    "lila-ob-mirrored"
+   ],
+   "lines": {
+    "seat": "lila-ob-seats",
+    "speakers": "lila-ob-sound-hour",
+    "wave": "lila-ob-wave",
+    "mirrored": "lila-ob-mirrored"
+   },
+   "_films": "Lila's own lines (the User 2026-10-11): seats as the card opens, sound-hour when the speakers' mark is next, wave for the picture, mirrored after a No; the walk names them so the pack ships them",
+   "defaults": {
+    "seat": 6,
+    "speakers": 0
+   },
+   "_defaults": "what Crissa assumes with nothing saved: you at 6 (the camera is the middle of the clock, never a mark: the User 2026-10-26) and the sound from this computer (0). No door: a door is a fact about one room, so it stays unset until the person marks it (the User 2026-10-25, the 1.0.0 stranger install).",
+   "wave": {
+    "ask": "Stand in the doorway and wave your right hand. Is that wave on the right of the picture?"
+   },
+   "one_line": {
+    "say": "Now label the main sound source and door location based on this diagram.",
+    "nudge": "The camera in the middle is Crissa. The sound source is where media plays, like a TV or speakers, so she can filter it out. Then mark your door."
+   },
+   "_one_line": "the User 2026-10-14: where only the speakers and the door are asked (a fixed camera or none), Lila says `say` as the card opens and nothing per mark, the card finishes by itself after the two clicks, and `nudge` once if a mark is still unset (lib/crissa_init ROOM_ONE_LINE)"
+  },
+  {
+   "id": "hours",
+   "kind": "hours",
+   "eyebrow": "Your hours",
+   "title": "Your hours",
+   "body": "Overnight is when Crissa does her own work while you are away. Quiet hours are when her announcements keep quiet. Keep the defaults, change them, or skip.",
+   "films": [
+    "lila-ob-overnight",
+    "lila-ob-manners"
+   ],
+   "_films": "Lila's own lines (the User 2026-10-11), said in turn as the card opens; the walk names them so the pack ships them",
+   "defaults": {
+    "overnight": "18:00-02:00",
+    "quiet": null
+   }
+  }
+ ],
+ "landing": {
+  "steps": [
+   {
+    "cue": "listen"
+   }
+  ]
+ }
+}

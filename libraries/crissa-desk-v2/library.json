@@ -1,0 +1,21 @@
+{
+ "name": "Crissa desk v2",
+ "listen_loop": "v2-listen-screen",
+ "boot_loop": "v2-listen-screen",
+ "rest_loop": "v2-listen-screen",
+ "_note": "written into the carried copy as library.json (scripts/kit-carry-library.py); lib/avatar reads it for a library no avatar manifest names",
+ "roles": {
+  "walk_in": "v2-walk-in",
+  "walk_out": "v2-walk-out",
+  "walk_in_casual": "v2-walk-in-casual",
+  "walk_out_casual": "v2-walk-out-casual",
+  "glance": "v2-fl-glance-door",
+  "door": "v2-fl-turn-door",
+  "tool_work": "v2-work-a",
+  "nod": "v2-fl-head-tilt",
+  "notes": "v2-fl-hair-tuck",
+  "shift": "v2-fl-lean-back",
+  "yawn": "v2-fl-stretch"
+ },
+ "_roles": "the named moments by role (the User 2026-10-29, 'substitute titles and locations'): the house code's classic moment keys (lib/conductor MOMENT_ROLES) play these v2 clips; no hello and no close-up - those moments are not played, she talks where she is"
+}

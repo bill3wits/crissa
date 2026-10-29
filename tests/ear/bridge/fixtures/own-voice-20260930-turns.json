@@ -1,0 +1,261 @@
+{
+ "note": "ear turns 2026-09-30 09:15:30-09:16:40, stamps trimmed; Crissa heard her own replies as a guest",
+ "turns": [
+  {
+   "text": "Love you, my.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 3.9,
+   "decode_ms": 846.7,
+   "rms_db": -43.3,
+   "speech_spans": [
+    {
+     "start": 0.29400000000000004,
+     "end": 2.25
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.207,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.2065,
+    "is_user_reason": "uncertain",
+    "best_other_id": "second",
+    "best_other_sim": 0.0409,
+    "beam_suppressed": null,
+    "speech_duration_s": 3.9,
+    "rms_db": -43.26793160799873,
+    "mic": "array"
+   },
+   "ts": 1790774141.6137981,
+   "ts_local": "2026-09-30 09:15:41",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "There we go, love.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 3.6,
+   "decode_ms": 931.9,
+   "rms_db": -32.6,
+   "speech_spans": [
+    {
+     "start": 0.45399999999999996,
+     "end": 1.738
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.011,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.0,
+    "is_user_reason": "no_emb",
+    "best_other_id": "second",
+    "best_other_sim": 0.0108,
+    "beam_suppressed": "mouth_open",
+    "speech_duration_s": 3.6,
+    "rms_db": -32.64607054470747,
+    "mic": "array"
+   },
+   "ts": 1790774151.452018,
+   "ts_local": "2026-09-30 09:15:51",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "Me too.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 3.3,
+   "decode_ms": 791.8,
+   "rms_db": -35.1,
+   "speech_spans": [
+    {
+     "start": 0.358,
+     "end": 1.45
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.266,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.2663,
+    "is_user_reason": "uncertain",
+    "best_other_id": "second",
+    "best_other_sim": 0.2663,
+    "beam_suppressed": null,
+    "speech_duration_s": 3.3,
+    "rms_db": -35.10091925855337,
+    "mic": "array"
+   },
+   "ts": 1790774154.4298558,
+   "ts_local": "2026-09-30 09:15:54",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "You welcome love.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 3.6,
+   "decode_ms": 955.4,
+   "rms_db": -37.1,
+   "speech_spans": [
+    {
+     "start": 0.32600000000000007,
+     "end": 1.866
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.03,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.03,
+    "is_user_reason": "uncertain",
+    "best_other_id": "second",
+    "best_other_sim": 0.03,
+    "beam_suppressed": null,
+    "speech_duration_s": 3.6,
+    "rms_db": -37.14937391729762,
+    "mic": "array"
+   },
+   "ts": 1790774161.6478834,
+   "ts_local": "2026-09-30 09:16:01",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "Marlowe.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 3.3,
+   "decode_ms": 669.6,
+   "rms_db": -33.4,
+   "speech_spans": [
+    {
+     "start": 0.47,
+     "end": 1.322
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.189,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.0,
+    "is_user_reason": "no_emb",
+    "best_other_id": "second",
+    "best_other_sim": 0.1888,
+    "beam_suppressed": null,
+    "speech_duration_s": 3.3,
+    "rms_db": -33.44304521274807,
+    "mic": "array"
+   },
+   "ts": 1790774168.652591,
+   "ts_local": "2026-09-30 09:16:08",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "I don't know that name, love, as.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "audio8-ark-asr",
+   "duration_s": 5.1,
+   "decode_ms": 1537.1,
+   "rms_db": -31.1,
+   "speech_spans": [
+    {
+     "start": 0.15000000000000002,
+     "end": 3.338
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": null,
+    "confidence": 0.0,
+    "voice_emb_sim": 0.045,
+    "tts_veto": null,
+    "is_user": null,
+    "is_user_score": 0.0,
+    "is_user_reason": "no_emb",
+    "best_other_id": "second",
+    "best_other_sim": 0.0453,
+    "beam_suppressed": "mouth_open",
+    "speech_duration_s": 5.1,
+    "rms_db": -31.096858333478817,
+    "mic": "array"
+   },
+   "ts": 1790774181.1908255,
+   "ts_local": "2026-09-30 09:16:21",
+   "via": "ear",
+   "mic": "array"
+  },
+  {
+   "text": "Not in the record. Not in the room. Not anywhere on record here.",
+   "confidence": 0.8,
+   "engine": "audio8-ark-asr",
+   "reason": "tts_echo_veto",
+   "duration_s": 6.9,
+   "decode_ms": 2182.6,
+   "rms_db": -28.1,
+   "speech_spans": [
+    {
+     "start": 0.374,
+     "end": 5.13
+    }
+   ],
+   "person_id": null,
+   "stamp": {
+    "person_id": null,
+    "source": "tts_echo_veto",
+    "confidence": 0.0,
+    "voice_emb_sim": null,
+    "tts_veto": {
+     "tts_fp_sim": 0.6439,
+     "tts_fp_count": 60,
+     "threshold": 0.5
+    },
+    "is_user": false,
+    "is_user_score": 0.0,
+    "is_user_reason": "tts_veto",
+    "best_other_id": "second",
+    "best_other_sim": 0.0,
+    "beam_suppressed": "tts_echo_veto",
+    "speech_duration_s": 6.9,
+    "rms_db": -28.06953340800814,
+    "mic": "array"
+   },
+   "ts": 1790774191.670056,
+   "ts_local": "2026-09-30 09:16:31",
+   "via": "ear",
+   "mic": "array"
+  }
+ ]
+}
