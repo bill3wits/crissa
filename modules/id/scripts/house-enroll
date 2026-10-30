@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# house-enroll - the enrol CLI of a Crissa install (the house's house-id tool, 2026-10-09)
+#   modules/id/scripts/house-enroll status
+#   modules/id/scripts/house-enroll voice <user_id>
+#   modules/id/scripts/house-enroll doctor
+# The identity store is <state home>/identity (CRISSA_IDENTITY or HOUSE_ID_ROOT name another).
+set -euo pipefail
+MODULE="$(cd "$(dirname "$0")/.." && pwd)"
+STATE="${CRISSA_HOME:-$HOME/.crissa}"
+export HOUSE_ID_ROOT="${HOUSE_ID_ROOT:-${CRISSA_IDENTITY:-$STATE/identity}}"
+export PYTHONPATH="$MODULE${PYTHONPATH:+:$PYTHONPATH}"
+# the id env (crissa-id.py --install) carries the face engine and the voice features; else this machine's python3
+PY="${HOUSE_ENROLL_PYTHON:-}"
+if [[ -z "$PY" ]]; then
+  if [[ -x "$STATE/id/env/bin/python" ]]; then
+    PY="$STATE/id/env/bin/python"
+  else
+    PY=python3
+  fi
+fi
+exec "$PY" -m crissa_id.house_enroll "$@"

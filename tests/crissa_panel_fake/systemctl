@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+"""A stand-in systemctl for the Control Panel tests (tests/test_crissa_panel*.py). State lives in the JSON file
+$FAKE_SYSTEMD_STATE; every call is appended to its "calls". It answers only what the panel asks:
+list-unit-files, show -pX, start/stop/restart, enable/disable, cat. Never on a live machine's PATH: the tests put it first on
+their own subprocesses' PATH and nowhere else."""
+import fcntl
+import json
+import os
+import sys
+
+STATE = os.environ["FAKE_SYSTEMD_STATE"]
+
+
+def main(argv):
+    scope = "system"
+    args = []
+    for a in argv:
+        if a == "--user":
+            scope = "user"
+        elif a in ("--no-ask-password", "--no-pager", "--no-legend", "--plain", "--no-block") or a.startswith("--type="):
+            continue
+        elif a == "--value":
+            os.environ["FAKE_SYSTEMCTL_VALUE"] = "1"
+            continue
+        else:
+            args.append(a)
+    with open(STATE, "r+") as fh:
+        fcntl.flock(fh, fcntl.LOCK_EX)
+        st = json.load(fh)
+        st.setdefault("calls", []).append([scope] + args)
+        rc = run(st, scope, args)
+        fh.seek(0)
+        fh.truncate()
+        json.dump(st, fh, indent=1)
+    return rc
+
+
+def run(st, scope, args):
+    if scope in (st.get("unreachable") or []):
+        sys.stderr.write("Failed to connect to user scope bus via local transport: No such file or directory\n")
+        return 1
+    units = st.setdefault("units", {}).setdefault(scope, {})
+    verb, rest = (args[0], args[1:]) if args else ("", [])
+    if verb == "list-unit-files":
+        for n, u in sorted(units.items()):
+            print(f"{n} {u.get('UnitFileState', 'enabled')} enabled")
+        return 0
+    if verb == "show":
+        props = [a[2:] for a in rest if a.startswith("-p") and len(a) > 2]
+        names = [a for a in rest if not a.startswith("-")]
+        i = 0
+        while i < len(rest):          # `-p Name` (two words) as well as `-pName`
+            if rest[i] == "-p" and i + 1 < len(rest):
+                props.append(rest[i + 1])
+                names = [n for n in names if n != rest[i + 1]]
+                i += 2
+                continue
+            i += 1
+        blocks = []
+        for n in names:
+            u = units.get(n)
+            d = {"Id": n, "LoadState": "not-found", "ActiveState": "inactive", "SubState": "dead"} if u is None else \
+                dict({"Id": n, "LoadState": "loaded", "SubState": "running" if u.get("ActiveState") == "active" else "dead",
+                      "NRestarts": "0", "ActiveEnterTimestampMonotonic": "0"}, **u)
+            if os.environ.get("FAKE_SYSTEMCTL_VALUE"):
+                blocks.append("\n".join(str(d.get(p, "")) for p in (props or sorted(d))))
+            else:
+                blocks.append("\n".join(f"{p}={d.get(p, '')}" for p in (props or sorted(d))))
+        print("\n\n".join(blocks))
+        return 0
+    if verb in ("start", "stop", "restart"):
+        bad = []
+        for n in rest:
+            u = units.get(n)
+            if u is None:
+                bad.append(f"Failed to {verb} {n}: Unit {n} not found.")
+                continue
+            if verb == "stop" and n in (st.get("refuse_stop") or []):
+                bad.append(f"Failed to stop {n}: Access denied")
+                continue
+            if verb in ("start", "restart") and n in (st.get("refuse_start") or []):
+                bad.append(f"Failed to start {n}: Access denied")
+                continue
+            fall = n in (st.get("fall_over") or [])          # starts, then dies at once (a crash on start)
+            u["ActiveState"] = "inactive" if verb == "stop" else ("failed" if fall else "active")
+            u["SubState"] = "dead" if verb == "stop" else ("failed" if fall else ("waiting" if n.endswith(".timer") else "running"))
+            if fall:
+                u.update(Result="exit-code", ExecMainStatus="1")
+            if verb in ("start", "restart"):
+                st["runs"] = int(st.get("runs") or 0) + 1
+                u["InvocationID"] = "run%d" % st["runs"]
+                if u.get("Type") == "oneshot" and not fall:
+                    u.update(ActiveState="inactive", SubState="dead", Result=u.get("RunResult", "success"))
+        if bad:
+            sys.stderr.write("\n".join(bad) + "\n")
+            return 1
+        return 0
+    if verb in ("enable", "disable"):
+        now = "--now" in rest
+        for n in rest:
+            if n.startswith("-"):
+                continue
+            u = units.get(n)
+            if u is None:
+                sys.stderr.write(f"Failed to {verb} {n}: Unit {n} not found.\n")
+                return 1
+            u["UnitFileState"] = "enabled" if verb == "enable" else "disabled"
+            if now:
+                u["ActiveState"] = "active" if verb == "enable" else "inactive"
+                u["SubState"] = "running" if verb == "enable" else "dead"
+        return 0
+    if verb == "cat":
+        for n in rest:
+            u = units.get(n)
+            if u is None:
+                sys.stderr.write(f"No files found for {n}.\n")
+                return 1
+            print(f"# {u.get('FragmentPath', '/nowhere/' + n)}\n[Unit]\nDescription={u.get('Description', '')}\n\n"
+                  f"[Service]\nExecStart={u.get('ExecLine', '')}")
+        return 0
+    sys.stderr.write(f"fake systemctl: {verb} not handled\n")
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

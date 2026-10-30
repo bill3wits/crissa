@@ -1,0 +1,18 @@
+# The Chatterbox-Turbo env (modules/voice/crissa_voice/turbo_setup.py): Resemble AI's Chatterbox-Turbo on an NVIDIA
+# GPU (code and weights MIT; weights fetched at install by hash). torch 2.11 with CUDA 12.8 (Blackwell included):
+# chatterbox-tts 0.1.7 pins torch 2.6, which has no sm_120 kernels, so turbo-overrides.txt lifts that pin and drops
+# the package's pykakasi (GPL-3, Japanese only), gradio (its demo UI) and spacy-pkuseg (Chinese only).
+# resemble-perth is Resemble's Perth watermarker: it stamps every clip (turbo.settings.watermark, on by default).
+chatterbox-tts==0.1.7
+torch==2.11.0
+torchaudio==2.11.0
+numpy==1.26.4
+librosa==0.11.0
+s3tokenizer==0.3.0
+transformers==5.2.0
+diffusers==0.29.0
+resemble-perth==1.0.1
+conformer==0.3.2
+safetensors==0.5.3
+pyloudnorm==0.2.0
+omegaconf==2.3.1

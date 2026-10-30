@@ -1,0 +1,162 @@
+{
+ "schema": "phoneme_map/v3 \u2014 ranked rows, clip+frame, best first",
+ "series": {},
+ "by": "the user, by eye",
+ "library": "v2-listen-door",
+ "clips": [
+  "clip-v2-talk-pause-soft"
+ ],
+ "row_order": [
+  "rest",
+  "MBP",
+  "FV",
+  "TH",
+  "TDN",
+  "L",
+  "R",
+  "KG",
+  "S/Z",
+  "SH/CH",
+  "EE",
+  "EH",
+  "ER",
+  "AH",
+  "OH",
+  "WOO",
+  "Y",
+  "H",
+  "rest-open",
+  "Ah",
+  "Aa"
+ ],
+ "map": {
+  "EH": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 84
+   }
+  ],
+  "Aa": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 175
+   }
+  ],
+  "EE": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 141
+   }
+  ],
+  "TH": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 36
+   }
+  ],
+  "Ah": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 67
+   }
+  ],
+  "L": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 173
+   }
+  ],
+  "S/Z": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 80
+   }
+  ],
+  "KG": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 219
+   }
+  ],
+  "H": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 83
+   }
+  ],
+  "OH": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 121
+   }
+  ],
+  "WOO": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 127
+   }
+  ],
+  "rest-open": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 149
+   }
+  ],
+  "SH/CH": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 154
+   }
+  ],
+  "AH": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 53
+   }
+  ],
+  "ER": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 163
+   }
+  ],
+  "Y": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 83
+   }
+  ],
+  "TDN": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 230
+   }
+  ],
+  "R": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 97
+   }
+  ],
+  "FV": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 181
+   }
+  ],
+  "MBP": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 51
+   }
+  ],
+  "rest": [
+   {
+    "clip": "clip-v2-talk-pause-soft",
+    "f": 19
+   }
+  ]
+ },
+ "pose": {},
+ "saved": "2026-10-30T06:13:58"
+}

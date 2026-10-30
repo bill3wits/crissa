@@ -1,0 +1,25 @@
+{
+ "about": "Round 16 (.101 fresh install, ASK-20261013-0030 addenda 00:40, 00:43, 00:48, 00:50): the ear's exact decodes, the stamps' shape and the logged numbers. The User is `user`; the reading is a public-domain text she read aloud (her reference is cut to its sentences without names).",
+ "reading": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.",
+ "dropped_as_hers": [
+  {"text": "Okay, that's good. Stop there, Krista.", "logged": 0.604},
+  {"text": "What book was that?", "logged": 0.606},
+  {"text": "Thank you.", "logged": 0.625},
+  {"text": "Right. Hang on.", "logged": 0.727},
+  {"text": "Hang on.", "logged": 0.714}
+ ],
+ "stop_on_air": {"at": "00:40:29", "text": "Stop.", "rule": "on_air_not_user", "air_share": 1.0, "like_her": 0.667, "pid": "s1"},
+ "name_stop": {"at": "00:40:39", "text": "Crissa, stop.", "pid": null, "why": "no_emb", "route_was": "over_line by model, ~5 s"},
+ "pause": [
+  {"at": "00:36:58", "text": "Wait one second.", "was": "over_line PAUSE by model (fine)"},
+  {"at": "00:37:13", "text": "Okay. Continue.", "was": "own_voice no_emb, media: true, crissa_skip not_to_her"},
+  {"at": "00:38:29", "text": "Hey, Chris. Go ahead and start again.", "was": "crissa_skip paused"},
+  {"at": "00:38:31", "text": "Start where you left off.", "was": "crissa_skip paused"},
+  {"at": "00:39:00", "text": "Hey, Crissa.", "was": "unpause"}
+ ],
+ "near_name": [
+  {"at": "00:48:00", "text": "Hey, Krista.", "pid": "user", "was": "crissa_skip paused"},
+  {"at": "00:48:07", "text": "Hey, Krista.", "pid": "user", "was": "crissa_skip paused"},
+  {"at": "00:48:33", "text": "Hey, Crissa.", "pid": "user", "was": "wake hey_zoe"}
+ ]
+}

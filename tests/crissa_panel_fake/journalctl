@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""A stand-in journalctl for the Control Panel tests. Each unit asked for (-u) has $FAKE_JOURNAL_N entries (default
+1; the newest is "fake journal line for <unit>"), or the lines listed for it in $FAKE_JOURNAL_FILE (JSON
+{unit: [message, ...]}). Answers -o json / short-iso / cat, -r, -n N and --after-cursor (which, reversed, reads the
+entries BEFORE the cursor - journalctl's own behaviour)."""
+import json
+import os
+import sys
+
+argv = sys.argv[1:]
+units = [argv[i + 1] for i, a in enumerate(argv[:-1]) if a == "-u"]
+fmt = argv[argv.index("-o") + 1] if "-o" in argv else "short"
+n = int(argv[argv.index("-n") + 1]) if "-n" in argv else None
+after = next((a.split("=", 1)[1] for a in argv if a.startswith("--after-cursor=")), "")
+rev = "-r" in argv
+N = int(os.environ.get("FAKE_JOURNAL_N") or 1)
+listed = {}
+if os.environ.get("FAKE_JOURNAL_FILE"):
+    try:
+        listed = json.load(open(os.environ["FAKE_JOURNAL_FILE"]))
+    except (OSError, ValueError):
+        listed = {}
+ents = []
+base = 1791300000 * 10**6
+for k, u in enumerate(units):
+    msgs = listed.get(u) or [f"fake journal line for {u} #{i}" if i < N - 1 else f"fake journal line for {u}" for i in range(N)]
+    for i, m in enumerate(msgs):
+        ents.append({"__CURSOR": f"{u};{i}", "__REALTIME_TIMESTAMP": str(base + (i * 10 + k) * 10**6), "_HOSTNAME": "test",
+                     "SYSLOG_IDENTIFIER": "test", "_PID": "1", "MESSAGE": m, "_unit": u})
+ents.sort(key=lambda e: int(e["__REALTIME_TIMESTAMP"]))
+if rev:
+    ents.reverse()
+if after:
+    idx = next((i for i, e in enumerate(ents) if e["__CURSOR"] == after), None)
+    ents = ents[idx + 1:] if idx is not None else []
+if n is not None:
+    ents = ents[:n] if rev else ents[-n:]
+for e in ents:
+    if fmt == "json":
+        print(json.dumps({k: v for k, v in e.items() if k != "_unit"}))
+    elif fmt == "cat":
+        print(e["MESSAGE"])
+    else:
+        print(f"2026-10-06T06:00:00-0400 test {e['_unit']}[1]: {e['MESSAGE']}")

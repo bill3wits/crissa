@@ -1,0 +1,408 @@
+{
+  "_doc": "AUDIO8 IS HER EAR, NEVER A VOICE (the User 2026-10-17, round 27: slower and worse sounding than Pocket): lib/crissa_voice_tiers.not_a_voice takes it out of both orders below, every chain, saved pick and state-home copy; the orders keep it only for its switch (CRISSA_AUDIO8_TTS=1 = the old behaviour), so the lines below that name Audio8 as a voice hold only with that switch. Which voice a machine can run (lib/crissa_voice_tiers.py; the User 2026-10-06: the voice is chosen by what the machine can handle, not one fixed default). Init's order is exactly `order` (the User 2026-10-07, again that afternoon): Chatterbox-Turbo on a strong NVIDIA GPU (Linux, x86_64 or Arm), Audio8 on a robust CPU machine (its `needs`: 16 GB, 8 logical cores) with Pocket as her backup, Pocket TTS on a lighter CPU (Linux, or an Apple Silicon Mac on macOS 14+), the Mac's say, on-screen text. A tier's `stands_back_for` keeps it out of her chain when one of those is her voice: on a GPU machine Turbo's backup stays Pocket, with Audio8 after it where it is installed. The first tier whose `needs` this machine meets is the one Init picks and INSTALLS during setup (lib/crissa_voice_install.py); every tier below it that the machine also meets is the fallback chain, and a voice that fails to install falls down it. Kokoro (af_heart) is Pocket's backup only, on a weak machine and an 8 GB Mac (backup_only_for pocket; it stands back for Turbo and Audio8, so those orders stay Pocket next). The other tiers here (multilingual, turbo_mlx, piper) are never picked by Init for Crissa; they speak only when the person names one, and the announcer has its own order below (Audio8 first on a robust CPU machine). Crissa is always a woman's voice on every engine (lib/crissa_tts.py she_voice). A copy of this file in the state home (~/.crissa/crissa-voice-tiers.json) wins key by key, so a bigger machine can add or loosen tiers; nothing in the code caps it. The house never reads this file: its own voice is named in its house config.",
+  "order": [
+    "turbo",
+    "audio8",
+    "pocket",
+    "kokoro",
+    "say",
+    "text"
+  ],
+  "tiers": {
+    "multilingual": {
+      "label": "Chatterbox Multilingual V3 (Resemble AI, a GPU voice for your language)",
+      "needs": {
+        "gpu": "cuda",
+        "gpu_free_gb": 6,
+        "ram_gb": 8,
+        "os": [
+          "linux"
+        ],
+        "arch": [
+          "x86_64",
+          "aarch64",
+          "arm64"
+        ],
+        "languages": [
+          "ar",
+          "da",
+          "de",
+          "el",
+          "es",
+          "fi",
+          "fr",
+          "he",
+          "hi",
+          "it",
+          "ja",
+          "ko",
+          "ms",
+          "nl",
+          "no",
+          "pl",
+          "pt",
+          "ru",
+          "sv",
+          "sw",
+          "tr",
+          "zh"
+        ]
+      },
+      "needs_why": "Chatterbox Multilingual V3 (Resemble AI, 0.5B; code and weights MIT; 23 languages) on an NVIDIA GPU under Linux, in Turbo's env (the same hash locks and Arm stages; NOT YET VERIFIED ON ARM HARDWARE). Picked automatically when the language Init asks for is one of these and not English (English stays with Turbo). Opt-in install; its own self-test must pass, or Init passes it over with the reason and Turbo speaks English, else Pocket. Measured by a bake-off on the reference house's GPU: 4.4 GiB process peak with the allocator capped at 4 GiB (not yet through this service). Japanese, Chinese, Hebrew and Russian speak with a reduced text front end (no pykakasi, which is GPL-3; no pkuseg, dicta or stress marks).",
+      "backup": [
+        "turbo",
+        "pocket",
+        "say"
+      ],
+      "install": "python3 modules/voice/scripts/crissa-multilingual.py --install",
+      "size": "about 3.2 GB of model, in Turbo's env (about 5 GB of packages if Turbo is not installed yet)",
+      "settings": {
+        "watermark": true,
+        "language": "auto",
+        "chunk_first_min": 0,
+        "chunk_min": 0,
+        "chunk_max": 80,
+        "temperature": 0.8,
+        "exaggeration": 0.5,
+        "cfg_weight": 0.5,
+        "seed": 0,
+        "vram_cap_gb": 4.0,
+        "headroom_gb": 2.0
+      },
+      "settings_why": "language: \"auto\" is the language Init detected; a code (de, fr, ja, ...) fixes it; each /stream request may name its own. watermark: Resemble's Perth watermark, ON by default (CRISSA_MULTILINGUAL_WATERMARK=0 or false here turns it off; /health says which). Voices: <crissa home>/multilingual/voices/<face>.wav, cloned here on their own (its speaker embeddings are not Turbo's); none ship."
+    },
+    "turbo": {
+      "label": "Chatterbox-Turbo (Resemble AI, a GPU voice, sentence by sentence)",
+      "needs": {
+        "gpu": "cuda",
+        "gpu_free_gb": 6,
+        "ram_gb": 8,
+        "os": [
+          "linux"
+        ],
+        "arch": [
+          "x86_64",
+          "aarch64",
+          "arm64"
+        ],
+        "languages": [
+          "en"
+        ]
+      },
+      "needs_why": "Chatterbox-Turbo (Resemble AI, 350M; code and weights MIT) on an NVIDIA GPU under Linux. x86_64: its hash lock is torch 2.11 with CUDA 12.8, Blackwell included. Arm (aarch64): torch 2.11 cu128 on Grace / GH200 / SBSA servers, cu130 on a DGX Spark / GB10 (sm_121), installed in stages from its own hash lock; NOT YET VERIFIED ON ARM HARDWARE, so the install's self-test decides, and a failed self-test passes Turbo over to Pocket with the reason on screen and in the log. A Jetson needs JetPack torch wheels and is passed over to Pocket. ResembleAI/chatterbox-turbo-ONNX (MIT; Perth optional, OFF in the upstream sample) was evaluated as an easier Arm GPU install and NOT adopted: onnxruntime-gpu now has aarch64 CUDA-13 wheels, but the export is a different service (four ONNX sessions), watermark is not on by default, Arm GPU timings are unverified, and ONNX on CPU measured too slow against Pocket — not a CPU tier, and not a replacement for the PyTorch --no-deps Arm path. Measured on the reference house's GPU (2026-10-06): 3.7 GiB on the card at peak, CUDA context included (the allocator is capped at vram_cap_gb 4.5), ~80-character chunks, first clip in 0.16-0.21 s, each next clip 0.36-0.43 s behind the last (always ahead of playback), real-time factor about 0.11, barge-in stops the stream within 5 ms; 6 GiB free as nvidia-smi counts it is its start gate (vram_cap_gb + headroom_gb). No Apple GPU path, and far too slow on a CPU to talk: Pocket speaks there.",
+      "backup": [
+        "pocket",
+        "say"
+      ],
+      "install": "python3 modules/voice/scripts/crissa-turbo.py --install",
+      "size": "about 3 GB of model and 5 GB of packages (PyTorch with CUDA)",
+      "settings": {
+        "watermark": true,
+        "chunk_first_min": 0,
+        "chunk_min": 0,
+        "chunk_max": 80,
+        "temperature": 0.8,
+        "seed": 0,
+        "vram_cap_gb": 4.5,
+        "headroom_gb": 1.5
+      },
+      "settings_why": "watermark: Resemble's Perth watermark on every clip, as upstream ships it; ON by default. Set it false here (or CRISSA_TURBO_WATERMARK=0) to turn it off; /health and the start-up log always say which. chunk_max 80 was the smallest size that still sounded natural (40 was choppy). Voices: a face's own clip in <crissa home>/turbo/voices/<face>.wav (a clip you have the rights to; none ship), else Turbo's built-in voice."
+    },
+    "pocket": {
+      "label": "Pocket TTS (Kyutai, 100M, on the CPU)",
+      "needs": {
+        "ram_gb": 4,
+        "os": [
+          "linux",
+          "darwin"
+        ],
+        "mac_chip": "arm64",
+        "macos_min": "14.0",
+        "languages": [
+          "en",
+          "fr",
+          "de",
+          "es",
+          "it",
+          "pt",
+          "nl"
+        ]
+      },
+      "needs_why": "Kyutai Pocket TTS (100M; code MIT, weights CC BY 4.0) runs on the CPU, Apple Silicon included (macOS 14 or later, for torch's Mac build). Measured on the reference house on 3 threads: about 1.2 GiB of memory, about 0.1 s to first audio, RTF about 0.3. Packs speak with its stock voices only (CC BY 4.0 or CC0 each); it never clones. Cloning needs Kyutai's gated weights and your own Hugging Face login after accepting their terms; Crissa does not use them.",
+      "backup": [
+        "kokoro",
+        "say"
+      ],
+      "installs_backup": true,
+      "installs_backup_why": "When Pocket is Crissa's voice (a weak machine or an 8 GB Mac), Init also installs Kokoro, the next voice in her chain, so the backup is really there (lib/crissa_voice_install.py). A Turbo or Audio8 chain does not contain Kokoro, so this does not install it there.",
+      "size": "about 0.33 GB of model and voices and about 1 GB of packages (PyTorch for the CPU)",
+      "install": "python3 modules/voice/scripts/crissa-pocket.py --install",
+      "settings": {
+        "threads": 3,
+        "emit": "frames",
+        "chunk_first_max": 40,
+        "chunk_max": 80,
+        "voices": {
+          "crissa": "crissa",
+          "lila": "eve",
+          "announcer": "anna",
+          "anna": "anna",
+          "default": "azelma"
+        }
+      },
+      "settings_why": "emit = frames sends each ~80-character chunk's 80 ms frames as they are made; \"chunk\" (or POCKET_EMIT=chunk) renders each chunk whole first, which measured 1.0-1.3 s gaps between clips on 3 cores. voices maps a face to an allowed stock voice (modules/voice/crissa_voice/pocket_setup.py VOICES); an unknown face speaks with `default`. crissa and default are eve (VCTK p361, the User 2026-10-09, after hearing the Pocket stocks). Lila is eve on Pocket too. jane stays an allowed stock voice. Audio8 still speaks her own clip, and jane is that clip's backup. alba is still an allowed stock voice but measured in a man's pitch range (2026-10-07: median 135 Hz on a test line, the men's voices 113-128 Hz, the women's 176-254 Hz), so it is no face's voice. A female face never gets a man's voice whatever a saved map says (pocket_setup.FEMALE).",
+      "languages_why": "Pocket's language models (kyutai/pocket-tts-without-voice-cloning, CC BY 4.0): english, french, german, spanish, italian, portuguese; dutch is in the repo but not in its README. Each face keeps a stock voice in every language: crissa eve, lila eve, the announcer anna. eve is one of the four voices every language carries, so she does not fall to mary outside English. jane is English only and is no longer her Pocket voice. Native voices checked 2026-10-06 and allowed: estelle (fr, Kyutai's own recording, CC0), lola (es) and giovanni (it) (Mozilla Common Voice, CC0), daan (nl, CML-TTS, CC BY 4.0). Left out, licence unverifiable: juergen (de) and rafael (pt)."
+    },
+    "kokoro": {
+      "label": "Kokoro (Kokoro-82M on the CPU)",
+      "needs": {
+        "ram_gb": 4,
+        "os": [
+          "linux",
+          "darwin"
+        ],
+        "mac_chip": "arm64",
+        "languages": [
+          "en"
+        ]
+      },
+      "needs_why": "Kokoro runs on any 64-bit Linux and on Apple Silicon Macs; it uses about 1.2 GB of memory and speaks faster than real time on 3 to 4 CPU cores. Crissa speaks af_heart. Init installs it only as Pocket's backup (a weak machine or an 8 GB Mac).",
+      "backup_only_for": "pocket",
+      "backup_only_why": "Kokoro is Pocket's backup on a weak machine and an 8 GB Mac (the User 2026-10-08): Crissa speaks azelma, then af_heart. It is not her voice when Turbo or Audio8 is, and Init does not pick it as the main voice.",
+      "stands_back_for": [
+        "turbo",
+        "audio8",
+        "multilingual",
+        "turbo_mlx"
+      ],
+      "backup": [
+        "say",
+        "piper"
+      ],
+      "install": "python3 modules/voice/scripts/crissa-tts.py --install",
+      "size": "about 0.4 GB of model and 1 GB of packages",
+      "settings": {
+        "voices": {
+          "crissa": "af_heart",
+          "lila": "bf_emma",
+          "announcer": "bm_george"
+        }
+      }
+    },
+    "say": {
+      "label": "the Mac's own voice (say)",
+      "needs": {
+        "os": [
+          "darwin"
+        ],
+        "languages": [
+          "*"
+        ]
+      },
+      "backup": [],
+      "settings": {
+        "voices": {
+          "crissa": "Samantha",
+          "lila": "Karen",
+          "announcer": "Daniel"
+        }
+      },
+      "settings_why": "voices: each face's macOS voice when that voice is installed; a face whose voice is missing (or a language other than English) speaks with the first installed voice of the language, and Init says so."
+    },
+    "piper": {
+      "label": "Piper (a voice model you supply)",
+      "needs": {
+        "piper_model": true,
+        "languages": [
+          "en"
+        ]
+      },
+      "needs_why": "Piper speaks only with a voice model you download yourself and name in the voice settings; none ships.",
+      "backup": []
+    },
+    "text": {
+      "label": "on-screen text",
+      "needs": {
+        "languages": [
+          "*"
+        ]
+      },
+      "backup": []
+    },
+    "audio8": {
+      "label": "Audio8 TTS (Edge0, Crissa's voice and the announcer on a robust CPU machine)",
+      "needs": {
+        "ram_gb": 16,
+        "cpu_cores": 8,
+        "os": [
+          "linux",
+          "darwin"
+        ],
+        "macos_min": "14.0",
+        "languages": [
+          "en",
+          "fr",
+          "de",
+          "es",
+          "it",
+          "nl",
+          "ja",
+          "zh",
+          "ko",
+          "pl",
+          "yue"
+        ]
+      },
+      "needs_why": "Audio8 TTS (Edge0; 0.6B, ONNX INT4; code and weights Apache-2.0) on the CPU, no torch. On a robust CPU machine it is CRISSA'S OWN VOICE, with Pocket as her backup (the User 2026-10-07, afternoon), and the ANNOUNCER (the User 2026-10-06, again 2026-10-07), in every language it speaks. She speaks with her own clip (crissa_imagine; jane, VCTK p339, a woman's stock voice, CC BY 4.0, is its backup), the announcer with anna. On a GPU machine Turbo stays her voice (stands_back_for); weaker machines and 8 GB Macs keep Pocket for both, and Kokoro (af_heart) backs Pocket for Crissa there only. ROBUST = ram_gb and cpu_cores here (16 GB, 8 logical cores as the OS counts them), from `measured`: the server holds about 1.0 GiB once loaded and peaks at 1.7-1.9 GiB while speaking, a tenth of 16 GB beside Pocket (about 1.2 GiB) and the Wall; its autoregressive decode is near real time only with about 8 or more cores free (real-time factor 1.0-1.1 with spare cores, 1.3-1.4 held to 8, 1.5-1.6 held to 5, 2.4-2.6 held to 3), and an announcer line is buffered, so on fewer cores a 6 s line waits 10-16 s. A 16-core machine with 91 GB and no GPU qualifies; an 8 GB laptop or a 4-core box announces with Pocket. Init installs it there (lib/crissa_voice_install.py); its self-test must speak.",
+      "stands_back_for": [
+        "turbo",
+        "multilingual",
+        "turbo_mlx"
+      ],
+      "stands_back_why": "Crissa's chain only: when one of these GPU voices is her own voice here, Audio8 is not her next voice; Pocket is (it streams, so a missed line is covered fastest), and Audio8 follows it where installed (lib/crissa_tts.py with_installed). The announcer's order is not changed by this.",
+      "installs_backup": true,
+      "installs_backup_why": "When Audio8 is Crissa's voice, Init installs the next voice in her chain too (Pocket on a robust CPU machine), so her backup is really there (lib/crissa_voice_install.py).",
+      "install": "python3 modules/voice/scripts/crissa-audio8.py --install",
+      "size": "about 1 GB of model and 0.2 GB of packages",
+      "backup": [
+        "pocket",
+        "kokoro",
+        "say"
+      ],
+      "settings": {
+        "stream_replies": true,
+        "piece_chars": 72
+      },
+      "settings_why": "ROUND 23 (the User 2026-10-15, .101 round 22: Audio8 as her voice read \"one sentence at a time\", 6-7 chars/s against Pocket's 13-15): stream_replies streams her replies from the first chunk, as the announcer always has (CRISSA_AUDIO8_STREAM=0/1 still decides when set); a stream measured under real time falls back to the pieces (piece_chars a request, the first playing while the next renders) and says so. Setup never leaves a voice with empty settings.",
+      "measured": {
+        "_doc": "2026-10-07, the reference machine (a 16-core, 32-thread desktop CPU), the pack's own install (lock audio8-linux-x86_64-cpu-py312, Python 3.12.15 from pyenv), voice anna, 3 lines of 41-114 characters, ARKTTS_THREADS 3-8, each run in a systemd scope with CPUQuota as the core limit. RAM is the server's VmRSS / VmHWM. Peak 1.7 GiB with anna, 1.9 GiB with vctk_p283.",
+        "rss_loaded_gib": 1.0,
+        "rss_peak_gib": 1.9,
+        "rtf_by_cpus": {
+          "unlimited": "1.0-1.1",
+          "8": "1.3-1.4",
+          "5": "1.5-1.6",
+          "3": "2.4-2.6"
+        },
+        "stream_20261008": {
+          "_doc": "2026-10-08, the reference box, the house's own engine 7b6a5a1 (int4 AR, fp16 codec), announcer, one 82-char line (6.64 s of audio), scratch server in its own scope. The AR decode alone keeps real time; the codec decodes a whole line at 2.4x real time (an fp32 copy of it: 2.57x, so the codec's speed is the model's); buffered /api/tts = AR + one codec pass = 0.94x, which is why an announcer line waits about its own length. /api/tts/stream re-decodes stream_context_frames (128) + the chunk (12) of codec for every 0.56 s chunk, so it runs at 0.31x whatever the thread count; a smaller context and bigger chunk reach 0.78x, still under real time. A stream that keeps real time on a CPU needs the AR and the codec in two threads (pipelined: about 1.4x by these numbers) - a pack-side server change, not built. The pack streams the announcer's first line, notes the rate, and takes the 72-char pieces after a slow one (lib/crissa_tts.audio8_stream_wanted). LATER THE SAME NIGHT: the pack's own server (modules/voice/crissa_voice/audio8_serve.py) runs the AR and the codec in two threads with their own ONNX budgets (ARKTTS_THREADS 5, AUDIO8_CODEC_THREADS 3, context 16): in-process 1.04x real time, through HTTP 0.92-0.98x with first sound 0.90 s, a cancel returns in under 3 s and the next line starts at once; one shared thread budget made the pipeline 0.65x. The announcer streams on it with a 0.5 s prebuffer after the first chunk (lib/crissa_tts.speak_audio8).",
+          "ar_rtf_by_threads": {
+            "3": 1.49,
+            "4": 1.42,
+            "5": 1.56,
+            "6": 1.08,
+            "8": 1.28,
+            "16": 0.48
+          },
+          "codec_whole_line_rtf": {
+            "fp16": 2.44,
+            "fp32_copy": 2.57
+          },
+          "buffered_rtf_5_threads": 0.94,
+          "stream_rate_by_threads": {
+            "5": 0.31,
+            "8": 0.32,
+            "16": 0.23
+          },
+          "stream_rate_ctx_chunk_5_threads": {
+            "128/12": 0.31,
+            "32/12": 0.52,
+            "32/24": 0.71,
+            "16/24": 0.78
+          },
+          "stream_first_chunk_s": {
+            "5": 0.8,
+            "8": 0.8,
+            "16": 1.5
+          },
+          "pipelined_pack_server": {
+            "in_process_rate_ar5_codec3": 1.04,
+            "http_rate": "0.92-0.98",
+            "http_first_sound_s": 0.9,
+            "cancel_return_s": "<3",
+            "codec_threads_sweep_ar5": {
+              "2": 0.95,
+              "3": 1.04,
+              "4": 0.98
+            },
+            "shared_budget_rate": 0.65
+          }
+        }
+      }
+    },
+    "turbo_mlx": {
+      "label": "Chatterbox-Turbo on Apple Silicon (MLX, unverified)",
+      "needs": {
+        "gpu": "mps",
+        "ram_gb": 16,
+        "os": [
+          "darwin"
+        ],
+        "mac_chip": "arm64",
+        "macos_min": "14.0",
+        "languages": [
+          "en"
+        ]
+      },
+      "backup": [
+        "pocket",
+        "say"
+      ],
+      "install": "python3 modules/voice/scripts/crissa-turbo-mlx.py --install",
+      "size": "about 0.5-0.8 GB of model (4-bit or 8-bit) plus mlx-audio",
+      "settings": {
+        "watermark": true,
+        "quant": "4bit",
+        "chunk_max": 80
+      },
+      "needs_why": "Chatterbox-Turbo via mlx-community/chatterbox-turbo-4bit (or 8bit) and mlx-audio (conversion Apache-2.0; base ResembleAI/chatterbox-turbo MIT). Apple Silicon only, 16 GB unified RAM floor (an 8 GB M1/M2 stays on Pocket: community reports of the non-MLX Mac path ballooning past 16 GB, and 4-bit peak RAM is NOT YET VERIFIED ON APPLE SILICON HARDWARE). Perth watermark is NOT applied by mlx-audio for Chatterbox; a Crissa install must stamp clips with resemble-perth itself (settings.watermark, ON by default) before this tier ships as verified. Opt-in; the self-test decides, and a failed self-test passes it over to Pocket. CoreML (ebrinz/iliasaz) and GGUF (cstr) ports were noted and are not adopted.",
+      "settings_why": "quant: 4bit (mlx-community/chatterbox-turbo-4bit, ~415 MB) or 8bit (~706 MB). watermark: ON; mlx-audio does not stamp Perth for Chatterbox, so the Crissa service must apply resemble-perth itself."
+    }
+  },
+  "beyond": {
+    "gpu_free_gb": 16,
+    "note": "This machine has more GPU room than the reference house, which shares one GPU with its language models. Open settings in the state-home copy of this file: turbo.settings.vram_cap_gb (the allocator cap, 4.5 here; Turbo measured 3.7 GiB at peak) and turbo.settings.chunk_max (longer chunks, fewer seams, a later first clip)."
+  },
+  "announcer": {
+    "_doc": "Who says the announcer's lines (the User 2026-10-06, again 2026-10-07): Audio8 on a robust CPU machine (tiers.audio8.needs), then Pocket, then Kokoro, then the Mac's say, then text. Each step must speak the person's language too, and Init installs the first one this machine can run (lib/crissa_voice_install.py). Crissa's own voice keeps its own order (Turbo on a GPU, Audio8 then Pocket on a robust CPU machine, else Pocket, with Kokoro (af_heart) behind her on a weak machine and an 8 GB Mac). When she and the announcer both use Audio8, one Audio8 server speaks both, one line at a time.",
+    "order": [
+      "audio8",
+      "pocket",
+      "kokoro",
+      "say",
+      "text"
+    ],
+    "audio8": {
+      "_doc": "The announcer's two voices on Audio8 (the User 2026-10-07: keep the house's alternating announcer, every other day, with voices a pack can ship; no house clone ever ships). voice = A, voice_b = B, alternate = \"day\" (A on even days by the calendar's day number, B on odd ones, the house's own rule) or \"off\" (A every day). An empty voice_b is A every day. Each must be one of the voice module's pack voices (modules/voice/crissa_voice/audio8_setup.py PACK_VOICES); any other name is refused and A speaks. Set them in the state-home copy of this file; Init (or crissa-audio8.py --install) registers them.",
+      "voice": "anna",
+      "voice_b": "",
+      "alternate": "day",
+      "voice_why": "A: anna, VCTK speaker p228 (English, Southern England), CC BY 4.0, a stock corpus voice registered on your machine; the stock English voice of the house's pair.",
+      "voice_b_proposed": "vctk_p283",
+      "voice_b_why": "Audio8 ships no stock voice at all (its code and model repositories carry none; every voice is registered from a reference clip), so there is no Audio8 Irish voice to take. PROPOSED for B, not set: vctk_p283, VCTK speaker p283 (a woman of 24 from Cork, south of Ireland, as VCTK's speaker table lists her), CC BY 4.0, from the same kyutai/tts-voices copy and sentence as anna; pinned by sha256 and fetched only when named. The house's own B-day voice is a clone and never ships."
+    },
+    "pocket": {
+      "anna": "anna",
+      "vctk_p283": "anna"
+    },
+    "kokoro": "bm_george",
+    "say": "Daniel"
+  },
+  "on_demand": {
+    "_doc": "A voice engine runs only while a role uses it (lib/crissa_voice_demand.py, round 17, the User 2026-10-13: \"agree on stoping not used software\"). The roles: her replies and Lila / Setup use her voice (the pick's main, or the engine the person named), the announcer the first of its own order. Every other installed engine of a chain is installed, not running: the launcher holds it (the Control Panel says so; never red), starts it when a line's ladder falls back to it and waits up to wait_s for it to load, and stops it again after idle_stop_s with no role using it and no line asking it. every_s: how often the launcher looks. A copy of this file in the state home changes them for one install. Kill CRISSA_VOICE_ENGINES_ON_DEMAND=0: every installed engine of a chain starts with Crissa and stays up.",
+    "idle_stop_s": 600,
+    "wait_s": {"default": 60, "turbo": 120, "multilingual": 120},
+    "every_s": 5,
+    "measured": "2026-10-11, .101 (a CPU-only laptop): Pocket in use at 0.9 GB RSS, Kokoro 1.1 GB and Audio8 1.8 GB resident and idle (CPU about 0), about 3.8 GB for one voice in use. idle_stop_s 600: the watch's whole back-off (2+5+15+30+60 s) is under two minutes, so a backup that spoke while her voice came back is usually asked again within minutes; ten minutes is keep_warm.interval_s, the measure of idle for a voice here (the first line after ten idle minutes paid the cold model, 2026-10-06). wait_s: the launcher's own ready budget for a lane (lib/crissa_procs.READY_S: 60 s), and 120 s for a GPU voice (its ready budget is 240 s) so a line's wait stays under the player's 150 s limit for one line (house-conductor SPEAK_WEDGE_S)."
+  },
+  "keep_warm": {
+    "_doc": "Keep-warm for the active GPU voice (Turbo, or Multilingual when chosen): a short line on start and every interval_s so the first line after idle does not pay the cold model and aligner cost (about 2.9 s cold against 1.0 s warm, measured 2026-10-06). on: \"gpu\" = on whenever Crissa's voice is a GPU voice; false turns it off. Nothing is played.",
+    "on": "all",
+    "_on": "Round 28 (.101 2026-10-17: her first line after a quiet spell on Pocket paused on its first packet; the keep-warm said nothing to warm): all = any streamed voice of hers, Pocket included; gpu = Turbo or Multilingual only (rounds 22-27); false = off.",
+    "interval_s": 600,
+    "line": "Mm, okay.",
+    "face": "crissa",
+    "aligner": true,
+    "timeout_s": 60
+  }
+}

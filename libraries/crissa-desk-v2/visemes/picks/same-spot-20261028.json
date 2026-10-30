@@ -1,0 +1,167 @@
+{
+ "schema": "same-spot/1",
+ "source": "spots:female",
+ "picks": "visemes/picks/map-best-work.json",
+ "day": "20261028",
+ "bands": {
+  "v2-talk-pause-work": {
+   "station": "desk/0",
+   "moved": {
+    "desk/0/Aa": {
+     "how": "same-spot:spots:female#29 -> v2-talk-pause-work#29 (Now q=0.14)",
+     "src_f": 29,
+     "f": 29,
+     "word": "Now",
+     "k": 0,
+     "q": 0.143
+    },
+    "desk/0/EE": {
+     "how": "same-spot:spots:female#141 -> v2-talk-pause-work#134 (really? q=0.92)",
+     "src_f": 141,
+     "f": 134,
+     "word": "really?",
+     "k": 10,
+     "q": 0.923
+    },
+    "desk/0/TH": {
+     "how": "same-spot:spots:female#36 -> v2-talk-pause-work#36 (and q=0.25)",
+     "src_f": 36,
+     "f": 36,
+     "word": "and",
+     "k": 1,
+     "q": 0.25
+    },
+    "desk/0/Ah": {
+     "how": "same-spot:spots:female#67 -> v2-talk-pause-work#70 (calm q=0.11)",
+     "src_f": 67,
+     "f": 70,
+     "word": "calm",
+     "k": 5,
+     "q": 0.111
+    },
+    "desk/0/L": {
+     "how": "same-spot:spots:female#85 -> v2-talk-pause-work#86 (helped q=0.14)",
+     "src_f": 85,
+     "f": 86,
+     "word": "helped",
+     "k": 7,
+     "q": 0.143
+    },
+    "desk/0/S/Z": {
+     "how": "same-spot:spots:female#80 -> v2-talk-pause-work#82 (voice q=0.83)",
+     "src_f": 80,
+     "f": 82,
+     "word": "voice",
+     "k": 6,
+     "q": 0.833
+    },
+    "desk/0/KG": {
+     "how": "same-spot:spots:female#219 -> v2-talk-pause-work#206 (the q=0.50)",
+     "src_f": 219,
+     "f": 206,
+     "word": "the",
+     "k": 19,
+     "q": 0.5
+    },
+    "desk/0/H": {
+     "how": "same-spot:spots:female#83 -> v2-talk-pause-work#84 (helped q=0.00)",
+     "src_f": 83,
+     "f": 84,
+     "word": "helped",
+     "k": 7,
+     "q": 0.0
+    },
+    "desk/0/OH": {
+     "how": "same-spot:spots:female#121 -> v2-talk-pause-work#119 (Oh, q=0.00)",
+     "src_f": 121,
+     "f": 119,
+     "word": "Oh,",
+     "k": 9,
+     "q": 0.0
+    },
+    "desk/0/WOO": {
+     "how": "same-spot:spots:female#127 -> v2-talk-pause-work#121 (Oh, q=0.60)",
+     "src_f": 127,
+     "f": 121,
+     "word": "Oh,",
+     "k": 9,
+     "q": 0.6
+    },
+    "desk/0/rest-open": {
+     "how": "same-spot:spots:female#149 -> v2-talk-pause-work#19 (really? q=1.00)",
+     "src_f": 149,
+     "f": 19,
+     "word": "really?",
+     "k": 10,
+     "q": 1.0
+    },
+    "desk/0/SH/CH": {
+     "how": "same-spot:spots:female#154 -> v2-talk-pause-work#151 (Sure, q=0.00)",
+     "src_f": 154,
+     "f": 151,
+     "word": "Sure,",
+     "k": 11,
+     "q": 0.0
+    },
+    "desk/0/ER": {
+     "how": "same-spot:spots:female#163 -> v2-talk-pause-work#154 (Sure, q=0.42)",
+     "src_f": 163,
+     "f": 154,
+     "word": "Sure,",
+     "k": 11,
+     "q": 0.417
+    },
+    "desk/0/Y": {
+     "how": "same-spot:spots:female#83 -> v2-talk-pause-work#84 (helped q=0.00)",
+     "src_f": 83,
+     "f": 84,
+     "word": "helped",
+     "k": 7,
+     "q": 0.0
+    },
+    "desk/0/TDN": {
+     "how": "same-spot:spots:female#230 -> v2-talk-pause-work#216 (kitchen. q=0.77)",
+     "src_f": 230,
+     "f": 216,
+     "word": "kitchen.",
+     "k": 20,
+     "q": 0.769
+    },
+    "desk/0/R": {
+     "how": "same-spot:spots:female#97 -> v2-talk-pause-work#96 (her. q=0.71)",
+     "src_f": 97,
+     "f": 96,
+     "word": "her.",
+     "k": 8,
+     "q": 0.714
+    },
+    "desk/0/FV": {
+     "how": "same-spot:spots:female#181 -> v2-talk-pause-work#171 (laughed, q=0.54)",
+     "src_f": 181,
+     "f": 171,
+     "word": "laughed,",
+     "k": 13,
+     "q": 0.538
+    },
+    "desk/0/MBP": {
+     "how": "same-spot:spots:female#51 -> v2-talk-pause-work#50 (my q=0.00)",
+     "src_f": 51,
+     "f": 50,
+     "word": "my",
+     "k": 3,
+     "q": 0.0
+    },
+    "desk/0/rest": {
+     "how": "same-spot:spots:female#19 -> v2-talk-pause-work#105 (Now q=0.00)",
+     "src_f": 19,
+     "f": 105,
+     "word": "Now",
+     "k": 0,
+     "q": 0.0
+    }
+   },
+   "kept": [],
+   "missing_tiles": []
+  }
+ }
+}

@@ -1,0 +1,8 @@
+# The id module's env (modules/id/crissa_id): the face engine (MediaPipe + AuraFace on onnxruntime) and the
+# voice encoder (WeSpeaker ResNet221 on onnxruntime; its kaldi fbank is numpy since 2026-10-10, torch stays pinned).
+numpy==1.26.4
+onnxruntime==1.18.0
+mediapipe==0.10.21
+opencv-python-headless==4.10.0.84
+torch==2.6.0
+torchaudio==2.6.0
