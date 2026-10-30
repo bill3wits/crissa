@@ -1,0 +1,5 @@
+# The voice module's listening loop. The ASR service builds its own env on first use
+# (python3 modules/voice/scripts/crissa-asr.py --install).
+numpy>=1.24
+sounddevice>=0.4
+webrtcvad-wheels>=2.0.14

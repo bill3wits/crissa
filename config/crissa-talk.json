@@ -1,0 +1,63 @@
+{
+ "_doc": "How she talks, waits and listens (2026-10-06). lib/crissa_talk.py reads this file, then <crissa home>/talk.json on top (Init writes that one), then the environment wins over both. 0 means no limit; null means leave the speaker's own default alone.",
+ "reply": {
+  "max_chars": 0,
+  "timeout_s": 0,
+  "stream_sentences": true,
+  "min_sentence_chars": 12,
+  "working_filler": ["One moment."],
+  "working_every_s": 20,
+  "max_tokens": 4096,
+  "reading_tokens": 1000,
+  "context_tokens": 10000,
+  "_tokens_doc": "What the chat is asked for (round 15, 2026-10-12): max_tokens is a turn's reply budget; reading_tokens is a reading's budget per request (\"go on\" fetches the next part); context_tokens caps what is sent (system prompt + recent history + the turn, about 4 characters a token; the oldest history goes first). EAR_BRIDGE_MAX_TOKENS, EAR_BRIDGE_READING_TOKENS, EAR_BRIDGE_CONTEXT_TOKENS override. 0 = no cap of ours."
+ },
+ "speak": {
+  "max_chars": 0,
+  "piece_chars": 760,
+  "_piece_doc": "A line longer than this is read as consecutive pieces of at most this many characters, each ending on a sentence, each its own line; nothing is dropped (round 14, 2026-10-12). 200-780; 0 = one line, cut at the voice's 800-character cap with a note."
+ },
+ "announce": {
+  "queue_max": 20,
+  "roundup_over": 3,
+  "dedup_s": 45,
+  "speech_pause_s": 12,
+  "max_wait_s": 0,
+  "quiet_hours": null,
+  "voice": ""
+ },
+ "ear": {
+  "wake": [],
+  "variants": [],
+  "gather_s": 1.2,
+  "tail_s": 1.5,
+  "follow_s": 20,
+  "barge": true,
+  "body_cues": true,
+  "poll_s": 0.3
+ },
+ "turn": {
+  "speculate": true,
+  "end_s": 0.6,
+  "final_s": 2.0,
+  "gap_s": 0.3,
+  "_doc": "When his turn ends and her mouth opens (round 17, 2026-10-13, the User: \"yes cut the waits\"; checkpoint round17-waits-20261013). end_s: the silence that closes his utterance in a conversation (the ear's hangover; was 2.0 s, 0.6 = two of its 0.3 s frames). speculate: her turn starts as his lands and is cancelled silently, then asked again with the whole utterance, if he goes on before her mouth opens. final_s: her mouth opens only after this much silence since he was last heard (2.0: a thinking pause of up to 1.5 s inside his sentence is not taken for his end even on a fast machine; the ear sees him start again 0.3-0.5 s late, so a pause about final_s long can still be answered early). gap_s: and this long after his turn reached the bridge (was 2.0 s). CRISSA_EAR_SPECULATE=0 (the 2.0 s hangover back, no speculation), CRISSA_SPEAK_GAP_S (2 = the old quiet), CRISSA_EAR_END_S, CRISSA_TURN_FINAL_S override."
+ },
+ "speak_tuning": {
+  "tempo": null,
+  "follow_line": null,
+  "buffer": null,
+  "read_bytes": null,
+  "first_chunk_ms": null,
+  "tail_starve_ms": null,
+  "align_lead_ms": null
+ },
+ "barge": {
+  "words_only": true,
+  "words": ["stop", "wait", "hold on", "hang on", "one second", "one sec", "pause", "quiet", "enough", "cancel", "never mind", "excuse me"],
+  "name": true,
+  "names": [],
+  "side_talk": true,
+  "_doc": "What may cut her line while she speaks (round 18, 2026-10-13, the User: \"Interrupt words only\" and \"Id like to talk with someone else while she speaks without interrupting her\"; checkpoint round18-barge-words-20261013). words_only: only these words, or her name, cut her, straight from the ear's first look, with no voice check (false = round 17: any words of someone's). words: the interrupt words he approved, matched on word boundaries, case-insensitive, never when she is saying the same word herself; the ear also counts its measured spellings of them (\"wansan\" for one second, \"nevermind\"). Left out on purpose: okay, yes, no, sorry (every reply and reading has them; the ASR writes \"No.\" and \"Okay.\" for a cough or a key). name: her name and the spellings the ear has written for it (Chrissa, Chrisa, Krisa, ... and, over her line, Chris, Krista), when it calls her (after hey/hi/okay, or first or last in what was heard), never when she says it herself. names: more spellings of her name. side_talk: anything else said while she answers is not a cut and is never sent to her; it is shown on the Wall's log as room speech. CRISSA_BARGE_WORDS_ONLY=0 and CRISSA_SIDE_TALK=0 override."
+ }
+}

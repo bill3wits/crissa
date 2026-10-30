@@ -1,0 +1,17 @@
+{
+  "_doc": "The voice module's own Python (2026-10-07, the User: the voice envs never use the system Python; Ubuntu ships 3.14 only and every lock in this folder is for 3.12). crissa_voice/pyenv.py reads this file; a copy at <crissa home>/voice-python.json wins key by key. Each engine's env (<crissa home>/<engine>/env) is made by micromamba from conda-forge with the pinned Python and pip, then the engine's hash lock goes in with pip --require-hashes. One env per engine: the locks disagree (torch 2.6 for speech-in and Kokoro, 2.11 for Turbo, 2.14.1 for Pocket; numpy 1.26 against 2.x), so they cannot share one. micromamba's package cache (pkgs_dir) is shared, so the Python itself downloads once. Checked 2026-10-07: micromamba 2.9.0-0 is the latest release (2026-08-07), python 3.12.15 the latest 3.12 on conda-forge.",
+  "python": "3.12.15",
+  "channel": "conda-forge",
+  "packages": ["pip"],
+  "micromamba": {
+    "version": "2.9.0-0",
+    "url": "https://github.com/mamba-org/micromamba-releases/releases/download/{version}/micromamba-{platform}",
+    "sha256": {
+      "linux-64": "366cd9cd8be14df1ab8ed50352a82111082a36686b2d389fdb79a92c3fafb3e3",
+      "linux-aarch64": "9f93b974adcb4d166996af969b6cd371287d1a3e52733704727884d9b74cb7a7",
+      "osx-arm64": "ec2a072f028e1a7cf20f3e2e74d5a8127cf5a5f27636375b5359811565f4e5be",
+      "osx-64": "1e71054bb3ac9a076e21f7ec48acfef536f9b3f1408f371a942784bf5ef83d8a"
+    },
+    "use_path": true
+  }
+}

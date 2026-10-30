@@ -1,0 +1,32 @@
+{
+ "schema": "phoneme_map/v3 \u2014 ranked rows, clip+frame, best first",
+ "series": {},
+ "by": "the user, by eye",
+ "library": "v2-away",
+ "clips": [],
+ "row_order": [
+  "rest",
+  "MBP",
+  "FV",
+  "TH",
+  "TDN",
+  "L",
+  "R",
+  "KG",
+  "S/Z",
+  "SH/CH",
+  "EE",
+  "EH",
+  "ER",
+  "AH",
+  "OH",
+  "WOO",
+  "Y",
+  "H",
+  "rest-open",
+  "Ah",
+  "Aa"
+ ],
+ "map": {},
+ "pose": {}
+}

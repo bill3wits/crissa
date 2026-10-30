@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crissa face</title>
+<style>
+  /* FACE ONLY (2026-10-16): her painted picture, a 9:16 slice of the film's full height centred on her nose (the
+     phone's layout), or the whole picture ("room"). lib/crissa_face.py says why. */
+  :root { --bg: #000; --ground: #10131A; --ink: #E9E5DB; --ink3: #8B93A6; --hair: #3a4252; --ember: #D9A05B; }
+  html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+  #view { position: fixed; inset: 0; overflow: hidden; background: var(--bg); }
+  #view { cursor: grab; touch-action: none; }
+  #view.drag { cursor: grabbing; }
+  #film { position: absolute; top: 0; left: 0; height: 100%; width: auto; will-change: transform;
+          transition: transform 0.6s ease-out; user-select: none; -webkit-user-drag: none; }
+  body.room #film { width: 100%; height: 100%; object-fit: contain; transform: none !important; }
+  #note { position: fixed; left: 0; right: 0; bottom: 8px; text-align: center; color: #aaa;
+          font: 12px system-ui, sans-serif; opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+  #note.on { opacity: 1; }
+  /* THE TILE'S BAR (the User 2026-10-16: "have the buttons show on tile on hover for that toggle and size etc ...
+     fade and collapse even with restore on hover mouse move as in wallpaper mode"): the Wall on / off, the shape, the
+     size. After IDLE_MS without the pointer it fades and folds away and takes no clicks; a move brings it back. */
+  #bar { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; gap: 6px;
+         align-items: center; padding: 5px 7px; background: rgba(16, 19, 26, .82); border: 1px solid var(--hair);
+         border-radius: 7px; font: 12px/1 "DejaVu Sans Mono", ui-monospace, monospace; color: var(--ink3);
+         max-height: 40px; overflow: hidden; white-space: nowrap;
+         transition: opacity .3s ease, max-height .3s ease, padding .3s ease, bottom .3s ease; }
+  #bar.idle { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; bottom: 0; pointer-events: none; }
+  #bar button { font: inherit; color: var(--ink3); background: var(--ground); border: 1px solid var(--hair);
+                border-radius: 4px; padding: 5px 8px; cursor: pointer; }
+  #bar button:hover { color: var(--ink); border-color: var(--ink3); }
+  #bar button.on { color: var(--ember); border-color: var(--ember); }
+  #bar button[hidden] { display: none; }
+  #size { color: var(--ink); min-width: 2.6em; text-align: center; }
+  /* THE WALL TILE'S VEILS (round 26): one chip, three veils - off, Blur, Fade - shared with the Wall's tile */
+  body.v-blur #film { filter: blur(9px); }
+  body.v-fade #film { opacity: .32; }
+  #bar .sep { width: 4px; }
+</style>
+</head>
+<body>
+<div id="view"><img id="film" alt="Crissa" src="/frame.mjpg"></div>
+<div id="note"></div>
+<!-- THE WALL TILE'S BAR, AS ON THE WALL (round 26, the User 2026-10-16: "the same bar, same look ... the Face only /
+     Wall toggle goes in that bar as one more button of the same style beside BLUR"): - size +, FT / ROOM, BLUR, WALL -->
+<div id="bar" class="idle">
+  <button id="b-minus" type="button" title="Smaller">&minus;</button>
+  <span id="size">1.00</span>
+  <button id="b-plus" type="button" title="Larger">+</button>
+  <span class="sep"></span>
+  <button id="b-shape" type="button" title="Her face (9:16) or the whole picture (16:9)">FT</button>
+  <button id="b-veil" type="button" title="Off, Blur, Fade">BLUR</button>
+  <button id="b-wall" type="button" hidden title="The desk Wall">WALL</button>
+  <span class="sep"></span>
+  <button id="b-close" type="button" hidden title="Close her face window" aria-label="Close">&times;</button>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const film = $("film"), note = $("note"), bar = $("bar");
+  const IDLE_MS = 1000;                 // the wallpaper's own chrome idle
+  let pt = {cx: 0.5, w: 16, h: 9};
+  let shape = "face";
+  let scale = 1.0;
+  let wall = null;
+  let lastSent = "";
+  let idleTimer = null;
+  let busy = false;
+  let lastPtr = 0;
+  let veil = "off";
+  function paintVeil(v) {
+    veil = v;
+    document.body.classList.toggle("v-blur", v === "blur");
+    document.body.classList.toggle("v-fade", v === "fade");
+    $("b-veil").textContent = v === "fade" ? "FADE" : "BLUR";
+    $("b-veil").classList.toggle("on", v !== "off");
+  }
+
+  // her nose to the middle of the window: the picture is the window's height, slid sideways (face); whole (room)
+  let lastX = null, lastKey = "";
+  function place() {
+    document.body.classList.toggle("room", shape === "room");
+    $("b-shape").textContent = shape === "room" ? "ROOM" : "FT";
+    $("b-shape").classList.toggle("on", shape === "room");
+    if (shape === "room") return;
+    const vh = window.innerHeight, vw = window.innerWidth;
+    const pw = vh * (pt.w / Math.max(1, pt.h));
+    let x = vw / 2 - pt.cx * pw;
+    x = Math.min(0, Math.max(vw - pw, x));
+    // .101 2026-10-17 (the User: "We have a defined squared out set of pixels, not a cameraman"): the slice is fixed.
+    // It is aimed at her nose when a clip starts and kept through it; a new clip, window size or shape aims it again
+    const key = vw + "x" + vh + ":" + shape + ":" + (pt.clip || "");
+    if (lastX !== null && key === lastKey) return;
+    lastX = x; lastKey = key;
+    film.style.transform = "translateX(" + Math.round(x) + "px)";
+  }
+
+  async function poll() {
+    try {
+      const painted = window.__faceMovedAt && Date.now() - window.__faceMovedAt < 4000 ? 1 : 0;
+      const r = await fetch("/v1/face-point?painted=" + painted, {cache: "no-store"});
+      const d = await r.json();
+      if (d && d.shape && !busy) shape = d.shape === "room" ? "room" : "face";
+      if (d && d.w && d.h) { pt = d; }
+      if (d && d.ptr && d.ptr !== lastPtr) { if (lastPtr) wake(); lastPtr = d.ptr; }   // any move on the screen
+      if (d && d.veil) paintVeil(d.veil);
+      if (d) $("b-close").hidden = !d.close_key;          // round 45: the tile's x (the window has no frame)
+      place();
+      note.classList.remove("on");
+    } catch (e) {
+      note.textContent = "Crissa is not answering"; note.classList.add("on");
+    }
+  }
+
+  // the Wall's state from the Crissa menu (the key that closes it is the one that opens it)
+  async function readWall() {
+    try {
+      const v = await (await fetch("/v1/menu", {cache: "no-store"})).json();
+      wall = (v && v.wall) || null;
+    } catch (e) { wall = null; }
+    const b = $("b-wall");
+    b.hidden = !(wall && wall.present);
+    if (wall) { b.textContent = "WALL"; b.classList.toggle("on", !wall.closed);
+                b.title = wall.closed ? "Open the Wall" : "Close the Wall: her face stays on top"; }
+  }
+
+  function bounds() { return {x: window.screenX, y: window.screenY, w: window.outerWidth, h: window.outerHeight}; }
+
+  // the window's place and size, kept for the next time it opens
+  function keep() {
+    if (busy) return;
+    const k = JSON.stringify(bounds());
+    if (k === lastSent) return;
+    lastSent = k;
+    fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                              body: JSON.stringify({save: bounds()})}).catch(() => {});
+  }
+
+  async function resize(newShape, step) {
+    busy = true;
+    try {
+      const r = await fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({resize: {b: bounds(), shape: newShape, step: step}})});
+      const d = await r.json();
+      if (d && d.shape) shape = d.shape;
+      if (step) { scale = Math.max(0.3, Math.min(4, scale * Math.pow(1.12, step))); $("size").textContent = scale.toFixed(2); }
+      place();
+    } catch (e) { /* the window stays as it is */ }
+    setTimeout(() => { busy = false; lastSent = ""; keep(); }, 900);
+  }
+
+  $("b-shape").onclick = () => resize(shape === "room" ? "face" : "room", 0);
+  $("b-veil").onclick = async () => {
+    const next = veil === "off" ? "blur" : (veil === "blur" ? "fade" : "off");
+    paintVeil(next);
+    try {
+      const d = await (await fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                                                       body: JSON.stringify({veil: next})})).json();
+      if (d && d.veil) paintVeil(d.veil);
+    } catch (e) { /* the next look says what it is */ }
+  };
+  $("b-minus").onclick = () => resize(shape, -1);
+  $("b-plus").onclick = () => resize(shape, 1);
+  $("b-wall").onclick = async () => {
+    if (!wall || !wall.action) return;
+    try {
+      await fetch("/v1/menu", {method: "POST", headers: {"Content-Type": "application/json"},
+                               body: JSON.stringify({action: wall.action, by: "her face tile"})});
+    } catch (e) { /* said by the menu */ }
+    setTimeout(readWall, 800);
+  };
+
+  // DRAG (round 27, .101 2026-10-16: "could not drag it"): the window has no frame, so her picture is the handle. The
+  // page follows the pointer in screen pixels and asks the player to move its window; letting go keeps the place.
+  // CRISSA_FACE_DRAG is the player's; a refused move leaves the window where it is.
+  const view = $("view");
+  let drag = null, sending = false, pending = null, frameAsked = false;
+  async function sendMove() {
+    if (sending || !pending) return;
+    sending = true;
+    const m = pending; pending = null;
+    try {
+      await fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                                      body: JSON.stringify({move: m})});
+    } catch (e) { /* the window stays */ }
+    sending = false;
+    if (pending) sendMove();
+  }
+  view.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    // .101 2026-10-17: under Xwayland window.screenX (and so e.screenX) lags each move, so screen deltas undo the
+    // last move; the pointer's own motion (movementX/Y) does not depend on where the window is
+    // .101 round 28 ("it jumps to left of screen then drags from there"): window.screenX/Y is not the window's place
+    // under Xwayland either, so the drag starts from where the browser says the window is; until that answers,
+    // moves wait (nothing is sent from a guessed origin)
+    drag = {dx: 0, dy: 0, wx: null, wy: null};
+    const d0 = drag;
+    fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                              body: JSON.stringify({where: true})})
+      .then((r) => r.json()).then((w) => {
+        const b = w && w.bounds;
+        d0.wx = b ? b.left : window.screenX; d0.wy = b ? b.top : window.screenY;
+      }).catch(() => { d0.wx = window.screenX; d0.wy = window.screenY; })
+      .then(() => { if (drag === d0 && (d0.dx || d0.dy)) {
+        pending = {x: Math.round(d0.wx + d0.dx), y: Math.round(d0.wy + d0.dy)}; sendMove(); } });
+    busy = true;
+    view.classList.add("drag");
+    try { view.setPointerCapture(e.pointerId); } catch (err) { /* capture is a nicety */ }
+    e.preventDefault();
+  });
+  view.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    drag.dx += e.movementX || 0; drag.dy += e.movementY || 0;
+    if (drag.wx === null) return;          // the window's place is not known yet: the motion is kept, nothing is sent
+    pending = {x: Math.round(drag.wx + drag.dx), y: Math.round(drag.wy + drag.dy)};
+    // round 28 (.101 2026-10-17: "seems tortured with several images flashing"): one move per animation frame, the last
+    // one wins; each move repaints the window under Xwayland
+    if (!frameAsked) { frameAsked = true; requestAnimationFrame(() => { frameAsked = false; sendMove(); }); }
+  });
+  const endDrag = (e) => {
+    if (!drag) return;
+    drag = null;
+    view.classList.remove("drag");
+    try { view.releasePointerCapture(e.pointerId); } catch (err) { /* */ }
+    setTimeout(() => { busy = false; lastSent = ""; keep(); }, 400);
+  };
+  view.addEventListener("pointerup", endDrag);
+  view.addEventListener("pointercancel", endDrag);
+
+  function wake() {
+    bar.classList.remove("idle");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => { if (!bar.matches(":hover")) bar.classList.add("idle"); else wake(); }, IDLE_MS);
+  }
+  ["mousemove", "mouseenter", "pointerdown", "keydown"].forEach((ev) => window.addEventListener(ev, wake));
+  window.addEventListener("mouseleave", () => { clearTimeout(idleTimer); bar.classList.add("idle"); });
+
+  film.addEventListener("error", () => { setTimeout(() => { film.src = "/frame.mjpg?" + Date.now(); }, 1500); });
+  // A STALLED PICTURE RECONNECTS (round 28, .101 2026-10-17: "her face froze ... lips were not moving" after a player
+  // restart: a stalled stream raises no error). Once a second the picture is drawn into a 16x16 canvas; her film always
+  // moves, so the same pixels for STALL_MS mean the stream stopped, and it is opened again.
+  const STALL_MS = 4000, probe = document.createElement("canvas");
+  probe.width = probe.height = 16;
+  const pctx = probe.getContext("2d", {willReadFrequently: true});
+  let lastSig = "", sameSince = Date.now();
+  window.__faceMovedAt = 0;                       // round 29: the poll tells the player this page really paints
+  setInterval(() => {
+    let sig = "";
+    try { pctx.drawImage(film, 0, 0, 16, 16); sig = Array.from(pctx.getImageData(0, 0, 16, 16).data).join(","); }
+    catch (e) { return; }                         // not decoded yet: nothing measured
+    if (sig !== lastSig) { lastSig = sig; sameSince = Date.now(); window.__faceMovedAt = Date.now(); return; }
+    if (Date.now() - sameSince > STALL_MS) { sameSince = Date.now(); film.src = "/frame.mjpg?" + Date.now(); }
+  }, 1000);
+  // round 45 (.101 round 43, the User: "how do I close her face tile? no x or button"): the player closes the window
+  // (frameless, it has no title bar); if it could not, the page closes itself
+  $("b-close").addEventListener("click", async () => {
+    let ok = false;
+    try {
+      const r = await fetch("/v1/face-window", {method: "POST", headers: {"Content-Type": "application/json"},
+                                                body: JSON.stringify({close: true})});
+      ok = !!(await r.json()).ok;
+    } catch (e) { /* the page closes itself */ }
+    if (!ok) window.close();
+  });
+  // closed on purpose: the player does not bring it back (lib/crissa_face, round 28); a crash sends nothing
+  window.addEventListener("pagehide", () => {
+    try { navigator.sendBeacon("/v1/face-window", new Blob([JSON.stringify({closed: true})], {type: "application/json"})); }
+    catch (e) { /* the player reopens it after a silence instead */ }
+  });
+  window.addEventListener("resize", place);
+  poll();
+  readWall();
+  setInterval(poll, 250);
+  setInterval(readWall, 3000);
+  setInterval(keep, 1500);
+})();
+</script>
+</body>
+</html>

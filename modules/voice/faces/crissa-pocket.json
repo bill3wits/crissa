@@ -1,0 +1,10 @@
+{
+ "_about": "Crissa's own voice for Pocket TTS on the CPU (the User 2026-10-17: 'our imagine voice must stick ... that is the TM and our brand'). A Pocket voice state: her Grok Imagine clip (crissa-imagine.wav, Created with Grok) run once through kyutai/pocket-tts's export_model_state, the same kind of file as Pocket's stock voices ('embeddings precomputed with our released weights'). The kit's Pocket model (pocket-tts without voice cloning) loads it as it loads a stock voice: no cloning on your machine, no login. Nothing in it is a recording of a person.",
+ "credit": "Created with Grok; voice state made with kyutai/pocket-tts (CC BY 4.0)",
+ "made_from": "modules/voice/faces/crissa-imagine.wav (sha256 bbf638c07031c14ed842351ebb434f96fa078c2b5fe1ef846f0f61e9d907d8fc)",
+ "made_with": "kyutai/pocket-tts gated weights (CC BY 4.0; the Hugging Face gate accepted by the User 2026-10-17), export_model_state",
+ "licence": "CC BY 4.0 (Kyutai's weights); her voice is covered by MEDIA-LICENSE.md like her films and her clip",
+ "sha256": "012eb0e3fbc0e67560dcacc52ca2be3afef11a2004b01d36c3f2e90e58d3698f",
+ "bytes": 5703480,
+ "measured": "2026-10-17, 3 cores of a 9950X, pocket-tts 3.3.0 no-cloning English weights, streaming: first audio 85-112 ms, RTF 0.256-0.281; azelma on the same run 79-120 ms, 0.259-0.280"
+}

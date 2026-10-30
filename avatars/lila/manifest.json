@@ -1,0 +1,67 @@
+{
+  "schema": "avatar/v1",
+  "name": "lila",
+  "note": "Lila (2026-09-12). Copied from Crissa's manifest; face boxes are Crissa's measurements and NOT yet measured for Lila (the Haar-box fallback paste reads them). head_geom kw/kh widened: on Crissa's 0.28/0.18 the arch hole cut the corners of Lila's open AH and the skin inpaint showed inside the mouth (the User: 'looks like chewing gum, her right corner').",
+  "poses_dir": "display/lila-poses",
+  "listen_loop": "lila-listen",
+  "listen_loop_note": "Optional. The loop this face listens and answers on; absent, the one loop with a mouth whose key has the word listen.",
+  "tts": {
+    "kokoro": "bf_emma"
+  },
+  "tts_note": "Optional. This face's voice per speech engine (lib/crissa_tts.face_voice); an agent.json tts block's voices map still wins. Kokoro voice ids lead with a for American, b for British. A proposal until the User picks (2026-10-05).",
+  "frame": {
+    "w": 736,
+    "h": 400,
+    "fps": 24
+  },
+  "zframe": {
+    "cx": 0.0,
+    "cy": 0.0,
+    "cw": 0.675,
+    "ch": 0.7,
+    "note": "Where she sits in frame; used for the hub NCC crop. Kept per-avatar because it is tied to the plate, though nothing has yet proved it varies."
+  },
+  "face": {
+    "measured": "2026-08-29",
+    "source": "hub-up.png, Haar alt2 + lip box, measured by hand",
+    "mouth_face_up": [
+      287,
+      104,
+      180,
+      180
+    ],
+    "mouth_box_up": [
+      351,
+      238,
+      54,
+      20
+    ],
+    "mouth_frac": [
+      0.35555555555555557,
+      0.7444444444444445,
+      0.3,
+      0.1111111111111111
+    ],
+    "mouth_frac_note": "DERIVED from the two boxes above and stored for readability. pose_mouth recomputes it; if they disagree the boxes win."
+  },
+  "mouth": {
+    "drift_px": 4.0,
+    "open_px": 8,
+    "open_px_provisional": true,
+    "open_px_note": "PROVISIONAL: phoneme aa.jpg vs hub-up, not talking-head. Redo on re-harvest."
+  },
+  "head_geom": {
+    "kw": 0.36,
+    "kh": 0.22,
+    "warp_cap_deg": 0,
+    "inpaint_gap_s": 0.08,
+    "inpaint_past_chin_s": 0.12,
+    "pad": 0.55,
+    "note": "kw/kh size the hinge/matte (the arch the tile is cut to), not the tile. Lila's takes open wider than Crissa's closed-mouth loops; 0.36/0.22 covers the AH cavity. Retune by eye."
+  },
+  "visemes": {
+    "back": "display/crissa-poses/visemes/mouth-strip.json",
+    "down": "display/crissa-poses/visemes/mouth-strip-down.json"
+  },
+  "boot_loop": "lila-listen"
+}

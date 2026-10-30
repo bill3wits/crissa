@@ -1,0 +1,7 @@
+# The oracle module. Its models are fetched on first use
+# (python3 modules/oracle/scripts/crissa-oracle.py --install).
+numpy>=1.24
+opencv-python-headless>=4.8,<5
+opencv-contrib-python<5   # MediaPipe pulls it; OpenCV 5 has no face cascade files (Init's room check)
+mediapipe>=0.10
+# onnxruntime>=1.18      # only with CRISSA_ORACLE_AURAFACE=1

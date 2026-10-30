@@ -1,0 +1,165 @@
+{
+ "schema": "phoneme_map/v3 \u2014 ranked rows, clip+frame, best first",
+ "series": {},
+ "by": "the user, by eye",
+ "library": "v2-turn-45",
+ "clips": [
+  "clip-v2-talk-pause-soft",
+  "clip-v2-talk-pause-soft-45l",
+  "clip-v2-vowel-loud"
+ ],
+ "row_order": [
+  "rest",
+  "MBP",
+  "FV",
+  "TH",
+  "TDN",
+  "L",
+  "R",
+  "KG",
+  "S/Z",
+  "SH/CH",
+  "EE",
+  "EH",
+  "ER",
+  "AH",
+  "OH",
+  "WOO",
+  "Y",
+  "H",
+  "rest-open",
+  "Ah",
+  "Aa"
+ ],
+ "map": {
+  "EH": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 14
+   }
+  ],
+  "Aa": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 156
+   }
+  ],
+  "EE": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 191
+   }
+  ],
+  "TH": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 11
+   }
+  ],
+  "Ah": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 48
+   }
+  ],
+  "L": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 154
+   }
+  ],
+  "S/Z": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 61
+   }
+  ],
+  "KG": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 188
+   }
+  ],
+  "H": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 65
+   }
+  ],
+  "OH": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 67
+   }
+  ],
+  "WOO": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 8
+   }
+  ],
+  "rest-open": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 203
+   }
+  ],
+  "SH/CH": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 44
+   }
+  ],
+  "AH": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 172
+   }
+  ],
+  "ER": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 75
+   }
+  ],
+  "Y": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 59
+   }
+  ],
+  "TDN": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 198
+   }
+  ],
+  "R": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 156
+   }
+  ],
+  "FV": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 34
+   }
+  ],
+  "MBP": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 69
+   }
+  ],
+  "rest": [
+   {
+    "clip": "clip-v2-talk-pause-soft-45l",
+    "f": 140
+   }
+  ]
+ },
+ "pose": {},
+ "saved": "2026-10-27T15:38:11",
+ "note": "split 2026-10-28 from map-best-v2-listen-screen.json: the 45 take's picks under its own band (v2-turn-45); the grid stores by station"
+}

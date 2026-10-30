@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  scrub:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Nothing private in the tree
+        run: python3 scripts/scrub.py
+  tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tools the tests call
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
+      - name: Requirements
+        run: python -m pip install -r requirements.txt pytest
+      - name: Tests, one process per file (code only; tests that need her library are listed in tests/ci-skip.txt)
+        run: python scripts/run-tests.py -j 4

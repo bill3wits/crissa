@@ -1,0 +1,18 @@
+/* House panel tokens. The August 2026 design-doc copy was removed 2026-10-15.
+   This file is what the panel serves. The token values were not changed.
+*/
+:root {
+  --bg: #0d1017;
+  --elev: #151a26;
+  --fg: #eef0f4;
+  --muted: #8d93a4;
+  --line: #232a3a;
+  --accent: #e8a33d;
+  --accent-soft: #d4b896;
+  --ok: #6fcf97;
+  --live: #e85d5d;
+  --font: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --accent-dim: rgba(232, 163, 61, 0.14);
+  --live-band: var(--live);
+}

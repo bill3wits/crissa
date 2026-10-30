@@ -1,0 +1,1701 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set up Crissa</title>
+<!--
+  Init in a browser (the User 2026-10-10, after the .101 demo stopped at Connect). Served by the player at /init when
+  its Init is on (CRISSA_INIT=1, a pack); the Wall page (/wall) sends a first boot here, the launcher opens it.
+  The walk is the player's (lib/crissa_init): this page reads GET /v1/init, draws the step's plate, and posts what the
+  person presses to POST /v1/init with the run's id. Voice ID's phases and pips come from GET /v1/register (the
+  Register coach writes them); the face step's progress is on the plate. Static, no external loads.
+-->
+<style>
+:root {
+  --bg: #f6f5f2; --panel: #ffffff; --ink: #1c1b19; --muted: #6b6860; --line: #dedbd3;
+  --accent: #2f6f5e; --accent-ink: #ffffff; --bad: #a33b2b; --good: #2f6f5e; --air: #b5651d;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412; --panel: #1d1c1a; --ink: #ecebe6; --muted: #a09d94; --line: #34322e;
+    --accent: #6cc2a8; --accent-ink: #0f1a16; --bad: #f08a78; --good: #6cc2a8; --air: #f0a24a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412; --panel: #1d1c1a; --ink: #ecebe6; --muted: #a09d94; --line: #34322e;
+  --accent: #6cc2a8; --accent-ink: #0f1a16; --bad: #f08a78; --good: #6cc2a8; --air: #f0a24a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px;
+  display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+@media (max-width: 720px) { main { grid-template-columns: 1fr; } }
+h1 { font-size: 20px; margin: 0 0 4px; }
+h2 { font-size: 18px; margin: 0 0 8px; }
+p.lede { margin: 0 0 16px; color: var(--muted); }
+.face { background: #000; border-radius: 10px; overflow: hidden; aspect-ratio: 1296 / 704; }
+body.cancelled-only .face, body.cancelled-only #steps, body.cancelled-only #eyebrow { display: none; }
+.face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.steps { list-style: none; margin: 14px 0 0; padding: 0; font-size: 13px; color: var(--muted); }
+.steps li { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+.steps .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--muted); flex: none; }
+.steps li.done .dot { background: var(--good); border-color: var(--good); }
+.steps li.now { color: var(--ink); font-weight: 600; }
+.steps li.now .dot { background: var(--air); border-color: var(--air); }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--air);
+  margin-bottom: 6px; }
+label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+label small { font-weight: 400; color: var(--muted); }
+input, select { width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; align-items: center; }
+button { font: inherit; border-radius: 6px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button:disabled { opacity: .5; cursor: default; }
+button.quiet { border: 0; background: transparent; color: var(--muted); padding: 8px 0; text-decoration: underline; }
+.msg { margin-top: 12px; font-size: 13px; min-height: 1.4em; overflow-wrap: anywhere; }
+.msg.bad { color: var(--bad); } .msg.good { color: var(--good); }
+.hint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+.lines { font-size: 13px; color: var(--muted); white-space: pre-line; margin: 8px 0 0; }
+.mic { font-size: 14px; font-weight: 600; margin: 14px 0 0; }
+.mic.on { color: var(--good); }
+.mic.off { color: var(--bad); }
+.small { font-size: 12px; color: var(--muted); }
+.glass { margin-top: 12px; border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: var(--bg); }
+.glass .phase { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--air); }
+.glass .text { font-size: 22px; line-height: 1.3; margin-top: 6px; overflow-wrap: anywhere; }
+.glass .line { font-size: 14px; color: var(--muted); margin-top: 8px; }
+.glass .cue { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); margin-top: 12px; overflow: hidden; }
+.meter { height: 8px; border-radius: 4px; background: var(--line); margin-top: 8px; overflow: hidden; }
+.meter > div { height: 100%; width: 0; background: var(--good); transition: width .15s linear; }
+.meter.clip > div { background: var(--bad); }
+.check { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+.check input { width: auto; }
+.bar > div { height: 100%; width: 0; background: var(--accent); transition: width .2s linear; }
+.bar.beep > div { background: var(--air); }
+.offer { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; margin-top: 6px; }
+footer { grid-column: 1 / -1; font-size: 12px; color: var(--muted); text-align: center; }
+/* Your room (the User 2026-10-11): the clock (her Wall's oracle dial, 12 = the screen), a key per mark */
+.clock { position: relative; width: 248px; height: 248px; margin: 14px auto 4px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--bg); }
+.clock .hr { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; padding: 0;
+  font-size: 14px; line-height: 1.05; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.clock .hr small { font-size: 9px; font-weight: 700; letter-spacing: .03em; color: var(--muted); }
+.clock .hr.on { border-color: var(--air); }
+.clock .hr.on small { color: var(--air); }
+.clock .hr.far { opacity: .35; cursor: not-allowed; }
+.clock .mid { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 11px;
+  font-weight: 700; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+/* the speakers' Internal tick by her at the centre (round 17, the User 2026-10-13): a checkbox, lit once clicked */
+.clock .internal { position: absolute; left: 50%; top: calc(50% + 12px); transform: translateX(-50%); padding: 2px 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; border-radius: 12px; display: flex; align-items: center;
+  gap: 5px; white-space: nowrap; }
+.clock .internal .box { width: 12px; height: 12px; border: 1.5px solid var(--muted); border-radius: 3px;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 10px; line-height: 1; }
+.clock .internal.asking { border-color: var(--air); }
+.clock .internal.checked .box { border-color: var(--air); color: var(--air); }
+.clock .internal.lit { background: var(--air); border-color: var(--air); color: var(--panel); }
+.clock .internal.lit .box { border-color: var(--panel); color: var(--panel); }
+.marks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.marks button.now { border-color: var(--air); box-shadow: 0 0 0 1px var(--air) inset; }
+.cam { margin-top: 12px; border-radius: 8px; overflow: hidden; background: #000; max-width: 420px; }
+.cam img { width: 100%; display: block; }
+.hours-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+.hours-row select { width: auto; }
+/* ── ONE-PAGE SETUP (round 22, the User 2026-10-15): Lila's films on the left, every section on one page ── */
+#op { max-width: 1120px; margin: 0 auto; padding: 18px 16px 48px; display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 820px) { #op { grid-template-columns: 1fr; } }
+.op-stage { position: sticky; top: 12px; display: grid; gap: 10px; }
+@media (max-width: 820px) { .op-stage { position: static; } }
+.op-face { position: relative; border-radius: 10px; overflow: hidden; background: #000; aspect-ratio: 1296 / 704; }
+.op-face video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.op-face video.front { opacity: 1; }
+.op-face #op-start { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.op-cap { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-height: 84px; }
+.op-cap .who { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--air); }
+.op-cap .say { font-size: 17px; line-height: 1.35; margin-top: 4px; }
+.op-cap .say.empty { color: var(--muted); font-size: 14px; }
+#op-krew { margin: 0; padding: 0 2px; }
+.op-page { display: grid; gap: 12px; min-width: 0; }
+.op-page header p { margin: 0; color: var(--muted); font-size: 14px; }
+.op-sec { padding: 14px 16px; display: grid; gap: 10px; transition: border-color .25s, background-color .25s, opacity .25s;
+  scroll-margin: 16px; }
+.op-sec .head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.op-sec .head h2 { flex: 1; min-width: 0; margin: 0; font-size: 16px; }
+.pill { font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 9px; border: 1px solid var(--line);
+  color: var(--muted); white-space: nowrap; }
+.op-sec.next { opacity: .62; }
+.op-sec.skip { opacity: .38; pointer-events: none; }   /* round 38: an IDs run's sections it does not walk, greyed */
+/* round 39 (N5): collapsed, not greyed - the head stays readable, the body folds away; his Edit opens it to the walk */
+.op-sec.skip.collapsed { opacity: 1; pointer-events: auto; }
+.op-sec.collapsed .op-body, .op-sec.collapsed .summary { display: none; }
+.op-sec .edit { margin-left: .6em; }
+/* round 39 (N6): others greyed and never a key of their own; the new seat lit; two names on one hour wrap */
+.ids-dial .hr { overflow: visible; }
+.ids-dial small { position: absolute; left: 50%; transform: translateX(-50%); width: 76px; white-space: normal;
+                  text-align: center; line-height: 1.1; font-size: 8.5px; pointer-events: none; }
+.ids-dial small.taken { top: 46px; color: var(--muted); opacity: .75; font-weight: 600; }
+.ids-dial small.seat { top: -14px; color: var(--air); font-weight: 700; }
+.op-sec.now { border-color: var(--air); box-shadow: 0 0 0 1px var(--air); }
+.op-sec.now .pill { border-color: var(--air); color: var(--air); }
+.op-sec.done .pill, #op-done .pill { border-color: var(--good); color: var(--good); }
+.op-sec .summary { font-size: 14px; color: var(--muted); }
+.op-sec label { margin: 0 0 4px; }
+.op-sec .row { margin-top: 0; }
+.op-boxes { display: flex; gap: 8px; flex-wrap: wrap; }
+.op-box { display: grid; place-items: center; width: 70px; height: 44px; border-radius: 8px; border: 1px solid var(--line);
+  font-size: 12px; color: var(--muted); text-align: center; line-height: 1.15; background: var(--bg); }
+.op-box.ok { border-color: var(--good); color: var(--good); font-weight: 600; }
+.op-box.live { border-color: var(--air); color: var(--air); font-weight: 600; }
+.op-sec .clock { margin: 4px auto; }
+@media (prefers-reduced-motion: reduce) { .op-sec { transition: none; } }
+/* round 34: the way out, always in view (snap.way_out) */
+#way-out { position: fixed; top: 10px; right: 12px; z-index: 50; }
+#way-out button, #way-out a { font: inherit; font-size: 14px; padding: 6px 12px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink, inherit); text-decoration: none; }
+#way-out .esc { color: var(--muted); font-size: 12px; margin-left: 6px; }
+[hidden] { display: none !important; }
+.face video { width: 100%; height: 100%; object-fit: cover; display: block; }
+</style>
+</head>
+<body>
+<div id="way-out" hidden><button type="button" id="way-out-cancel">Cancel setup<span class="esc">Esc</span></button><a
+  id="way-out-wall" href="/wall?noinit=1" hidden>Back to the Wall</a></div>
+<main>
+  <div>
+    <div class="face"><img id="face" alt="Crissa, live" src="/frame.mjpg"></div>
+    <ol class="steps" id="steps" aria-label="Setup steps"></ol>
+    <div class="row"><button class="quiet" id="cancel" type="button" hidden>Cancel setup</button></div>
+  </div>
+  <div>
+    <h1>Set up Crissa</h1>
+    <p class="lede">A few steps on this computer. Nothing here leaves it.</p>
+    <section id="plate" aria-live="polite">
+      <div class="eyebrow" id="eyebrow"></div>
+      <div id="body"><p>Reading the setup…</p></div>
+      <div class="msg" id="msg" role="status"></div>
+    </section>
+  </div>
+  <footer>Crissa by Rocks Cry Out Labs, LLC.</footer>
+</main>
+<div id="op" hidden>
+  <aside class="op-stage" aria-label="Lila">
+    <div class="op-face">
+      <video id="op-va" playsinline preload="auto"></video>
+      <video id="op-vb" playsinline preload="auto"></video>
+      <button type="button" class="primary" id="op-start" hidden>Start, with sound</button>
+    </div>
+    <div class="op-cap" aria-live="polite"><div class="who">Lila</div><div class="say empty" id="op-say">One moment…</div></div>
+    <p class="small" id="op-krew" hidden>To see more of Lila and her team, download the Krew app <span id="op-krew-here">here</span>.</p>
+    <div><button class="quiet" id="op-cancel" type="button">Cancel setup</button></div>
+  </aside>
+  <div class="op-page">
+    <header><h1>Set up Crissa</h1><p>Step 2 of 2 · everything else, on one page. Nothing here leaves this computer.</p></header>
+    <div id="op-secs"></div>
+    <div class="msg" id="op-msg" role="status"></div>
+  </div>
+</div>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const S = { snap: null, sig: "", started: false, timer: null, glassTimer: null, camTimer: null, glass: {}, posting: false,
+            faceUntil: 0 };
+window.crissaInit = S;            // for a test that reads what the page did
+
+function el(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === undefined || v === null || v === false) continue;
+    if (k === "text") e.textContent = v; else if (k === "on") for (const [ev, fn] of Object.entries(v)) e.addEventListener(ev, fn);
+    else e.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids) if (k) e.appendChild(typeof k === "string" ? document.createTextNode(k) : k);
+  return e;
+}
+function say(text, kind) {
+  const m = (S.op && S.op.built) ? $("op-msg") : $("msg");      // the one page has its own line (round 22)
+  m.textContent = text || ""; m.className = "msg" + (kind ? " " + kind : "");
+}
+
+async function getJSON(path) {
+  const r = await fetch(path, { cache: "no-store" });
+  if (!r.ok) { const e = new Error(path + " " + r.status); e.status = r.status; throw e; }
+  return r.json();
+}
+async function act(action, body) {
+  if (S.posting) return null;
+  S.posting = true;
+  try {
+    const r = await fetch("/v1/init", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, body || {}, { action, run_id: (S.snap && S.snap.run_id) || "" })) });
+    let j = {};
+    try { j = await r.json(); } catch (e) { j = { ok: false, error: "no answer (" + r.status + ")" }; }
+    if (j && j.ok === false && j.error) say(j.error, "bad"); else say("");
+    if (j && j.v2) render(j);
+    return j;
+  } catch (e) {
+    say("The player is not answering.", "bad");
+    return null;
+  } finally {
+    S.posting = false;
+    schedule(150);
+  }
+}
+
+// VOICE ID AGAIN WITH PRINTS ON FILE (the User 2026-10-10, .101 round 4 DD): the player asks for the face or this
+// computer's login password; the password is posted once and never shown back.
+async function voiceIdAgain(password) {
+  const j = await act("voice_id_again", password ? { password } : {});
+  if (!j || j.ok !== false || !j.password || $("vid-pw")) return;
+  const row = $("voice-id-again-row");
+  if (!row) return;
+  const pw = el("input", { type: "password", id: "vid-pw", autocomplete: "current-password",
+                           placeholder: "This computer's login password" });
+  pw.addEventListener("keydown", (ev) => { if (ev.key === "Enter") $("vid-pw-go").click(); });
+  row.appendChild(pw);
+  row.appendChild(el("button", { type: "button", id: "vid-pw-go", text: "Check and start",
+    on: { click: () => { const v = pw.value; pw.value = ""; voiceIdAgain(v); } } }));
+  pw.focus();
+}
+
+// ---- VOICE ID AGAIN ON ONE PAGE (the User 2026-10-11, .101 round 9) ----------------------------------------------------
+// The desk Wall's Crissa key opens /init?voice_id=1 in her own window: the name (the User's, ready to change), the
+// login password when the player's gate asks for one (her face did not say it is him), and "replace", on one page.
+// Begin sends them together to POST /v1/menu {action: "voice_id", name, password, replace, page}; the take starts at
+// once and this page follows it like Setup's own Voice ID (the coach's glass). The password is posted once, never
+// shown back. New prints are ADDED to the ones she has unless "replace" is ticked.
+const AGAIN = new URLSearchParams(location.search).get("voice_id") === "1";
+S.again = { on: AGAIN, started: false };
+async function againShow(force) {
+  if (S.sig === "again-form" && !force) return;
+  let g = null;
+  try { g = (await getJSON("/v1/menu")).voice_id || {}; } catch (e) { g = null; }
+  S.sig = "again-form";
+  $("eyebrow").textContent = "Voice ID again";
+  const body = $("body");
+  body.textContent = "";
+  if (!g) {
+    body.appendChild(el("p", { id: "p-body", text: "The player is not answering. Is Crissa running?" }));
+    return;
+  }
+  const kids = [
+    el("h2", { id: "p-title", text: "Voice ID again" }),
+    el("p", { id: "p-body", text: "Crissa makes new voice prints and adds them to the ones she has, so she knows " +
+      "your voice better: you read a sentence and count aloud, facing the camera and turned away. Sit where you " +
+      "usually sit, near the microphone." }),
+    el("label", { for: "va-name", text: "Your name" }),
+    el("input", { id: "va-name", type: "text", autocomplete: "off", value: g.name || "" }),
+  ];
+  const needPw = g.ok === false && g.password;
+  if (needPw) {
+    kids.push(el("p", { class: "hint", id: "va-why", text: g.why || "Voice ID again needs to know it is you first." }));
+    kids.push(el("label", { for: "va-pw", text: "This computer's login password" }));
+    kids.push(el("input", { id: "va-pw", type: "password", autocomplete: "current-password" }));
+  } else if (g.ok === false) {
+    kids.push(el("p", { class: "msg bad", id: "va-why", text: g.why || "Voice ID cannot run now." }));
+  }
+  const rep = el("input", { type: "checkbox", id: "va-replace" });
+  rep.style.width = "auto";
+  kids.push(el("label", { for: "va-replace" }, rep, " Replace the voice prints she has (start over)"));
+  kids.push(el("div", { class: "msg bad", id: "va-err" }));
+  kids.push(el("div", { class: "row" },
+    el("button", { type: "button", id: "va-begin", class: "primary", text: "Begin", disabled: g.ok === false && !needPw,
+                   on: { click: () => againBegin() } }),
+    g.ok === false && !needPw ? el("button", { type: "button", id: "va-again", text: "Check again",
+                                              on: { click: () => againShow(true) } }) : null,
+    el("a", { href: "/wall?noinit=1", id: "va-wall" }, el("button", { type: "button", text: "Back to the Wall" }))));
+  kids.forEach((k) => body.appendChild(k));
+  for (const id of ["va-name", "va-pw"]) {
+    if ($(id)) $(id).addEventListener("keydown", (ev) => { if (ev.key === "Enter") againBegin(); });
+  }
+  ($("va-pw") && !$("va-name").value ? $("va-name") : ($("va-pw") || $("va-name"))).focus();
+}
+async function againBegin() {
+  if (S.posting || !$("va-begin") || $("va-begin").disabled) return;
+  const name = ($("va-name").value || "").trim();
+  if (!name) { $("va-err").textContent = "Type the name Crissa should call you."; $("va-name").focus(); return; }
+  const body = { action: "voice_id", name, replace: !!$("va-replace").checked, page: "/init" };
+  if ($("va-pw")) { body.password = $("va-pw").value; $("va-pw").value = ""; }
+  S.posting = true;
+  $("va-begin").disabled = true;
+  let j = {};
+  try {
+    const r = await fetch("/v1/menu", { method: "POST", headers: { "Content-Type": "application/json" },
+                                       body: JSON.stringify(body) });
+    j = await r.json();
+  } catch (e) { j = { ok: false, error: "The player is not answering." }; }
+  finally { S.posting = false; }
+  delete body.password;
+  if (j.ok) {
+    S.again.started = true;
+    S.sig = "";
+    say(j.note || "Voice ID is starting.", "good");
+    schedule(150);
+    return;
+  }
+  $("va-begin").disabled = false;
+  $("va-err").textContent = j.error || "Voice ID did not start.";
+  if (j.password && !$("va-pw")) { await againShow(true); $("va-err").textContent = j.error || ""; }
+}
+if (AGAIN) {
+  document.title = "Voice ID again - Crissa";
+  document.querySelector("h1").textContent = "Voice ID again";
+  document.querySelector("p.lede").textContent = "New voice prints, made on this computer. Nothing here leaves it.";
+  $("steps").hidden = true;
+}
+
+// ---- the steps down the side -------------------------------------------------------------------------------------
+function renderSteps(snap) {
+  const box = $("steps");
+  box.textContent = "";
+  const steps = snap.steps || [];
+  const done = snap.status === "done";
+  steps.forEach((s, i) => {
+    const cls = done || i < (snap.index || 0) ? "done" : (snap.status === "running" && i === (snap.index || 0) ? "now" : "");
+    box.appendChild(el("li", { class: cls }, el("span", { class: "dot" }), s.eyebrow || s.id));
+  });
+  $("cancel").hidden = snap.status !== "running";
+  $("steps").hidden = !!(AGAIN || snap.again);          // Voice ID again is one step, not the walk
+  if (AGAIN || snap.again) $("cancel").textContent = "Cancel Voice ID";
+}
+
+// ---- the plate -----------------------------------------------------------------------------------------------------
+function keysRow(keys, verbAction, extra) {
+  const row = el("div", { class: "row" });
+  (keys || []).forEach(([verb, label], i) => {
+    row.appendChild(el("button", { type: "button", id: "k-" + verb, "data-verb": verb, class: i === 0 ? "primary" : "",
+      text: label, on: { click: () => act(verbAction, { verb }) } }));
+  });
+  if (extra) row.appendChild(extra);
+  return row;
+}
+function plateSig(snap) {
+  const p = snap.plate || {};
+  const st = (p.machine || {}).state || (p.register || {}).state || (p.face || {}).state || (p.room || {}).state ||
+             (p.hours || {}).state || "";
+  const rm = p.room || {};
+  return [snap.status, snap.run_id, snap.step_id, p.kind, st, JSON.stringify(p.keys || (p.machine || {}).keys || []),
+          p.later ? 1 : 0, ((snap.done || {}).mic || {}).on ? 1 : 0,
+          JSON.stringify(((p.mic || (p.machine || {}).mic || {}).choices || []).map((c) => c.name)),
+          ((snap.done || {}).login || {}).on ? 1 : 0, (snap.browser || {}).led ? 1 : 0,
+          JSON.stringify([rm.marks || {}, rm.now || "", rm.picture || "", rm.changed || [], rm.internal || null]),
+          p.hint || ""].join("|");
+}
+
+function connectPlate(p) {
+  const c = p.connect || {};
+  const kinds = c.kinds || {};
+  const kind = el("select", { id: "c-kind" });
+  kind.appendChild(el("option", { value: "", text: "Choose a kind (fills the address and model)" }));
+  for (const [k, v] of Object.entries(kinds)) kind.appendChild(el("option", { value: k, text: v.label || k }));
+  kind.appendChild(el("option", { value: "openai-compatible", text: "OpenAI-compatible (any)" }));
+  kind.addEventListener("change", () => {
+    const k = kinds[kind.value];
+    if (k) { $("c-url").value = k.url; $("c-model").value = k.model; }
+  });
+  const offers = el("div", { id: "offers" });
+  for (const o of c.offers || []) {
+    if (!o.url || o.url === c.url) continue;
+    offers.appendChild(el("div", { class: "offer" }, (o.name || o.id) + " - " + o.url + (o.model ? " (" + o.model + ")" : ""),
+      el("button", { type: "button", "data-offer": o.id, text: "Use", on: { click: () => act("connect_adopt", { id: o.id }) } })));
+  }
+  const test = el("button", { type: "button", id: "c-test", text: "Test", on: { click: async () => {
+    const body = {};
+    const url = $("c-url").value.trim();
+    if (url) Object.assign(body, { url, model: $("c-model").value.trim(), preset: $("c-kind").value || "openai-compatible" });
+    const key = $("c-key").value.trim();
+    if (url && key) body.key = key;
+    $("c-test").disabled = true;
+    say("Testing… a model that thinks first can take a while.");
+    const j = await act("connect_test", body);
+    $("c-test") && ($("c-test").disabled = false);
+    if (j && j.ok) { say(""); $("c-key").value = ""; }
+  } } });
+  return [
+    el("h2", { id: "p-title", text: p.title || "Connect an agent" }),
+    el("p", { id: "p-body", text: p.body || "" }),
+    offers.childNodes.length ? el("div", {}, el("label", { text: "Detected on this computer" }), offers) : null,
+    el("label", { for: "c-kind", text: "Kind" }), kind,
+    el("label", { for: "c-url" }, "Address ", el("small", { text: "- base URL, e.g. https://api.example.com/v1" })),
+    el("input", { id: "c-url", type: "url", autocomplete: "off", spellcheck: "false", value: c.url || "" }),
+    el("label", { for: "c-key" }, "API key ", el("small", { text: "- optional for a model on this computer" })),
+    el("input", { id: "c-key", type: "password", autocomplete: "off", spellcheck: "false",
+                  placeholder: c.has_key ? "stored - leave blank to keep" : "" }),
+    el("label", { for: "c-model" }, "Model ", el("small", { text: "- the name your server expects" })),
+    el("input", { id: "c-model", type: "text", autocomplete: "off", spellcheck: "false", value: c.model || "" }),
+    el("div", { class: "row" }, test,
+      el("button", { type: "button", id: "c-continue", class: "primary", text: "Continue",
+                     on: { click: () => act("connect_continue") } }),
+      el("button", { type: "button", id: "c-later", text: "Set up later", on: { click: () => {
+        // asks first, as the desk Wall's plate does (the User 2026-10-10, .101: one click there recorded it)
+        if (confirm("Set up later? Crissa will not answer until an agent is connected. The Connect page sets one up any time."))
+          act("connect_later", { by: "page" });
+      } } })),
+    el("div", { class: "msg", id: "c-last" }),
+    el("p", { class: "small" }, "Or use the full ", el("a", { href: "/connect", text: "Connect page" }),
+       " (her personality, a session header). A test that passes there, of the agent you save, counts here."),
+  ];
+}
+function connectUpdate(p) {
+  if (!$("c-continue")) return;
+  $("c-continue").disabled = !p.tested;
+  $("c-later").hidden = !p.later || !!p.tested;
+  const last = p.last || {};
+  const where = last.where === "connect page" ? " (on the Connect page)" : "";
+  const box = $("c-last");
+  if (!last || last.ok === undefined) { box.textContent = ""; box.className = "msg"; return; }
+  if (last.ok) { box.textContent = "Test passed" + where + (last.ms ? " in " + last.ms + " ms" : "") +
+                   (last.reply ? ": “" + last.reply + "”" : "") + ". Continue when you are ready.";
+                 box.className = "msg good"; }
+  else if (last.thinking) { box.textContent = last.error || "The agent is still thinking."; box.className = "msg"; }
+  else { box.textContent = "Test failed" + where + ": " + (last.error || "no answer"); box.className = "msg bad"; }
+}
+
+function machinePlate(p) {
+  const m = p.machine || {};
+  if (m.fold) return foldPlate(p);
+  return [
+    el("h2", { id: "p-title", text: m.title || p.title || "This computer" }),
+    m.body ? el("p", { id: "p-body", text: m.body }) : null,
+    el("p", { class: "hint", id: "m-hint", text: m.hint || "" }),
+    el("div", { class: "lines", id: "m-lines" }),
+    keysRow(m.keys, "machine"),
+  ];
+}
+// THE NAME AND THE MICROPHONE ON THIS COMPUTER (round 20, the User 2026-10-14: "combine the what should we call you and
+// microphone from list with oracle screen ... Simple as can be but no simpler"): the name (required), the microphones
+// (the default preselected, a pick applied at once), its level with peak and clipping, a plain Mic off, and the card's
+// one click carrying the name. Voice ID then starts by itself.
+function foldPlate(p) {
+  const m = p.machine || {};
+  const input = el("input", { id: "m-name", class: "keep", type: "text", autocomplete: "off", value: m.name || "" });
+  const keys = el("div", { class: "row" });
+  (m.keys || []).forEach(([verb, label], i) => {
+    keys.appendChild(el("button", { type: "button", id: "k-" + verb, "data-verb": verb, class: i === 0 ? "primary" : "",
+      text: label, on: { click: () => act("machine", { verb, name: $("m-name").value }) } }));
+  });
+  input.addEventListener("keydown", (ev) => { if (ev.key === "Enter" && $("k-allow")) $("k-allow").click(); });
+  const off = el("input", { type: "checkbox", id: "m-mic-off" });
+  off.checked = !!m.mic_off;
+  off.addEventListener("change", () => act("mic_setting", { off: off.checked }));
+  return [
+    el("h2", { id: "p-title", text: m.title || p.title || "This computer" }),
+    m.body ? el("p", { id: "p-body", text: m.body }) : null,
+    el("label", { for: "m-name", text: m.ask_name || "What should Crissa call you?" }), input,
+    el("div", { class: "msg bad", id: "m-name-err", text: m.name_error || "" }),
+    micList(m.mic, "m-mic"),
+    el("div", { class: "meter", id: "m-meter" }, el("div", { id: "m-meter-fill" })),
+    el("p", { class: "small", id: "m-level", text: "" }),
+    el("label", { class: "check", for: "m-mic-off" }, off, "Mic off (she cannot hear you until you turn it on)"),
+    el("p", { class: "hint", id: "m-hint", text: m.hint || "" }),
+    el("div", { class: "lines", id: "m-lines" }),
+    keys,
+  ];
+}
+// The microphones, the default preselected; a pick is applied at once (no "Use this microphone": it re-drew the plate and
+// wiped the typed name, round 19). Inputs that read only noise or are unplugged are not offered (round 20).
+function micList(m, id) {
+  m = m || {};
+  const ch = m.choices || [];
+  if (!ch.length) return el("p", { class: "msg bad", id: id + "-none", text: m.line || "No microphone was found." });
+  const sel = el("select", { id });
+  const pick = m.pick || m.source || "";
+  ch.forEach((c) => {
+    const o = el("option", { value: c.name, text: (c.label || c.name) + (c.default ? " (default)" : "") +
+      (c.state === "silent" ? " - no sound right now" : "") });
+    if (c.name === pick) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.addEventListener("change", (ev) => act("mic_pick", { source: ev.target.value }));
+  return el("div", { id: id + "-row" }, el("label", { for: id, text: "Microphone" }), sel);
+}
+function machineUpdate(p) {
+  const m = p.machine || {};
+  if ($("m-hint")) $("m-hint").textContent = m.hint || "";
+  if (m.fold) foldUpdate(m);
+  const vi = p.voice_install || {};
+  const lines = (m.lines || []).slice();
+  if (vi.state === "installing") lines.push(...(vi.lines || []).slice(-3));
+  if (p.aligner && p.aligner.state === "installing") lines.push("The word aligner is downloading in the background.");
+  if ($("m-lines")) $("m-lines").textContent = lines.filter(Boolean).join("\n");
+}
+
+function foldUpdate(m) {
+  if ($("m-name-err")) $("m-name-err").textContent = m.name_error || "";
+  const lv = m.level || {};
+  if ($("m-meter")) {
+    // -60 dB at the left, 0 dB (full scale) at the right
+    const pct = typeof lv.db === "number" ? Math.max(0, Math.min(100, (lv.db + 60) * 100 / 60)) : 0;
+    $("m-meter-fill").style.width = pct + "%";
+    $("m-meter").className = "meter" + (lv.clip || lv.verdict === "noise" ? " clip" : "");
+  }
+  if ($("m-level")) $("m-level").textContent = typeof lv.db !== "number" ? "" :
+    "Level " + lv.db.toFixed(0) + " dB, peak " + Math.round(100 * (lv.peak || 0) / 32768) + "%" +
+    (lv.clip ? " - clipping" : (lv.verdict === "noise" ? " - only noise, not a voice" : (lv.verdict === "silent" ?
+      " - no sound" : "")));
+  const sel = $("m-mic"), want = (m.mic || {}).pick || "";
+  if (sel && want && document.activeElement !== sel && sel.value !== want) sel.value = want;
+}
+
+const PHASES = { watch: "Look here", read: "Read this at the beep", turn: "Turn away and count", thanks: "Thanks",
+                 done: "Done", error: "It stopped", ended: "It stopped" };   // ended: round 21, a menu run with its reason
+// Which microphone Voice ID records on and she listens on (the User 2026-10-10): the default input unless one is
+// picked here; a pick names it for both and starts her ear on it (POST /v1/init {action: "mic_pick"}).
+function micPick(m) {
+  m = m || {};
+  if ((m.choices || []).length < 2) return null;
+  return micList(m, "r-mic");                 // round 20: the default preselected, a pick applied at once
+}
+function registerPlate(p) {
+  const r = p.register || {};
+  const st = r.state || "";
+  if (st === "name") {
+    const input = el("input", { id: "r-name", class: "keep", type: "text", autocomplete: "off", value: p.name || "" });
+    input.addEventListener("keydown", (ev) => { if (ev.key === "Enter") $("r-begin").click(); });
+    return [
+      el("h2", { id: "p-title", text: p.title || "Voice ID" }),
+      el("p", { id: "p-body", text: p.body || "" }),
+      el("label", { for: "r-name", text: p.ask || "What should Crissa call you?" }), input,
+      el("div", { class: "msg bad", id: "r-err", text: p.name_error || "" }),
+      micPick(p.mic),
+      keysRow([], "register", el("button", { type: "button", id: "r-begin", class: "primary", text: "Begin",
+        on: { click: () => act("name", { text: $("r-name").value }) } })),
+      keysRow(p.keys, "register"),
+    ];
+  }
+  if (st === "starting" || st === "live") {
+    return [
+      el("h2", { id: "p-title", text: p.title || "Voice ID" }),
+      el("p", { id: "p-body", text: st === "starting" ? "Starting Voice ID…" : (p.body || r.hint || "") }),
+      el("div", { class: "glass", id: "glass" },
+        el("div", { class: "phase", id: "g-phase", text: st === "starting" ? "Getting ready" : "" }),
+        // the cue over the sentence and the take (the User 2026-10-10, .101 V: no sentence to read at the beep)
+        el("div", { class: "cue", id: "g-cue" }),
+        el("div", { class: "text", id: "g-text" }),
+        el("div", { class: "line", id: "g-line" }),
+        el("div", { class: "bar", id: "g-bar" }, el("div", { id: "g-fill" })),
+        el("div", { class: "small", id: "g-pip" }),
+        el("div", { class: "small", id: "g-take" }),
+        el("div", { class: "small", id: "g-mic" })),
+    ];
+  }
+  return [
+    el("h2", { id: "p-title", text: p.title || "Voice ID" }),
+    el("p", { id: "p-body", text: p.body || "" }),
+    el("p", { class: "hint", text: r.hint || "" }),
+    keysRow(p.keys, "register"),
+  ];
+}
+function glassUpdate() {
+  // the coach's glass from /v1/register, else the copy the plate carries (one source, two reads)
+  const plateGlass = (((S.snap || {}).plate || {}).register || {}).glass || {};
+  const g = (S.glass && S.glass.phase && S.glass.phase !== "idle") ? S.glass : (plateGlass.phase ? plateGlass : (S.glass || {}));
+  if (!$("glass")) return;
+  const phase = g.phase || "idle";
+  // four takes (2026-10-11): the sentence turned away and the count facing the camera say which way to face
+  const AWAY = { read: "Turn away and say it again", turn: "Face the camera and count" };
+  const label = (phase === "read" && g.away === true) || (phase === "turn" && g.away === false) ? AWAY[phase] : PHASES[phase];
+  $("g-phase").textContent = label || (phase === "idle" ? "Getting ready" : phase);
+  $("g-text").textContent = g.text || g.line || "";
+  $("g-cue").textContent = g.cue || "";
+  $("g-take").textContent = Number(g.takes || 0) && Number(g.take || 0)
+    ? "Recording " + g.take + " of " + g.takes : "";
+  $("g-mic").textContent = g.mic ? "Recording on: " + g.mic : "";
+  $("g-line").textContent = g.line && g.line !== g.text ? g.line : "";
+  $("g-pip").textContent = { loop: "The host on the Wall is listening.", hold: "The host on the Wall holds still.",
+                             intro: "The host on the Wall is speaking." }[g.pip] || "";
+  const secs = Number(g.seconds || 0), beep = Number(g.beep_ts || 0);
+  const left = beep > 0 && secs > 0 ? Math.max(0, secs - (Date.now() / 1000 - beep)) : 0;
+  $("g-bar").className = "bar" + (left > 0 ? " beep" : "");
+  $("g-fill").style.width = (left > 0 ? (100 * (1 - left / secs)) : 0) + "%";
+}
+async function glassPoll() {
+  clearTimeout(S.glassTimer);
+  const st = ((S.snap && S.snap.plate && S.snap.plate.register) || {}).state;
+  if (!(S.snap && S.snap.step_id === "voice_id" && (st === "live" || st === "starting"))) return;
+  try { S.glass = await getJSON("/v1/register"); } catch (e) { S.glass = {}; }
+  glassUpdate();
+  S.glassTimer = setTimeout(glassPoll, 200);
+}
+
+function facePlate(p) {
+  const f = p.face || {};
+  const st = f.state || "";
+  const live = st === "starting" || st === "live";
+  return [
+    el("h2", { id: "p-title", text: p.title || "Face photos" }),
+    el("p", { id: "p-body", text: p.body || "" }),
+    el("p", { class: "hint", id: "f-hint", text: f.hint || "" }),
+    live ? el("div", { class: "bar", id: "f-bar" }, el("div", { id: "f-fill" })) : null,
+    el("p", { class: "small", id: "f-wait" }),
+    keysRow(p.keys, "face"),
+  ];
+}
+function faceUpdate(p) {
+  const f = p.face || {};
+  if ($("p-body")) $("p-body").textContent = p.body || "";
+  if ($("f-hint")) $("f-hint").textContent = f.hint || "";
+  const pr = f.progress || {};
+  if ($("f-fill") && pr.total) $("f-fill").style.width = (100 * Math.min(1, (pr.done || 0) / pr.total)) + "%";
+  if ($("f-wait")) $("f-wait").textContent = f.state === "no_camera" && f.until
+    ? "Going on by itself in " + Math.max(0, Math.ceil(f.until - Date.now() / 1000)) + " s." : "";
+}
+
+// ---- Your room and Your hours (the User 2026-10-11: plain cards, defaults shown, Skip) ----------------------------
+const ROOM_TAGS = { seat: "You", speakers: "Speakers", door: "Door" };   // the camera is the middle: never a tag
+function roomClock(r) {
+  const box = el("div", { class: "clock", id: "rm-clock", role: "group", "aria-label": "The clock: the camera is the middle, you are at 6" });
+  const at = {};
+  for (const mk of r.order || []) {
+    const h = Number((r.marks || {})[mk] || 0);
+    if (h >= 1 && h <= 12) (at[h] = at[h] || []).push(mk);
+  }
+  for (let h = 1; h <= 12; h++) {
+    const a = (h / 12) * Math.PI * 2 - Math.PI / 2;
+    // YOU ARE AT 6 (2026-10-26, the house's dial "highlighted on the dial with your initials"): shown, never a question
+    const you = h === Number(r.user_hour || 6) && !(at[h] || []).includes("seat") ? ["You"] : [];
+    const tags = you.concat((at[h] || []).map((mk) => ROOM_TAGS[mk] || mk)).join(" + ");
+    const b = el("button", { type: "button", class: "hr" + ((at[h] || []).includes(r.now) ? " on" : ""),
+      id: "rm-h" + h, "data-hour": String(h), "aria-label": "hour " + h + (tags ? " (" + tags + ")" : ""),
+      on: { click: () => act("room", { verb: "hour", hour: h }) } }, String(h), tags ? el("small", { text: tags }) : null);
+    // AN HOUR THE CAMERA CANNOT TURN TO IS GREYED FOR THE DOOR (2026-10-26, the User: "must grey out 12"): the view
+    // names them from the camera's own travel (door_unreachable); only while the door is the mark being set
+    if (r.now === "door" && (r.door_unreachable || []).includes(h)) {
+      b.disabled = true;
+      b.classList.add("far");
+      b.title = "The camera cannot turn to " + h;
+    }
+    b.style.left = (124 + Math.cos(a) * 98) + "px";
+    b.style.top = (124 + Math.sin(a) * 98) + "px";
+    box.appendChild(b);
+  }
+  box.appendChild(el("div", { class: "mid", text: "Crissa" }));
+  // THE SPEAKERS' INTERNAL TICK (round 17, the User 2026-10-13, .101: "This computer" was taken and the card showed
+  // nothing): the computer and the door are equals; by her at the centre, a checkbox, checked when the sound comes from
+  // this computer and lit once clicked. A click is THIS COMPUTER. The view sends `internal` only while it is on
+  // (lib/crissa_init room_internal; kill CRISSA_ROOM_INTERNAL_TICK=0).
+  const it = r.internal;
+  if (it) {
+    const cls = "internal" + (it.checked ? " checked" : "") + (it.lit ? " lit" : "") + (it.asking ? " asking" : "");
+    box.appendChild(el("button", { type: "button", class: cls, id: "rm-internal", role: "checkbox",
+      "aria-checked": it.checked ? "true" : "false",
+      "aria-label": (it.label || "Internal") + ": the sound comes from this computer",
+      on: { click: () => act("room", { verb: "computer", mark: "speakers" }) } },
+      el("span", { class: "box", "aria-hidden": "true", text: it.checked ? "✓" : "" }), it.label || "Internal"));
+    box.querySelector(".mid").style.marginTop = "-10px";
+  }
+  return box;
+}
+// ROUND 39 (.101 round 38 N6, the User: "grey out user and speaker and any other regs in the dial. Only new ID and in any
+// seat even if taken by someone else. Iow, dial spot can hold multiple usual IDs."): a new person's usual seat on the
+// room clock. Every other registration is shown at its hour, greyed and not a key; any hour takes the seat, a held one
+// too, and several names share an hour.
+function idsDial(d) {
+  const dial = d.dial || {};
+  const at = {};
+  for (const m of dial.marks || []) (at[m.hour] = at[m.hour] || []).push(m.label);
+  const seat = Number(dial.seat || d.seat || 0);
+  const who = d.name || "this person";
+  const box = el("div", { class: "clock ids-dial", id: "ids-dial", role: "group",
+                          "aria-label": "The clock: the camera is the middle, you are at 6. Tap the hour where " + who + " usually sits." });
+  for (let h = 1; h <= 12; h++) {
+    const a = (h / 12) * Math.PI * 2 - Math.PI / 2;
+    const names = (at[h] || []).slice();
+    const mine = seat === h;
+    const b = el("button", { type: "button", class: "hr" + (mine ? " on" : ""), id: "ids-h" + h, "data-hour": String(h),
+      "aria-label": "hour " + h + (names.length ? " (" + names.join(", ") + ")" : "") + (mine ? ", " + who : ""),
+      on: { click: () => act("ids_seat", { hour: mine ? "skip" : h }) } }, String(h),
+      ...(names.length ? [el("small", { class: "taken", text: names.join(" · ") })] : []),
+      ...(mine ? [el("small", { class: "seat", text: who })] : []));
+    b.style.left = (124 + Math.cos(a) * 98) + "px";
+    b.style.top = (124 + Math.sin(a) * 98) + "px";
+    if ((dial.marks || []).some((m) => m.hour === h && m.kind !== "person") && dial.office_tip) {
+      b.title = dial.office_tip;                  // the office marks are his file's: the hover says where
+      b.classList.add("office");
+    }
+    box.appendChild(b);
+  }
+  box.appendChild(el("div", { class: "mid", text: "Crissa" }));
+  return el("div", { id: "ids-room" }, el("h3", { text: "Your room: " + who + "'s usual seat (optional)" }),
+    el("p", { class: "hint", text: "Tap the hour where " + who + " usually sits; tap it again to clear. Others already on the clock stay as they are." }),
+    box);
+}
+function roomPlate(p) {
+  const r = p.room || {};
+  const st = r.state || "";
+  if (st === "marks") {
+    const chips = el("div", { class: "marks", id: "rm-marks" });
+    for (const mk of r.order || []) {
+      const v = (r.marks || {})[mk];
+      const val = mk === "speakers" && !v ? "this computer" : (v == null ? "not set" : String(v));
+      chips.appendChild(el("button", { type: "button", id: "rm-pick-" + mk, class: r.now === mk ? "now" : "",
+        text: ((r.labels || {})[mk] || mk) + ": " + val, on: { click: () => act("room", { verb: "pick", mark: mk }) } }));
+    }
+    chips.appendChild(el("button", { type: "button", id: "rm-computer", text: "Speakers: this computer",
+      on: { click: () => act("room", { verb: "computer", mark: "speakers" }) } }));
+    const d = r.defaults || {};
+    return [
+      el("h2", { id: "p-title", text: p.title || "Your room" }),
+      el("p", { id: "p-body", text: p.body || "" }),
+      roomClock(r),
+      el("p", { class: "hint", id: "rm-ask", text: p.hint || "" }),
+      chips,
+      el("p", { class: "small", id: "rm-defaults", text: "Defaults: your seat " + d.seat + ", speakers " +
+        (d.speakers ? d.speakers : "this computer") + ", door: tap its hour." }),
+      keysRow(p.keys, "room"),
+    ];
+  }
+  if (st === "aim") {
+    // THE DOOR IS SHOWN, NOT GUESSED (2026-10-25): the camera's live picture and two keys to turn it to the door
+    const kids = [el("h2", { id: "p-title", text: p.title || "Your room" }),
+                  el("p", { id: "p-body", text: p.body || "" })];
+    if (r.camera_url) kids.push(el("div", { class: "cam" }, el("img", { id: "rm-cam", alt: "The camera's picture" })));
+    kids.push(el("p", { class: "hint", id: "rm-hint", text: p.hint || "" }));
+    kids.push(keysRow(p.keys, "room"));
+    kids.push(el("div", { class: "row" }, el("button", { type: "button", class: "quiet", id: "rm-back",
+      text: "Back to the clock", on: { click: () => act("room", { verb: "back" }) } })));
+    return kids;
+  }
+  if (st === "wave" || st === "wave_again") {
+    const kids = [el("h2", { id: "p-title", text: p.title || "Your room" }),
+                  el("p", { id: "p-body", text: p.body || "" }),
+                  el("p", { class: "hint", id: "rm-hint", text: st === "wave_again" ? (p.hint || "") : "" })];
+    if (r.camera_url) kids.push(el("div", { class: "cam" }, el("img", { id: "rm-cam", alt: "The camera's picture" })));
+    kids.push(keysRow(p.keys, "room"));
+    kids.push(el("div", { class: "row" }, el("button", { type: "button", class: "quiet", id: "rm-back",
+      text: "Back to the clock", on: { click: () => act("room", { verb: "back" }) } })));
+    return kids;
+  }
+  return [el("h2", { id: "p-title", text: p.title || "Your room" }), el("p", { id: "p-body", text: p.body || "" })];
+}
+function camRefresh(snap) {
+  clearTimeout(S.camTimer);
+  const r = (((snap || {}).plate || {}).room) || {};
+  const img = $("rm-cam");
+  if (!img || !r.camera_url || !(r.state === "wave" || r.state === "wave_again" || r.state === "aim")) return;
+  img.src = r.camera_url + (r.camera_url.includes("?") ? "&" : "?") + "t=" + Date.now();
+  S.camTimer = setTimeout(() => camRefresh(S.snap), 700);
+}
+function hourSelect(id, value) {
+  const sel = el("select", { id });
+  for (let h = 0; h < 24; h++) {
+    const o = el("option", { value: String(h), text: String(h).padStart(2, "0") + ":00" });
+    if (Number(value) === h) o.selected = true;
+    sel.appendChild(o);
+  }
+  return sel;
+}
+function hoursPlate(p) {
+  const h = p.hours || {};
+  if (h.state !== "ask") return [el("h2", { id: "p-title", text: p.title || "Your hours" }), el("p", { text: p.body || "" })];
+  const over = h.overnight || [18, 2];
+  const quiet = h.quiet;
+  const d = h.defaults || {};
+  const none = el("input", { type: "checkbox", id: "hr-quiet-none" });
+  none.checked = !quiet;
+  const q1 = hourSelect("hr-quiet-from", quiet ? quiet[0] : 22), q2 = hourSelect("hr-quiet-to", quiet ? quiet[1] : 7);
+  const sync = () => { q1.disabled = q2.disabled = none.checked; };
+  none.addEventListener("change", sync);
+  sync();
+  const fmt = (w) => w ? String(w[0]).padStart(2, "0") + ":00 to " + String(w[1]).padStart(2, "0") + ":00" : "none";
+  return [
+    el("h2", { id: "p-title", text: p.title || "Your hours" }),
+    el("p", { id: "p-body", text: p.body || "" }),
+    el("label", { for: "hr-over-from", text: "Overnight" }),
+    el("div", { class: "hours-row" }, "from", hourSelect("hr-over-from", over[0]), "to", hourSelect("hr-over-to", over[1])),
+    el("label", { for: "hr-quiet-from", text: "Quiet hours" }),
+    el("div", { class: "hours-row" }, el("label", { for: "hr-quiet-none" }, none, " No quiet hours"),
+       "from", q1, "to", q2),
+    el("p", { class: "small", id: "hr-defaults", text: "Defaults: overnight " + fmt(d.overnight) + ", quiet hours " +
+      fmt(d.quiet) + "." }),
+    el("div", { class: "msg bad", id: "hr-err", text: p.hint || "" }),
+    el("div", { class: "row" },
+      el("button", { type: "button", class: "primary", id: "hr-save", text: "Save", on: { click: () => act("hours", {
+        verb: "save", overnight: [Number($("hr-over-from").value), Number($("hr-over-to").value)],
+        quiet: $("hr-quiet-none").checked ? null : [Number(q1.value), Number(q2.value)] }) } }),
+      el("button", { type: "button", id: "hr-skip", text: "Skip", on: { click: () => act("hours", { verb: "skip" }) } })),
+  ];
+}
+
+function donePlate(snap) {
+  const d = snap.done || {};
+  const mic = d.mic || {};
+  // Her microphone, said plainly (the User 2026-10-10: the plate said "she is listening" while the Mic was off).
+  // The key is the panels' Mic key: the ear's own lock, through POST /v1/init {action: "mic"}.
+  const micRow = mic.on
+    ? el("div", { class: "row" }, el("button", { type: "button", id: "mic-off", text: "Turn off the microphone",
+                                                  on: { click: () => act("mic", { on: false }) } }))
+    : el("div", { class: "row" }, el("button", { type: "button", id: "mic-on", class: "primary",
+                                                  text: "Turn on the microphone",
+                                                  on: { click: () => act("mic", { on: true }) } }));
+  return [
+    el("h2", { id: "p-title", text: d.title || "All set" }),
+    el("p", { id: "p-body", text: d.body || "" }),
+    el("div", { class: "lines", text: (d.lines || []).join("\n") }),
+    // round 41 (.101 round 40 D6): an IDs run's plate is the person's result only - no microphone key, no login box
+    d.person_only ? null : el("p", { id: "mic-state", class: mic.on ? "mic on" : "mic off", text: d.mic_line ||
+              (mic.on ? "Microphone: on." : "Microphone: off. She cannot hear you until you turn it on.") }),
+    d.person_only ? null : micRow,
+    // Y (the User 2026-10-10): a skipped or failed Voice ID always has its key here, and "Voice ID again" in the menu
+    d.voice_id_again ? el("div", { class: "row", id: "voice-id-again-row" }, el("button", { type: "button", id: "voice-id-again",
+      text: "Voice ID again", on: { click: () => voiceIdAgain() } })) : null,
+    d.person_only ? null : loginRow(d.login),
+    d.person_only ? null : phoneRow(d.phone),
+    // THE DESKTOP WALL, NOT A SECOND ONE (round 15): with a desk Wall this window steps aside and the desktop shows her
+    d.desk ? el("div", { class: "row" }, el("button", { type: "button", id: "go-wall", class: mic.on ? "primary" : "",
+                                                       text: "Go to the Wall", on: { click: () => act("to_wall") } }))
+           : el("div", { class: "row" }, el("a", { href: "/wall?noinit=1", id: "go-wall" },
+      el("button", { type: "button", class: mic.on ? "primary" : "", text: "Go to the Wall" }))),
+  ];
+}
+// Start Crissa when I log in (the User 2026-10-10): off unless chosen here; the line says why.
+// TO ENABLE THE MOBILE INTERFACE (the User 2026-10-28): the phone's Allow key, naming the network it opens, and its
+// Remove key; one POST each to the player (lib/crissa_phone_firewall), the desktop's password prompt does the rest.
+function phoneRow(ph) {
+  if (!ph) return null;
+  const said = el("p", { class: "hint", id: "phone-said" });
+  const press = (path, btn) => {
+    btn.disabled = true; said.textContent = "Waiting for the password prompt...";
+    fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })
+      .then((r) => r.json()).then((j) => {
+        if (j && j.ok) {
+          const x = (j.exposed || []).map((e) => e.program + " on port " + e.port).join(", ");
+          said.textContent = (path.endsWith("remove") ? "Done: phone access is removed."
+                              : "Done: your phone can open Crissa now.") + (x ? " Also open on the network: " + x + "." : "");
+        } else { said.textContent = (j && j.said) || "Not changed."; btn.disabled = false; }
+      }).catch(() => { said.textContent = "Not changed."; btn.disabled = false; });
+  };
+  const kids = [];
+  if (ph.offer) {
+    const b = el("button", { type: "button", id: "phone-allow", text: ph.label || "Allow my phone on this Wi-Fi" });
+    b.addEventListener("click", () => press("/v1/phone/allow", b));
+    // the network by its measured kind (the User 2026-10-29: "on this Wi-Fi" on a wired network)
+    kids.push(el("p", { id: "phone-why", text: "To enable the Mobile interface, allow your phone on your "
+                                               + (ph.where || "network") + ". It opens the phone port only." }), b);
+  }
+  if (ph.remove) {
+    const r = el("button", { type: "button", id: "phone-remove", text: ph.remove_label || "Remove phone access" });
+    r.addEventListener("click", () => press("/v1/phone/remove", r));
+    kids.push(el("p", { id: "phone-allowed", text: ph.here ? "Your phone is allowed on your " + (ph.where || ph.remove_where) + "."
+                        : "Phone access is allowed on another network (" + ph.remove_where + "), not this one." }), r);
+  }
+  kids.push(said);
+  return el("div", { class: "row", id: "phone-row" }, ...kids);
+}
+function loginRow(lg) {
+  lg = lg || {};
+  const box = el("input", { type: "checkbox", id: "login-on" });
+  box.checked = !!lg.on;
+  box.addEventListener("change", () => act("login", { on: box.checked }));
+  return el("div", { class: "row", id: "login-row" },
+    el("label", { for: "login-on" }, box, " " + (lg.label || "Start Crissa when I log in")),
+    el("p", { class: "hint", id: "login-why", text: lg.why || "" }));
+}
+// SETUP COULD NOT FINISH (round 20, the User 2026-10-14: "No mic detected failed install"): what is missing and Run Setup
+// again; nothing says Setup is done, so the next start runs it again too.
+function failedPlate(snap) {
+  const f = snap.failed || {};
+  if (snap.setup_again === false) return [      // round 34: no Run Setup again; the next start runs it
+    el("h2", { id: "p-title", text: "Setup could not finish" }),
+    el("p", { id: "p-body", text: f.why || "Something Crissa needs is missing on this computer." }),
+    el("p", { class: "hint", text: "Setup runs again the next time Crissa starts." }),
+    el("div", { class: "row" }, el("a", { href: "/wall?noinit=1" }, el("button", { type: "button", text: "Go to the Wall" }))),
+  ];
+  return [
+    el("h2", { id: "p-title", text: "Setup could not finish" }),
+    el("p", { id: "p-body", text: f.why || "Something Crissa needs is missing on this computer." }),
+    el("div", { class: "row" },
+      el("button", { type: "button", id: "again", class: "primary", text: "Run Setup again",
+                     on: { click: () => act("start", { force: true }) } })),
+  ];
+}
+function idlePlate(snap) {
+  const cancelled = snap.status === "aborted";
+  if (snap.setup_again === false) return [      // round 34: no Set up again; a cancelled first Setup runs next start
+    el("h2", { id: "p-title", text: cancelled ? "Setup was cancelled" : "Setup is not running" }),
+    el("p", { id: "p-body", text: cancelled ? "Nothing was kept. Setup runs again the next time Crissa starts."
+                                            : "Setup is done on this computer." }),
+    el("div", { class: "row" }, el("a", { href: "/wall?noinit=1" }, el("button", { type: "button", text: "Go to the Wall" }))),
+  ];
+  return [
+    el("h2", { id: "p-title", text: cancelled ? "Setup was cancelled" : "Setup is not running" }),
+    el("p", { id: "p-body", text: "Crissa runs as she is. You can set her up again at any time." }),
+    el("div", { class: "row" },
+      el("button", { type: "button", id: "again", class: "primary", text: "Set up again",
+                     on: { click: () => act("start", { force: true }) } }),
+      el("a", { href: "/wall?noinit=1" }, el("button", { type: "button", text: "Go to the Wall" }))),
+  ];
+}
+
+// ---- ONE-PAGE SETUP (round 22, the User 2026-10-15) ----------------------------------------------------------------
+// Connect stays its own screen; after it, ONE page: Lila on her own filmed lines on the left, every section on the
+// right. She goes from the top: the section she talks about is lit, a done section shows done, and sections done
+// before she got to them get one "Oh, you already did that, great!" instead of their lines. Between lines she is on her
+// listen loop. The walk's own lines are the page's; a line timed against the person (Voice ID's counts, the face
+// turns, the done line) is CUED by the player (GET /v1/register `film`) and the page says when her last word is out
+// (POST /v1/init film_said). Every film starts and ends on one anchor frame, so any film follows any other.
+// lib/crissa_init ONE-PAGE SETUP; kill CRISSA_SETUP_ONE_PAGE=0 (the card walk above).
+const OP_SECS = [
+  { id: "you", title: "You and your microphone", film: "you-mic" },
+  { id: "pc", title: "This computer", film: "computer" },
+  { id: "vid", title: "Voice and Face ID", film: "" },   // round 39 N4 asked for Face in the title; the one-page section kept Voice ID (the User 2026-10-26)
+  { id: "face", title: "Your face", film: "" },
+  { id: "room", title: "Your room", film: "room" },
+  { id: "hours", title: "Your hours", film: "hours" },
+];
+const OP_CUE_SEC = { "vid-facing": "vid", "vid-left": "vid", "vid-right": "vid", "count-again": "vid", face: "face",
+                     further: "face", done: "done" };
+const OP_TAKE_PHASES = ["watch", "read", "turn", "thanks"];   // round 45: the routine is in its takes
+const OP_WAIT_S = 30;              // a section open this long with nothing happening: "Take your time" (once)
+const OP_HEARD_PEAK = 1000;        // a known answer: a count at a desk peaks ~1500 on a Shure (the fast path)
+// THE BAR IS THE ROOM'S OWN FLOOR (the User's walk of 1.0.1, 2026-10-26: the card waited on a literal while the meter read a
+// dead source): the quietest reading so far is the floor, and a peak OP_HEARD_OVER_FLOOR times it (6 dB) is the person -
+// measured, so a quiet microphone or a loud room both work; the literal stays as the fast path only.
+const OP_HEARD_OVER_FLOOR = 2;
+S.op = { built: false, view: {}, glass: {}, said: new Set(), addressed: new Set(), cueSeen: -1, gen: 0, playing: null,
+         now: "", lineEndAt: 0, lastInput: Date.now(), heardSent: false, nameTimer: null, blocked: false,
+         blobs: {}, front: null, regTimer: null, roomSig: "", waited: new Set() };
+
+function opOn(snap) {
+  if (AGAIN) return false;
+  const live = snap.status === "running" && snap.one_page && Object.keys(snap.one_page).length && snap.step_id !== "connect";
+  return !!(live || (S.op.built && snap.status === "done"));
+}
+function opSecOf(fid) { return OP_CUE_SEC[fid] || (OP_SECS.find((s) => s.film === fid) || {}).id || ""; }
+function opSay(text) {
+  const b = $("op-say");
+  b.textContent = text || "Listening.";
+  b.className = "say" + (text ? "" : " empty");
+}
+function opBuild(snap) {
+  S.op.built = true;
+  $("op").hidden = false;
+  document.querySelector("main").hidden = true;
+  $("body").textContent = "";                      // the card plate under it: no second copy of a plate's ids
+  const box = $("op-secs");
+  // round 34: no "Your face" section when the counts carry the photos (one_page.face_section false); out of the list
+  // itself, so every later walk of the sections agrees
+  if ((snap.one_page || {}).face_section === false) {
+    const fi = OP_SECS.findIndex((s) => s.id === "face");
+    if (fi >= 0) OP_SECS.splice(fi, 1);
+  }
+  // ROUND 36 (the User 2026-10-19, Add/Edit IDs and Room): a run from the one button walks only its own sections -
+  // You (the name, locked; the Ready press), Voice ID, and on the User's own file Your room and Your hours with Redo
+  // keys. The same page, the same films; nothing of the old plates.
+  // ROUND 38 (.101 round 37 D: "One moment..." forever): the sections this run does not walk were cut out of the page
+  // too, and the bodies below are filled by id - $("op-body-pc") was gone, the append threw and opBuild never ended.
+  // The User's page: ONE page, the office sections greyed for a new person. They stay on the page, inert.
+  const skipped = [];
+  if (snap.ids && snap.ids.sections) {
+    const keep = new Set(snap.ids.sections);
+    // round 39 (N9, the User: "Just do Voice and Face ID first, delete the a new person section"): `drop` leaves the page
+    const drop = new Set(snap.ids.drop || []);
+    for (let k = OP_SECS.length - 1; k >= 0; k--) {
+      if (drop.has(OP_SECS[k].id)) OP_SECS.splice(k, 1);
+      else if (!keep.has(OP_SECS[k].id)) skipped.unshift(OP_SECS.splice(k, 1)[0]);
+    }
+    const vid0 = OP_SECS.find((x) => x.id === "vid");
+    if (vid0 && snap.ids.vid_title) vid0.title = snap.ids.vid_title;
+    const you = OP_SECS.find((x) => x.id === "you");
+    if (you) { you.title = snap.ids.who === "me" ? "Your file" : "A new person"; you.film = ""; }
+  }
+  for (const sec of OP_SECS) {
+    box.appendChild(el("section", { class: "op-sec next", id: "op-" + sec.id },
+      el("div", { class: "head" }, el("h2", { text: sec.title }), el("span", { class: "pill", id: "op-pill-" + sec.id,
+                                                                            text: "Up next" }),
+        el("span", { class: "edit", id: "op-edit-" + sec.id })),
+      el("div", { class: "op-body", id: "op-body-" + sec.id }),
+      el("div", { class: "summary", id: "op-sum-" + sec.id })));
+  }
+  const collapse = !!(snap.ids && snap.ids.collapse_edit);
+  for (const sec of skipped) {
+    box.appendChild(el("section", { class: "op-sec skip" + (collapse ? " collapsed" : ""), id: "op-" + sec.id,
+                                    "aria-disabled": "true" },
+      el("div", { class: "head" }, el("h2", { text: sec.title }), el("span", { class: "pill", id: "op-pill-" + sec.id,
+                                                                            text: collapse ? "Not in this run" : "Not needed" })),
+      el("div", { class: "op-body", id: "op-body-" + sec.id, inert: "" }),
+      el("div", { class: "summary", id: "op-sum-" + sec.id })));
+  }
+  box.appendChild(el("section", { class: "op-sec", id: "op-done", hidden: true },
+    el("div", { class: "head" }, el("h2", { text: "All set" }), el("span", { class: "pill", text: "Done" })),
+    el("div", { id: "op-done-body" }, el("p", { class: "hint", text: "Lila hands you over to Crissa." }))));
+  // the bodies: built once, filled as the walk reaches them
+  const name = el("input", { id: "op-name", type: "text", autocomplete: "off", placeholder: "Your name" });
+  name.addEventListener("input", () => {
+    clearTimeout(S.op.nameTimer);
+    S.op.nameTimer = setTimeout(() => act("machine", { verb: "name", name: name.value }), 900);
+  });
+  name.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { clearTimeout(S.op.nameTimer);
+                                                                       act("machine", { verb: "name", name: name.value }); } });
+  if (snap.ids) {
+    // round 36: the IDS plate (idsPlate draws it); round 39 (N9): in the first section when "you" has left the page
+    $($("op-body-you") ? "op-body-you" : "op-body-vid").prepend(el("div", { id: "op-ids" }));
+  } else $("op-body-you").append(
+    el("div", {}, el("label", { for: "op-name", text: "What should Crissa call you?" }), name),
+    el("div", { class: "msg bad", id: "op-name-err" }),
+    el("div", { id: "op-mics" }),
+    el("div", { class: "meter", id: "op-meter" }, el("div", { id: "op-meter-fill" })),
+    el("p", { class: "hint", id: "op-heard", text: "Say anything. The bar moves when the microphone hears you." }));
+  if (snap.ids) $("op-cancel").textContent = exitLabel(snap);
+  $("op-body-pc").append(
+    el("p", { class: "hint", text: "Crissa checks what this computer can run, then starts drawing her pictures for " +
+      "this screen. Both keep going while you carry on. Nothing leaves this computer." }),
+    el("div", { class: "row" },
+      el("button", { type: "button", class: "primary", id: "op-allow", text: "Allow",
+                     on: { click: () => act("machine", { verb: "allow" }) } }),
+      el("button", { type: "button", id: "op-skip", text: "Skip", on: { click: () => act("machine", { verb: "skip" }) } })),
+    el("p", { class: "hint", id: "op-pc-hint" }),
+    // round 28 (the User 2026-10-17: "offer this voice as English Accent option ... Simple toggle at setup"): her own
+    // voice (the default) or an English accent; she uses it from her next line
+    el("div", { class: "row", id: "op-her-voice" },
+      el("span", { class: "hint", text: "Voice:" }),
+      ...[["her", "Crissa's voice"], ["english_accent", "Non-branded voice (UK English)"]].map(([style, label]) =>
+        el("button", { type: "button", id: "op-hv-" + style, "data-style": style, "aria-pressed": String(style === "her"),
+                       class: style === "her" ? "primary" : "", text: label,
+                       on: { click: async () => {
+                         const j = await act("machine", { verb: "her_voice", style });
+                         if (j && j.ok) document.querySelectorAll("#op-her-voice button").forEach((b) => {
+                           const on = b.dataset.style === j.style;
+                           b.setAttribute("aria-pressed", String(on)); b.className = on ? "primary" : ""; });
+                       } } }))));
+  $("op-body-vid").append(
+    el("p", { class: "hint", text: "Count to six at each beep. Four counts: two facing the screen, one turned a little " +
+      "left, one turned a little right. A count that comes out too quiet is asked again." }),
+    el("div", { class: "op-boxes", id: "op-counts" }, ...["facing", "facing", "left", "right"].map((w, i) =>
+      el("div", { class: "op-box", text: w + " " + (i + 1) }))),
+    el("div", { class: "bar beep", id: "op-beep" }, el("div", { id: "op-beep-fill" })),
+    el("p", { class: "small", id: "op-vid-line" }),
+    // THE RESULT CARD'S KEYS ON THE ONE PAGE (the User 2026-10-26, his walk of 1.0.1: "click what" - Voice ID ended
+    // partial, 3 of 4 counts kept, and the page's state carried "Redo the count" / "Continue" that this section never
+    // drew; the run sat until a key was pressed from the wire)
+    el("p", { class: "small", id: "op-vid-hint" }),
+    el("div", { class: "row", id: "op-vid-keys" }));
+  if ($("op-body-face")) $("op-body-face").append(          // round 34: absent when the counts carry the photos
+    el("p", { class: "hint", id: "op-face-hint", text: "Two photos. Turn your head a little to the left, then a little to " +
+      "the right. Each one is taken by itself when you are turned far enough. The photos stay on this computer." }),
+    el("div", { class: "op-boxes", id: "op-faces" }, el("div", { class: "op-box", text: "left" }),
+       el("div", { class: "op-box", text: "right" })));
+  if ($("op-body-room")) $("op-body-room").append(          // round 39 (N9): absent on a new person's run (the seat is the dial)
+    el("p", { class: "hint", text: "The clock is your room seen from above: the camera is the middle of the clock and you are at 6 o'clock. Tap " +
+      "the hour where your TV or speakers play, or tick Internal; then tap your door." }),
+    el("div", { id: "op-clock" }), el("p", { class: "hint", id: "op-room-ask" }));
+  const from = hourSelect("op-hr-from", 18), to = hourSelect("op-hr-to", 2);
+  $("op-body-hours").append(
+    el("p", { class: "hint", text: "When may Crissa restart, render and work on her own? Six in the evening to two in " +
+      "the morning unless you change it." }),
+    el("div", { class: "hours-row" }, "from", from, "to", to),
+    el("div", { class: "row" }, el("button", { type: "button", class: "primary", id: "op-keep", text: "Keep these",
+      on: { click: () => act("hours", { verb: "save", overnight: [Number(from.value), Number(to.value)] }) } })));
+  for (const ev of ["pointerdown", "keydown"]) document.addEventListener(ev, () => { S.op.lastInput = Date.now(); });
+  $("op-cancel").addEventListener("click", () => $("cancel").click());
+  $("op-start").addEventListener("click", () => {
+    $("op-start").hidden = true;
+    S.op.blocked = false;
+    const go = S.op.retry; S.op.retry = null;
+    if (go) go(); else opTick();
+  });
+  S.op.front = $("op-va");
+  opPreload(snap.one_page.films || {});
+}
+async function opPreload(films) {
+  // every film fetched once into memory: a line starts at once and any film follows any other with no wait
+  const order = ["welcome", "listen", "you-mic", "computer", "vid-facing", "vid-left", "vid-right", "face", "room",
+                 "hours", "already", "done", "wait", "count-again", "further", "setup-only"];
+  for (const id of order.filter((k) => films[k]).concat(Object.keys(films).filter((k) => !order.includes(k)))) {
+    try { S.op.blobs[id] = URL.createObjectURL(await (await fetch(films[id].url)).blob()); } catch (e) { /* by URL */ }
+  }
+}
+function opFilms() { return (S.op.view.films || {}); }
+function opPlay(fid, loop, onEnd, onWord) {
+  const f = opFilms()[fid];
+  if (!f) { if (onEnd) onEnd(); return; }
+  const gen = ++S.op.gen;
+  const cur = S.op.front, nxt = cur === $("op-va") ? $("op-vb") : $("op-va");
+  S.op.playing = { id: fid, loop: !!loop, gen };
+  nxt.loop = !!loop;
+  // .101 round 29: each film on the one loudness of Setup's voices (setup_films `volume`; none = full, as before)
+  nxt.volume = Math.max(0, Math.min(1, Number(f.volume == null ? 1 : f.volume)));
+  nxt.src = S.op.blobs[fid] || f.url;
+  // A LINE ENDS ONCE, WHATEVER ENDS IT (the User's walks of cut 13 and 14, 2026-10-29: "sound stuck as usual"): the
+  // browser paused her welcome film 0.44 s before its end, unasked (the page's own pauses are the cut and the film it
+  // replaces), so "ended" never came and every step waited on a line that was over. A film paused while it is still the
+  // line is played on; a line not ended 2 s past its length ends by the clock. Kill ?filmguard=0.
+  let over = false;
+  const end = () => { if (over || S.op.gen !== gen) return; over = true; if (onEnd) onEnd(); };
+  const guard = new URLSearchParams(location.search).get("filmguard") !== "0";
+  nxt.onended = end;
+  nxt.onpause = () => {
+    if (!guard || loop || over || S.op.gen !== gen || nxt.ended || S.op.front !== nxt) return;
+    const again = nxt.play();
+    if (again && again.catch) again.catch(end);
+  };
+  nxt.onplaying = () => {
+    nxt.onplaying = null;
+    nxt.classList.add("front");
+    if (cur !== nxt) { cur.classList.remove("front"); cur.pause(); }
+    S.op.front = nxt;
+    if (onWord) setTimeout(() => { if (S.op.gen === gen) onWord(); }, 1000 * Number(f.last_word_s || f.seconds || 0));
+    if (stopAt) setTimeout(() => {
+      if (S.op.gen !== gen) return;
+      over = true;
+      nxt.pause();
+      if (onEnd) onEnd();
+    }, Math.max(0, 1000 * (stopAt - nxt.currentTime)));
+    const len = Number(f.seconds || nxt.duration || 0);
+    if (guard && !loop && len > 0) setTimeout(end, 1000 * (Math.max(0, len - nxt.currentTime) + 2));
+  };
+  // a film cut short (her done line with krew here) ends there: timed from its first frame, never from the browser's
+  // time updates, which come up to 250 ms late (into "If you add the Krew pack")
+  const stopAt = !loop && f.end_cut ? Number(f.seconds) : 0;
+  const p = nxt.play();
+  if (p && p.catch) p.catch(() => {
+    // no sound before a click on this page (the browser's rule): one key starts her, with sound
+    if (S.op.gen !== gen) return;
+    S.op.blocked = true;
+    S.op.playing = null;
+    S.op.retry = () => opPlay(fid, loop, onEnd, onWord);
+    $("op-start").hidden = false;
+  });
+}
+function opLoop() {
+  if (S.op.playing && S.op.playing.loop) return;
+  opSay("");
+  opPlay("listen", true);
+}
+function opLine(fid, seq, about) {
+  const f = opFilms()[fid];
+  if (!f) { if (seq) post("film_said", { seq }); return; }
+  const sec = opSecOf(fid);
+  if (sec && sec !== "done") { S.op.now = sec; S.op.addressed.add(sec); }
+  if (fid === "done") S.op.now = "done";
+  if (about && about.length) { S.op.now = about[about.length - 1]; about.forEach((a) => S.op.addressed.add(a)); }
+  opSay(f.line || "");
+  opPaint();
+  S.op.played = (S.op.played || []).concat([fid]);   // what she said, in order (a test reads it)
+  const key = fid + ":" + (about && about.length ? about.join(",") : (sec || ""));
+  const said = () => post("film_said", seq ? { seq } : { id: key });
+  post("film_start", { seconds: Number(f.seconds || 0), id: fid });   // the listener never hears her own films; an IDs run's Wall plays it too (r43)
+  opPlay(fid, false, () => {
+    if (!seq || fid === "done") said();       // the done line is waited for to its end; her other cues at her last word
+    S.op.said.add(key);
+    S.op.playing = null;
+    S.op.lineEndAt = Date.now();
+    opTick();
+  }, seq ? (fid !== "done" ? said : () => post("film_word", { seq })) : null);   // .101 r29: "Now here's Crissa." -> her
+}
+async function post(action, body) {
+  // a post that never re-draws or blocks the page's own keys (the film bus)
+  try {
+    await fetch("/v1/init", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, body, { action, run_id: (S.snap && S.snap.run_id) || "" })) });
+  } catch (e) { /* the cuer waits at most its cap */ }
+}
+// ROUND 36: THE IDS PLATE. Before the Ready press nothing is recorded: the page holds Lila on her loop and shows the
+// locked name, the Redo keys (the User's own file) or the seat question (a new person), then Ready; the proof is
+// asked at that press (his face through presence; the login password box when the player asks for it). A new person
+// then gets the handover plate with its own Ready. From the takes on, the page is Setup's one page as it was.
+S.ids = { sig: "", pw: "" };
+function idsPre(snap) {
+  const st = (snap && snap.ids && snap.ids.stage) || "";
+  return !!(snap && snap.ids) && (st === "ready_user" || st === "handover" || st === "dup_ask");
+}
+function idsPlate(snap) {
+  const d = snap.ids || {};
+  const box = $("op-ids");
+  if (!box) return;
+  const sig = [d.stage, d.need_password, d.why, (d.redo || []).join(","), d.seat, (snap.status || ""),
+               (d.dup || {}).pid || ""].join("|");
+  if (sig === S.ids.sig) return;
+  S.ids.sig = sig;
+  box.textContent = "";
+  // round 42 (.101's R41-4): the hint names the run's one exit by its own word (D8's Cancel; exitLabel)
+  box.append(el("p", { class: "hint", id: "op-ids-name",
+                       text: (d.who === "me" ? "Your file: " : "Adding: ") + (d.name || "") + (d.who === "me" ? "" :
+                             " (the name is set for this run; " + exitLabel(snap) + " to start another)") }));
+  if (d.stage === "ready_user" && d.who === "me") {
+    const list = el("div", { id: "op-ids-redo" });
+    for (const sec of ["voice_id", "room", "hours"]) {
+      const on = (d.redo || []).includes(sec);
+      // KEEP | REDO, a pair (the User 2026-10-26, the crissatest walk: "Redo office setup did not respect Keep Voice
+      // ID" - the key was one toggle labelled with its state, so "Keep: Voice ID" was the key that turned Redo ON)
+      list.append(el("div", { class: "row" },
+        el("span", { class: "label", text: (d.labels || {})[sec] || sec }),
+        el("button", { type: "button", id: "op-keep-" + sec, class: on ? "" : "primary", "aria-pressed": String(!on),
+                       text: "Keep", on: { click: () => act("ids_redo", { section: sec, on: false }) } }),
+        el("button", { type: "button", id: "op-redo-" + sec, class: on ? "primary" : "", "aria-pressed": String(on),
+                       text: "Redo", on: { click: () => act("ids_redo", { section: sec, on: true }) } }),
+        el("span", { class: "small", text: (d.summaries || {})[sec] || "" })));
+    }
+    box.append(el("p", { class: "hint", text: "Each section is done. Choose what to do again, then press Ready in front of the camera." }), list);
+  }
+  // round 39 (N5, the User: "collapsed but for User editable"): on a new person's run Your room and Your hours are on
+  // the page folded; the User's Edit (before his Ready, under the proof that Ready asks) unfolds one and the run walks
+  // it before the handover. A visitor never sees Edit: after the Ready the keys are gone.
+  if (d.collapse_edit && d.who === "new") {
+    const editable = d.editable || ["room", "hours"];
+    S.op.folded = new Set(editable.filter((x) => !(d.redo || []).includes(x)));   // opPaint draws the fold
+    for (const sec of editable) {
+      const slot = $("op-edit-" + sec);
+      if (!slot) continue;
+      const on = (d.redo || []).includes(sec);
+      slot.textContent = "";
+      if (d.stage === "ready_user")
+        slot.append(el("button", { type: "button", id: "op-edit-btn-" + sec, class: on ? "primary" : "",
+                                   "aria-pressed": String(on), text: on ? "Editing" : "Edit",
+                                   on: { click: () => act("ids_redo", { section: sec, on: !on }) } }));
+    }
+  }
+  if (d.stage === "ready_user" && d.who === "new" && d.dial) {
+    box.append(idsDial(d));                                     // round 39 (N6): the person's seat on the dial
+  } else if (d.stage === "ready_user" && d.who === "new") {
+    const sel = el("select", { id: "op-ids-seat" }, el("option", { value: "", text: "Not now" }),
+      ...[1,2,3,4,5,6,7,8,9,10,11,12].map((h) => el("option", { value: String(h), text: String(h) + " o'clock" })));
+    if (d.seat) sel.value = String(d.seat);
+    sel.addEventListener("change", () => act("ids_seat", { hour: sel.value || "skip" }));
+    box.append(el("div", { class: "row" }, el("label", { for: "op-ids-seat", text: "Where does " + (d.name || "this person") +
+      " usually sit? (optional, for the microphone; the camera is the middle of the clock)" }), sel));
+  }
+  if (d.stage === "ready_user") {
+    if (d.why) box.append(el("div", { class: "msg bad", id: "op-ids-why", text: d.why }));
+    const row = el("div", { class: "row" });
+    let pw = null;
+    if (d.need_password) {
+      pw = el("input", { id: "op-ids-pw", type: "password", autocomplete: "current-password",
+                         placeholder: "This computer's login password" });
+      row.append(pw);
+    }
+    row.append(el("button", { type: "button", class: "primary", id: "op-ids-ready", text: "Ready",
+      on: { click: async () => {
+        $("op-ids-ready").disabled = true;
+        const body = pw && pw.value ? { password: pw.value } : {};
+        if (pw) pw.value = "";
+        const j = await act("ids_ready", body);
+        if (!j || j.ok === false) { S.ids.sig = ""; idsPlate(S.snap || snap); }
+      } } }));
+    box.append(el("p", { class: "hint", text: d.who === "me" ? "Sit in front of the camera, then press Ready: Crissa checks it is you first."
+                                                             : "You first: sit in front of the camera and press Ready, so Crissa knows it is you adding someone." }), row);
+  }
+  if (d.stage === "handover") {
+    box.append(el("p", { class: "hint", id: "op-ids-handover", text: d.handover || "" }),
+      el("div", { class: "row" }, el("button", { type: "button", class: "primary", id: "op-ids-ready-guest", text: "Ready",
+        on: { click: async () => { $("op-ids-ready-guest").disabled = true; const j = await act("ids_ready", {});
+                                   if (!j || j.ok === false) { S.ids.sig = ""; idsPlate(S.snap || snap); } } } })));
+  }
+  // round 41 (.101 round 40 F1, the User: "Is this the user? We're getting a hit on an existing person"): a kept face at
+  // the camera at the person's Ready. Yes ends the run, nothing saved; No goes on to the takes.
+  if (d.stage === "dup_ask") {
+    const dup = d.dup || {};
+    box.append(el("div", { class: "msg bad", id: "op-ids-dup", text: dup.ask || "" }),
+      el("div", { class: "row" },
+        el("button", { type: "button", id: "op-ids-dup-no", text: "No, go on",
+                       on: { click: () => act("ids_dup", { same: false }) } }),
+        el("button", { type: "button", class: "primary", id: "op-ids-dup-yes", text: "Yes, it is " + (dup.display || ""),
+                       on: { click: () => act("ids_dup", { same: true }) } })));
+  }
+  if (d.stage === "takes") box.append(el("p", { class: "hint", text: "Recording. Lila says what to do." }));
+}
+function idsPrime(snap) {
+  // the page never plays Lila's You / This computer lines on an IDS run: the plate is the You section
+  if (!snap.ids || S.ids.primed) return;
+  S.ids.primed = true;
+  for (const sec of OP_SECS) if (sec.id === "you") { S.op.addressed.add(sec.id); S.op.said.add((sec.film || "you-mic") + ":" + sec.id); }
+  S.op.said.add("you-mic:you"); S.op.said.add("computer:pc"); S.op.addressed.add("pc");
+}
+function opBusy() { return !!(S.op.playing && !S.op.playing.loop) || S.op.blocked; }
+function opTick() {
+  if (!S.op.built || opBusy()) return;
+  if (idsPre(S.snap)) return opLoop();                                   // round 36: nothing before Ready
+  const v = S.op.view;
+  const bus = (S.op.glass && S.op.glass.film) || v.film || {};
+  if (S.op.cueSeen < 0) S.op.cueSeen = Number(bus.said || 0);          // a page opened again never replays old cues
+  const secs = v.sections || {};
+  const cur = OP_SECS.find((s) => !(secs[s.id] || {}).done);
+  const before = cur ? OP_SECS.slice(0, OP_SECS.indexOf(cur)) : OP_SECS;
+  const skipped = before.filter((s) => !S.op.addressed.has(s.id));
+  const cue = Number(bus.seq || 0) > S.op.cueSeen && bus.id;
+  // 1. a cue the player waits on (her done line only after her welcome and her "already": it ends the page)
+  if (cue && !(bus.id === "done" && (!S.op.said.has("welcome:") || (skipped.length && opFilms().already)))) {
+    S.op.cueSeen = Number(bus.seq);
+    return opLine(bus.id, Number(bus.seq), bus.about ? [bus.about] : null);   // round 23: `already` on Your face
+  }
+  if (S.snap && S.snap.status !== "running") return opLoop();
+  // round 45 (R43-1): none of her own lines while a take runs (the microphone hears her); an IDs run whose takes began
+  // has no welcome to come back to
+  if (v.takes_hold && [(S.op.glass || {}).phase, (v.glass || {}).phase].some((ph) => OP_TAKE_PHASES.includes(String(ph || "")))) {
+    return opLoop();
+  }
+  if (v.takes_hold && S.snap && S.snap.ids && (S.op.played || []).length && !S.op.said.has("welcome:")) {
+    S.op.said.add("welcome:");
+  }
+  if (!S.op.said.has("welcome:")) return opLine("welcome");            // 2. her welcome opens the page
+  if (skipped.length && opFilms().already) {                           // 3. done before she got there: once
+    skipped.forEach((s) => S.op.addressed.add(s.id));
+    return opLine("already", 0, skipped.map((s) => s.id));
+  }
+  if (cur && cur.film && !S.op.addressed.has(cur.id)) return opLine(cur.film);   // 4. her line for the next section
+  if (cur && cur.film && !S.op.waited.has(cur.id) && opFilms().wait &&
+      Date.now() - Math.max(S.op.lineEndAt, S.op.lastInput) > OP_WAIT_S * 1000) {  // 5. "Take your time", once
+    S.op.waited.add(cur.id);
+    return opLine("wait");
+  }
+  opLoop();                                                            // 6. her listen loop
+}
+function opServerSec(snap) {
+  // the section whose keys are live now (the walk's own step)
+  const sid = snap.step_id || "", g = S.op.glass || {};
+  if (sid === "machine") return (((snap.one_page || {}).sections || {}).you || {}).done ? "pc" : "you";
+  if (sid === "voice_id") return g.stage === "face" ? "face" : "vid";
+  return { face: "face", room: "room", hours: "hours" }[sid] || "";
+}
+function opVidKeys(snap) {
+  /* the Voice ID result card (register.state partial: Redo the count | Continue) drawn in the one-page section */
+  const box = $("op-vid-keys"), hint = $("op-vid-hint");
+  if (!box || !hint) return;
+  const p = snap.plate || {}, r = p.register || {};
+  const on = snap.step_id === "voice_id" && r.state === "partial" && (p.keys || []).length > 0;
+  const sig = on ? JSON.stringify([r.state, r.hint || "", p.keys]) : "";
+  if (sig === S.op.vidKeysSig) return;
+  S.op.vidKeysSig = sig;
+  box.textContent = ""; hint.textContent = "";
+  if (!on) return;
+  hint.textContent = r.hint || "";
+  box.append(keysRow(p.keys, "register"));
+}
+function opPaint() {
+  const snap = S.snap || {};
+  opVidKeys(snap);
+  const secs = (S.op.view.sections || {});
+  const done = snap.status === "done" || S.op.now === "done" || !!S.op.view.ending;
+  let live = snap.status === "running" ? opServerSec(snap) : "";
+  if (idsPre(snap)) { live = $("op-you") ? "you" : "vid"; S.op.now = live; }   // round 36: the IDS plate until Ready
+  for (const sec of OP_SECS) {
+    const st = secs[sec.id] || {};
+    // round 43 (R42-3): when the run ends, a section it did not walk stays "Not in this run" (it read Done)
+    const notRun = !!snap.done_keeps_fold && !!(S.op.folded && S.op.folded.has(sec.id)) && !st.done;
+    const isDone = !!st.done || (snap.status === "done" && !notRun);
+    const now = !isDone && S.op.now === sec.id;          // lit only where Lila is
+    const fold = !isDone && !now && !!(S.op.folded && S.op.folded.has(sec.id));   // round 39 (N5)
+    $("op-" + sec.id).className = "op-sec " + (isDone ? "done" : now ? "now" : "next") + (fold ? " collapsed" : "");
+    $("op-pill-" + sec.id).textContent = isDone ? "Done ✓" : now ? "Lila is here" : fold ? "Not in this run" : "Up next";
+    $("op-body-" + sec.id).hidden = isDone || live !== sec.id;
+    $("op-sum-" + sec.id).textContent = isDone ? (st.summary || "Done") : (st.wait || "");   // r43: what it waits for
+  }
+  $("op-done").hidden = !done;
+  opShowNow(live);
+}
+// THE OPEN SECTION IS SEEN WHOLE (round 23, the User 2026-10-15, .101: "missing bottom of the your room tile when
+// expanded"): on a 768-pixel screen Your room opened 48 px below the fold (its 6 o'clock and the hint) and nothing
+// scrolled. When Lila's section changes, or its controls open, it is brought into view whole (its top, when it is
+// taller than the window) - once per change, so a person's own scrolling is never fought.
+function opShowNow(live) {
+  const id = S.op.now && S.op.now !== "done" ? S.op.now : "";
+  const key = id + "|" + (live === id ? "open" : "");
+  if (!id || key === S.op.shownKey) return;
+  S.op.shownKey = key;
+  const el = $("op-" + id);
+  if (!el) return;
+  requestAnimationFrame(() => {
+    const r = el.getBoundingClientRect();
+    if (r.top >= 0 && r.bottom <= innerHeight) return;
+    const smooth = !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    el.scrollIntoView({ block: r.height > innerHeight - 16 ? "start" : "nearest", behavior: smooth ? "smooth" : "auto" });
+  });
+}
+function opUpdate(snap) {
+  const v = snap.one_page || {};
+  if (snap.status === "running") S.op.view = v;
+  if (snap.ids) { idsPrime(snap); idsPlate(snap); }                      // round 36
+  // THE KREW NOTE (round 23, the User 2026-10-15): under her picture, only while krew is not installed
+  if (snap.status === "running") $("op-krew").hidden = !!v.krew;
+  // the link (round 23, the User 2026-10-15: "add a note under the render ... download the Krew app here"): its target is
+  // config (setup-films.json krew_url); none set, the word stays plain
+  if (snap.status === "running" && v.krew_url && !$("op-krew-link")) {
+    const a = Object.assign(document.createElement("a"), {id: "op-krew-link", href: v.krew_url, target: "_blank",
+                                                          rel: "noopener", textContent: "here"});
+    // in the person's own browser (the User 2026-10-29): the player opens it; no answer = the link as it is
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      fetch("/v1/init", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "open_krew" }) }).then((r) => r.json())
+        .then((j) => { if (!(j && j.ok)) window.open(v.krew_url, "_blank", "noopener"); })
+        .catch(() => window.open(v.krew_url, "_blank", "noopener"));
+    });
+    $("op-krew-here").replaceWith(a);
+  }
+  (v.page_said || []).forEach((k) => {
+    S.op.said.add(k);
+    (k.split(":")[1] || "").split(",").filter(Boolean).forEach((sec) => S.op.addressed.add(sec));
+  });
+  const p = snap.plate || {};
+  // You and your microphone: the name as typed, the microphones, the level; "heard" once she is not talking
+  const m = p.machine || {};
+  if (snap.step_id === "machine" && m.fold) {
+    if (document.activeElement !== $("op-name") && !$("op-name").value && m.name) $("op-name").value = m.name;
+    $("op-name-err").textContent = m.name_error || "";
+    const ch = ((m.mic || {}).choices || []).map((c) => c.name).join("|");
+    if (ch !== S.op.micSig) { S.op.micSig = ch; $("op-mics").textContent = ""; $("op-mics").append(micList(m.mic, "op-mic")); }
+    const lv = m.level || {};
+    const pct = typeof lv.db === "number" ? Math.max(0, Math.min(100, (lv.db + 60) * 100 / 60)) : 0;
+    $("op-meter-fill").style.width = pct + "%";
+    // WHAT VOICE ID WAITS FOR, SAID (the User's walk of 1.0.1, 2026-10-26: "why does mic take so long to register",
+    // "wont accept the user" - the name was taken four times while Voice ID waited, unseen, for the microphone's "heard",
+    // which is never read while Lila talks): once the name is in, the line under the meter says what it waits for
+    if (v.name_taken && !v.mic_heard && !S.op.heardSent) {
+      $("op-heard").textContent = opBusy() ? "Voice ID starts when Lila finishes and I hear you."
+                                           : "Say a few words so I can hear your microphone. Voice ID starts then.";
+    }
+    if (lv.verdict === "ok" && Number(lv.peak || 0) > 0 && lv.at !== S.op.floorAt) {
+      S.op.floorAt = lv.at;
+      S.op.floorN = (S.op.floorN || 0) + 1;
+      S.op.floor = S.op.floor ? Math.min(S.op.floor, Number(lv.peak)) : Number(lv.peak);
+    }
+    const heardNow = lv.verdict === "ok" && (Number(lv.peak || 0) >= OP_HEARD_PEAK ||
+      ((S.op.floorN || 0) >= 2 && Number(lv.peak || 0) >= OP_HEARD_OVER_FLOOR * (S.op.floor || Infinity)));
+    if (v.name_taken && !v.mic_heard && !S.op.heardSent && !opBusy() && heardNow) {
+      S.op.heardSent = true;
+      $("op-heard").textContent = "The microphone hears you.";
+      // A DROPPED "HEARD" IS SENT AGAIN (the User's walk of cut 13, 2026-10-29: "cant progress from sound ... the bar
+      // reacts to all"): act() returns null without posting while another post is in flight, and heardSent stayed true,
+      // so the player never heard it and Voice ID never started. Not taken = asked again on the next level.
+      Promise.resolve(act("machine", { verb: "heard" })).then((j) => { if (!j || j.ok === false) S.op.heardSent = false; });
+    }
+    $("op-allow").disabled = $("op-skip").disabled = !v.name_taken;
+    $("op-pc-hint").textContent = v.name_taken ? "" : "Type your name above first.";
+  }
+  // Your room: the clock, drawn again only when its marks move
+  const r = p.room || {};
+  if (snap.step_id === "room" && r.state === "marks" && $("op-clock")) {
+    const sig = JSON.stringify([r.marks, r.now, r.internal]);
+    if (sig !== S.op.roomSig) { S.op.roomSig = sig; $("op-clock").textContent = ""; $("op-clock").append(roomClock(r)); }
+    $("op-room-ask").textContent = p.hint || "";
+  }
+  // THE DOOR IS SHOWN ON THE ONE PAGE TOO (2026-10-26, the User's first walk of 1.0.1: "stalled on oracle dial" - the
+  // walker was on the aim step and the one-page Setup a pack runs still drew the clock): the camera's live picture,
+  // its body, the turn keys and Back, in the clock's place
+  if (snap.step_id === "room" && r.state === "aim" && $("op-clock")) {
+    const sig = JSON.stringify(["aim", r.camera_url, p.body, p.keys]);
+    if (sig !== S.op.roomSig) {
+      S.op.roomSig = sig;
+      const box = $("op-clock");
+      box.textContent = "";
+      box.append(el("p", { class: "hint", id: "op-aim-body", text: p.body || "" }));
+      if (r.camera_url) box.append(el("div", { class: "cam" }, el("img", { id: "rm-cam", alt: "The camera's picture" })));
+      box.append(keysRow(p.keys, "room"), el("div", { class: "row" }, el("button", { type: "button", class: "quiet",
+        id: "rm-back", text: "Back to the clock", on: { click: () => act("room", { verb: "back" }) } })));
+      camRefresh(snap);                           // it refreshes itself every 700 ms from S.snap
+    }
+    $("op-room-ask").textContent = p.hint || "";
+  }
+  const h = p.hours || {};
+  if (snap.step_id === "hours" && h.overnight && !S.op.hoursSet) {
+    S.op.hoursSet = true;
+    $("op-hr-from").value = String(h.overnight[0]);
+    $("op-hr-to").value = String(h.overnight[1]);
+  }
+  if (snap.status === "done" && !S.op.doneDrawn) {
+    S.op.doneDrawn = true;
+    $("op-done-body").textContent = "";
+    donePlate(snap).filter(Boolean).forEach((k) => $("op-done-body").appendChild(k));
+  }
+  opGlass();
+  opPaint();
+  opTick();
+}
+function opGlass() {
+  const g = S.op.glass || {};
+  const counts = $("op-counts").children;
+  const take = Number(g.take || 0), stage = g.stage || "";
+  const vidDone = !!(((S.op.view.sections || {}).vid || {}).done);
+  for (let i = 0; i < counts.length; i++) {
+    counts[i].className = "op-box" + (vidDone || (stage === "counts" && i < take - 1) ? " ok" :
+                                      (stage === "counts" && i === take - 1 ? " live" : ""));
+  }
+  const secs = Number(g.seconds || 0), beep = Number(g.beep_ts || 0);
+  const left = beep > 0 && secs > 0 && g.phase === "turn" ? Math.max(0, secs - (Date.now() / 1000 - beep)) : 0;
+  $("op-beep-fill").style.width = (left > 0 ? 100 * (1 - left / secs) : 0) + "%";
+  $("op-vid-line").textContent = left > 0 ? "Count now." : "";
+  const taken = (((S.op.view.sections || {}).face || {}).taken) || g.faces || [];
+  const fb = $("op-faces") ? $("op-faces").children : null;   // round 34: no face section, no boxes
+  if (fb) {
+    fb[0].className = "op-box" + (taken.includes("left") ? " ok" : "");
+    fb[1].className = "op-box" + (taken.includes("right") ? " ok" : "");
+  }
+}
+async function opGlassPoll() {
+  clearTimeout(S.op.regTimer);
+  if (!S.op.built || !S.snap || S.snap.status !== "running") return;
+  try { S.op.glass = await getJSON("/v1/register"); } catch (e) { /* the next read */ }
+  opGlass();
+  opPaint();
+  opTick();
+  S.op.regTimer = setTimeout(opGlassPoll, 250);
+}
+
+// A WAY OUT AT EVERY STEP (round 34, lib/crissa_init way_out_on): while a walk runs, Cancel (asked first) and Esc; with
+// none running, Back to the Wall. Both page forms, every step; the house's page (no way_out) is as it was.
+// round 41 (.101 round 40 D8, the User: "Just Cancel would be simplest"): an IDs run's one exit reads Cancel (it cancels
+// and returns to the Wall); the snapshot's exit_label, absent on an older player = round 40's words
+function exitLabel(snap) {
+  return (snap && snap.exit_label) || "Back to the Wall";
+}
+function wayOut(snap) {
+  const on = !!(snap && snap.way_out);
+  $("way-out").hidden = !on;
+  if (!on) return;
+  const running = snap.status === "running";
+  // round 39 (.101 round 38 N11, the User: "x = back to wall = cancel, all brings you back in one step"; "Too many back to
+  // wall buttons"): an IDs run keeps ONE exit, the page's own Back to the Wall (#op-cancel); Esc and the window's X do
+  // the same. The bar's copy is hidden on an IDs run.
+  const oneExit = !!(snap.ids && snap.ids.one_exit);
+  $("way-out-cancel").hidden = !running || oneExit;
+  $("way-out-cancel").firstChild.textContent = snap.ids ? exitLabel(snap) : (AGAIN || snap.again) ? "Cancel Voice ID" : "Cancel setup";
+  $("way-out-wall").hidden = running;
+}
+$("way-out-cancel").addEventListener("click", () => $("cancel").click());
+document.addEventListener("keydown", (ev) => {
+  if (ev.key !== "Escape" || !S.snap || !S.snap.way_out || S.snap.status !== "running") return;
+  ev.preventDefault();
+  $("cancel").click();                       // the same question first, then the walk's abort
+});
+// round 35 (LILA IN THE SETUP PAGE'S OWN PICTURE): while the snapshot names her film, the picture box plays it, muted,
+// on a loop, and the player's picture (the Wall's empty office) is never drawn here; else the player's picture as before
+function faceBox(snap) {
+  const lb = (snap && snap.lila_box) || {}, img = $("face");
+  let v = $("face-film");
+  if (lb.url) {
+    if (!v) {
+      v = document.createElement("video");
+      v.id = "face-film"; v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+      v.setAttribute("aria-label", "Lila");
+      img.parentNode.appendChild(v);
+    }
+    if (v.getAttribute("src") !== lb.url) { v.src = lb.url; }
+    v.hidden = false;
+    if (v.paused) { const pl = v.play(); if (pl && pl.catch) pl.catch(() => {}); }
+    img.hidden = true;
+    if (img.getAttribute("src")) img.removeAttribute("src");
+  } else {
+    if (v) { v.pause(); v.hidden = true; }
+    img.hidden = false;
+    if (!img.getAttribute("src")) img.src = "/frame.mjpg";
+  }
+}
+function render(snap) {
+  S.snap = snap;
+  wayOut(snap);
+  // round 35 (.101 round 34: after a cancel the open window drew the old Setup page, Crissa's picture and the step
+  // list): a cancelled first boot on a pack shows ONE plate, "Setup was cancelled", and nothing of the walk
+  const cancelledOnly = snap.status === "aborted" && snap.setup_again === false;
+  document.body.classList.toggle("cancelled-only", cancelledOnly);
+  if (cancelledOnly && S.op.built) { $("op").hidden = true; document.querySelector("main").hidden = false; }
+  faceBox(snap);
+  if (opOn(snap)) {
+    if (!S.op.built) { opBuild(snap); opGlassPoll(); }
+    $("op-cancel").hidden = snap.status !== "running";
+    opUpdate(snap);
+    return;
+  }
+  renderSteps(snap);
+  const p = snap.plate || {};
+  const sig = plateSig(snap);
+  if (sig !== S.sig) {
+    S.sig = sig;
+    $("eyebrow").textContent = snap.status === "running" ? (p.eyebrow || "") : (snap.status === "done" ? "Done" : "");
+    let kids = [];
+    if (snap.status === "running") {
+      kids = { connect: connectPlate, machine: machinePlate, register: registerPlate, face: facePlate,
+               room: roomPlate, hours: hoursPlate }[p.kind]?.(p) || [el("p", { text: "One moment…" })];
+    } else if (snap.status === "failed") {
+      kids = failedPlate(snap);
+    } else if (snap.status === "done") {
+      kids = donePlate(snap);
+    } else if (!snap.needed) {
+      kids = idlePlate(snap);
+    } else {
+      kids = [el("p", { text: "Starting…" })];
+    }
+    // THE BUILD SPLASH (round 14, the User: "If they fly through and not done then give that splash"): only once
+    // Setup has ended and only while her listen and hub loops are still being built; it goes when they are
+    if (snap.status === "done") kids.push(el("p", { class: "hint", id: "b-build", text: "" }));
+    const body = $("body");
+    // WHAT WAS TYPED STAYS TYPED (round 20, .101 round 19: a re-draw wiped the typed name): a box marked `keep` gets its
+    // typed text back after the plate is drawn again, and the caret if it had it
+    const kept = {}, had = document.activeElement && document.activeElement.id;
+    body.querySelectorAll("input.keep").forEach((i) => { if (i.value) kept[i.id] = i.value; });
+    body.textContent = "";
+    kids.filter(Boolean).forEach((k) => body.appendChild(k));
+    Object.entries(kept).forEach(([id, v]) => { if ($(id)) $(id).value = v; });
+    if (had && kept[had] !== undefined && $(had)) $(had).focus();
+    if (p.kind === "register" && (p.register || {}).state === "name" && $("r-name")) $("r-name").focus();
+  }
+  if ($("b-build")) $("b-build").textContent = snap.status === "done" ? ((snap.build || {}).line || "") : "";
+  if (snap.status === "running") {
+    if (p.kind === "connect") connectUpdate(p);
+    if (p.kind === "machine") machineUpdate(p);
+    if (p.kind === "face") faceUpdate(p);
+    if (p.kind === "register") glassPoll();
+    if (p.kind === "room") camRefresh(snap);
+  }
+}
+
+function busy(snap) {
+  const p = (snap && snap.plate) || {};
+  const st = (p.machine || {}).state || (p.register || {}).state || (p.face || {}).state || "";
+  return ["measuring", "voice", "voiced", "starting", "live", "checking", "no_camera"].includes(st);
+}
+function schedule(ms) {
+  clearTimeout(S.timer);
+  S.timer = setTimeout(poll, ms);
+}
+async function poll() {
+  let snap = null;
+  try { snap = await getJSON("/v1/init"); }
+  catch (e) {
+    if (AGAIN && e.status === 404 && !S.again.started) { await againShow(); schedule(3000); return; }
+    say(e.status === 404 ? "Setup is not on for this player." : "The player is not answering.", "bad");
+    schedule(3000);
+    return;
+  }
+  S.snap = S.snap || snap;
+  wayOut(snap);                             // round 34: before any plate, Voice ID again's own included
+  if (AGAIN && !S.again.started && snap.status !== "running") { await againShow(); schedule(3000); return; }
+  if (snap.needed && snap.status !== "running" && !S.started) {
+    S.started = true;                         // a first boot: begin by itself, the way the Wall does
+    render(snap);
+    await act("start", {});
+    return;
+  }
+  render(snap);
+  schedule(busy(snap) ? 400 : 1000);
+}
+
+$("cancel").addEventListener("click", async () => {
+  const again = AGAIN || (S.snap && S.snap.again);
+  const ids = S.snap && S.snap.ids;
+  if (ids) {
+    // ROUND 38 (.101 round 37, the User: "should not be three clicks to get back to wall"): ONE action - the run ends
+    // and her window steps aside onto the Wall (to_wall: the desktop Wall shows, none opened when it is there). A
+    // confirm only once something was recorded (after the Ready presses).
+    const recorded = !["ready_user", "handover", ""].includes(String(ids.stage || ""));
+    if (recorded && !confirm(exitLabel(S.snap) + "? Nothing from this run is saved.")) return;
+    await act("abort", { by: "the Setup window's exit (an IDs run)" });
+    act("to_wall");
+    return;
+  }
+  if (confirm(again ? "Cancel Voice ID? The voice prints she has stay as they are."
+                    : "Cancel the setup? Crissa runs as she is. Nothing Setup saved is kept; you can run it again later.")) act("abort", { by: "the Setup window's Cancel" });
+});
+$("face").addEventListener("error", () => { $("face").alt = "No picture from the player yet"; });
+poll();
+</script>
+</body>
+</html>

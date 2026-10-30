@@ -1,0 +1,173 @@
+{
+ "schema": "crissa_setup_films/1",
+ "_doc": "Lila's filmed Setup lines for the one-page Setup (round 22, the User 2026-10-15). Every film starts on one anchor (hub-lila-comms-b, eyes on the camera, mouth closed) and settles back onto it; a line is cut at end_f (its settle frame, measured on the lively set 2026-10-15) so it joins the next film or the listen loop with no held freeze. last_word_f is her last spoken word. scripts/setup-films-build.py cuts the sources into display/setup-films/<id>.mp4; the page (display/crissa-init.html) plays them itself.",
+ "fps": 24,
+ "size": [
+  1296,
+  704
+ ],
+ "source": "~/Desktop/lila-complete-collection/setup-r22-lively/clip-lila-setup-<id>.mp4",
+ "dir": "display/setup-films",
+ "krew_url": "https://github.com/bill3wits/krew",
+ "films": {
+  "listen": {
+   "line": "",
+   "role": "loop"
+  },
+  "welcome": {
+   "line": "Hi, I'm Lila. I'll set Crissa up with you on this page. I go from the top, and the part I'm on lights up.",
+   "role": "line",
+   "last_word_f": 142,
+   "end_f": 221,
+   "source_frames": 241
+  },
+  "you-mic": {
+   "line": "First, what should Crissa call you? Type your name, then say anything so we can see the microphone hear you.",
+   "role": "line",
+   "last_word_f": 161,
+   "end_f": 225,
+   "source_frames": 241
+  },
+  "computer": {
+   "line": "Next, this computer. Click Allow, and Crissa checks what it can run while we carry on.",
+   "role": "line",
+   "last_word_f": 148,
+   "end_f": 221,
+   "source_frames": 241
+  },
+  "vid-facing": {
+   "line": "Now Voice ID. At each beep, count to six. Twice facing the screen.",
+   "role": "line",
+   "last_word_f": 152,
+   "end_f": 210,
+   "source_frames": 241
+  },
+  "vid-left": {
+   "line": "Now turn a little to your left, and count at the beep.",
+   "role": "line",
+   "last_word_f": 89,
+   "end_f": 120,
+   "source_frames": 145
+  },
+  "vid-right": {
+   "line": "And a little to your right. Last one.",
+   "role": "line",
+   "last_word_f": 48,
+   "end_f": 101,
+   "source_frames": 145
+  },
+  "face": {
+   "line": "Two quick photos. Turn your head a little to the left, then to the right. Each one takes itself.",
+   "role": "line",
+   "start_stop_f": 38,
+   "start_line": "Two quick photos.",
+   "_start_stop": "round 30 (.101): face-start = this film to frame 38, 'Two quick photos.' (silencedetect: speech 0.55-1.58 s, next word 1.77 s; ASR of 0-1.625 s: 'Two quick photos.'), said before `already` when both sides came in during the counts",
+   "last_word_f": 139,
+   "end_f": 225,
+   "source_frames": 241
+  },
+  "room": {
+   "line": "Your room. Tap the hour where your TV or speakers are, or tick Internal. Then tap your door.",
+   "role": "line",
+   "last_word_f": 145,
+   "end_f": 223,
+   "source_frames": 241
+  },
+  "hours": {
+   "line": "Last, your hours. When may Crissa restart, render and work on her own? Keep six to two, or change it.",
+   "role": "line",
+   "last_word_f": 158,
+   "end_f": 227,
+   "source_frames": 241
+  },
+  "already": {
+   "line": "Oh, you already did that, great!",
+   "role": "line",
+   "last_word_f": 63,
+   "end_f": 126,
+   "source_frames": 145
+  },
+  "done": {
+   "line": "That's everything. If you add the Krew pack, I'll be back to design and render new scenes and clips with you. Now here's Crissa.",
+   "role": "line",
+   "last_word_f": 177,
+   "end_f": 219,
+   "source_frames": 241,
+   "krew_stop_f": 27,
+   "krew_line": "That's everything.",
+   "_krew_stop": "round 23: with krew installed the line stops after \"That's everything.\" (word ends 1.05 s, \"If\" starts 1.32 s; faster-whisper word times 2026-10-15)"
+  },
+  "wait": {
+   "line": "Take your time. I'll wait right here.",
+   "role": "line",
+   "optional": true,
+   "when": "A section sits open about 30 s with nothing happening. Once per section.",
+   "last_word_f": 64,
+   "end_f": 228,
+   "source_frames": 241
+  },
+  "count-again": {
+   "line": "That one was a little quiet. Once more, a bit louder.",
+   "role": "line",
+   "optional": true,
+   "when": "A Voice ID count comes out too quiet; the count is asked again after it.",
+   "last_word_f": 96,
+   "end_f": 226,
+   "source_frames": 241
+  },
+  "further": {
+   "line": "A little further. There it is.",
+   "role": "line",
+   "optional": true,
+   "when": "A face photo has not taken after about 5 s of turning.",
+   "last_word_f": 93,
+   "end_f": 117,
+   "source_frames": 145
+  },
+  "setup-only": {
+   "line": "I'm just here for setup. Crissa can answer that in a minute.",
+   "role": "line",
+   "optional": true,
+   "when": "The ear hears speech outside a count or the mic test.",
+   "last_word_f": 97,
+   "end_f": 220,
+   "source_frames": 241
+  },
+  "turn-quarter": {
+   "line": "Just a quarter turn. I need to see your face.",
+   "role": "line",
+   "optional": true,
+   "when": "A Voice ID face photo sees her turned too far (about a quarter turn or more).",
+   "last_word_f": 83,
+   "end_f": 101,
+   "source_frames": 145
+  },
+  "turn-back": {
+   "line": "I can't see your face. Turn back a little.",
+   "role": "line",
+   "optional": true,
+   "when": "A Voice ID face photo finds no face while she turns.",
+   "last_word_f": 74,
+   "end_f": 115,
+   "source_frames": 145
+  },
+  "look-once-more": {
+   "line": "Look straight at the camera once more.",
+   "role": "line",
+   "optional": true,
+   "when": "The front face photo did not take.",
+   "last_word_f": 67,
+   "end_f": 125,
+   "source_frames": 145
+  },
+  "rest-later": {
+   "line": "I'll take the rest later.",
+   "role": "line",
+   "optional": true,
+   "when": "The face photo tries are spent; Setup moves on.",
+   "last_word_f": 43,
+   "end_f": 115,
+   "source_frames": 145
+  }
+ }
+}

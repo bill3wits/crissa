@@ -1,0 +1,2381 @@
+{
+ "schema": "phoneme-families/1",
+ "_doc": "Every phoneme of the three alphabets the house touches, mapped to its FAMILY = the mouth class it paints (the User 2026-10-21: 'let's map every phoneme to its phonetic family of sounds'). `phones` = the house phones written on the sheet (a diphthong is two notes, the 09-01 rule; a mark with no sound of its own is none); `family` = today's 19 classes, read by lib/mouth_viseme (PHONE_TO_CLASS, ESPEAK_PHONE come from here, never a second copy in code); `family_v2` = the User's v2 set (2026-10-18: TDN+S/Z and H+Y merged, EE kept, Aa and Aw added; still 19), carried as a column and NOT applied. Accent: General American as the West Coast speaks it; the notes say where the West Coast differs (cot/caught merged, the flap, rhotic R). Alphabets: arpabet = CMUdict's 39 as our aligner's MFA dictionary uses them, + TIMIT extras; espeak = espeak-ng -x en-us, every token it emitted over 43,948 dictionary words (2026-10-21); misaki = misaki 0.9.4 US_VOCAB, Kokoro's phonemes; house = the letter rules' own phones.",
+ "classes": [
+  "rest",
+  "rest-open",
+  "MBP",
+  "FV",
+  "TH",
+  "WOO",
+  "OH",
+  "EE",
+  "AH",
+  "EH",
+  "ER",
+  "S/Z",
+  "SH/CH",
+  "TDN",
+  "L",
+  "R",
+  "KG",
+  "H",
+  "Y"
+ ],
+ "classes_v2": [
+  "rest",
+  "rest-open",
+  "MBP",
+  "FV",
+  "TH",
+  "WOO",
+  "OH",
+  "EE",
+  "EH",
+  "ER",
+  "TDN+S/Z",
+  "SH/CH",
+  "L",
+  "R",
+  "KG",
+  "H+Y",
+  "Uh",
+  "Ah",
+  "Aa"
+ ],
+ "v2_merges": {
+  "TDN": "TDN+S/Z",
+  "S/Z": "TDN+S/Z",
+  "H": "H+Y",
+  "Y": "H+Y"
+ },
+ "v2_new": {
+  "Ah": "a true open ah (father, the a of five, the laugh): needs a NEW tile",
+  "Aa": "the a of cat and of now: needs a NEW tile",
+  "Uh": "today's AH tile, renamed (cut, about)"
+ },
+ "v2_open": [],
+ "arpabet": {
+  "AA": {
+   "example": "father, lot",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Ah"
+   ],
+   "note": "West Coast: cot = caught (AA = AO for most speakers), so his Aa / Aw split is a choice of shape, not a sound the voice will always make",
+   "v2_why": "the User 2026-10-21: 'a true ah actually ... cat vs father is the Aa vs Ah perfectly'"
+  },
+  "AE": {
+   "example": "cat",
+   "phones": [
+    "AE"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Aa"
+   ],
+   "note": "v2 keeps the open front vowel on AH (his size order Aa > AH); his call",
+   "v2_why": "the User 2026-10-21: cat is Aa ('the one case i spotted needing the Aa'; EH 'sticks out as too much')"
+  },
+  "AH": {
+   "example": "cut, about",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ],
+   "note": "AH stays for 'uh' (v2)",
+   "v2_why": "the User 2026-10-21: today's AH tile 'IS an Uh'; a true Ah and Aa free it for Uh"
+  },
+  "AO": {
+   "example": "all, caught",
+   "phones": [
+    "AO"
+   ],
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH"
+   ],
+   "note": "his 'aw' of 'all' (OH re-pick 10-18: lip 0.070 vs 0.134). West Coast: merged with AA",
+   "v2_why": "the User 2026-10-21: all / caught on OH (no Aw class)"
+  },
+  "AW": {
+   "example": "now",
+   "phones": [
+    "AE",
+    "UW"
+   ],
+   "family": [
+    "AH",
+    "WOO"
+   ],
+   "family_v2": [
+    "Aa",
+    "WOO"
+   ],
+   "note": "diphthong: two notes (the 09-01 rule)",
+   "v2_why": "the User 2026-10-21: 'Aa + Woo is this one'"
+  },
+  "AY": {
+   "example": "five, hi",
+   "phones": [
+    "AE",
+    "IY"
+   ],
+   "family": [
+    "AH",
+    "EE"
+   ],
+   "family_v2": [
+    "Ah",
+    "EE"
+   ],
+   "note": "diphthong: AE then IY (the 09-01 rule)",
+   "v2_why": "the User 2026-10-21: 'better with proper Ah'"
+  },
+  "B": {
+   "example": "be",
+   "phones": [
+    "B"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "CH": {
+   "example": "church",
+   "phones": [
+    "CH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "D": {
+   "example": "do",
+   "phones": [
+    "D"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "note": "West Coast flap: between vowels D (and T) is a flap, still TDN"
+  },
+  "DH": {
+   "example": "this",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ],
+   "note": "voiced th: the same tongue as TH",
+   "new": true
+  },
+  "EH": {
+   "example": "red",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH"
+   ]
+  },
+  "ER": {
+   "example": "her (rhotic)",
+   "phones": [
+    "ER"
+   ],
+   "family": [
+    "ER"
+   ],
+   "family_v2": [
+    "ER"
+   ],
+   "note": "General American keeps the R colour"
+  },
+  "EY": {
+   "example": "day",
+   "phones": [
+    "EH",
+    "IY"
+   ],
+   "family": [
+    "EH",
+    "EE"
+   ],
+   "family_v2": [
+    "EH",
+    "H+Y"
+   ],
+   "note": "diphthong in CMUdict; espeak's eI is ONE shape (beige = b-eh-sh, 09-24)",
+   "v2_why": "the User 2026-10-21: 'if day gets the Y then no diff' (two notes, ending on the merged H+Y)"
+  },
+  "F": {
+   "example": "fee",
+   "phones": [
+    "F"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "G": {
+   "example": "go",
+   "phones": [
+    "G"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "HH": {
+   "example": "he",
+   "phones": [
+    "HH"
+   ],
+   "family": [
+    "H"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "IH": {
+   "example": "sit",
+   "phones": [
+    "IH"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "IY": {
+   "example": "see",
+   "phones": [
+    "IY"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ],
+   "note": "kept apart from H/Y in v2 (teeth 3 vs 2): 'Keep EE'"
+  },
+  "JH": {
+   "example": "judge",
+   "phones": [
+    "JH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "K": {
+   "example": "key",
+   "phones": [
+    "K"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "L": {
+   "example": "low",
+   "phones": [
+    "L"
+   ],
+   "family": [
+    "L"
+   ],
+   "family_v2": [
+    "L"
+   ]
+  },
+  "M": {
+   "example": "me",
+   "phones": [
+    "M"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "N": {
+   "example": "no",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "NG": {
+   "example": "sing",
+   "phones": [
+    "NG"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "KG"
+   ],
+   "v2_why": "the User 2026-10-21: 'no visible n it happens in the throat'"
+  },
+  "OW": {
+   "example": "go",
+   "phones": [
+    "AO",
+    "UW"
+   ],
+   "family": [
+    "OH",
+    "WOO"
+   ],
+   "family_v2": [
+    "OH",
+    "WOO"
+   ],
+   "note": "diphthong; under v2 its onset is OH, not his Aw"
+  },
+  "OY": {
+   "example": "boy",
+   "phones": [
+    "AO",
+    "IY"
+   ],
+   "family": [
+    "OH",
+    "EE"
+   ],
+   "family_v2": [
+    "OH",
+    "EE"
+   ],
+   "note": "diphthong"
+  },
+  "P": {
+   "example": "pay",
+   "phones": [
+    "P"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "R": {
+   "example": "red",
+   "phones": [
+    "R"
+   ],
+   "family": [
+    "R"
+   ],
+   "family_v2": [
+    "R"
+   ],
+   "note": "rhotic R, lips rounded"
+  },
+  "S": {
+   "example": "see",
+   "phones": [
+    "S"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "SH": {
+   "example": "she",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "T": {
+   "example": "tea",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "note": "West Coast flap in butter, water: still TDN"
+  },
+  "TH": {
+   "example": "thin",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ]
+  },
+  "UH": {
+   "example": "book",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ],
+   "note": "lax rounded vowel: rounded lips, so WOO",
+   "new": true
+  },
+  "UW": {
+   "example": "too",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "V": {
+   "example": "vee",
+   "phones": [
+    "V"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "W": {
+   "example": "we",
+   "phones": [
+    "W"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "Y": {
+   "example": "yes",
+   "phones": [
+    "Y"
+   ],
+   "family": [
+    "Y"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "Z": {
+   "example": "zoo",
+   "phones": [
+    "Z"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "ZH": {
+   "example": "measure, beige",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ],
+   "note": "the same lips as SH",
+   "new": true
+  },
+  "AX": {
+   "example": "about (schwa)",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true,
+   "note": "schwa",
+   "v2_why": "the User 2026-10-21: the schwa is Uh, today's AH tile"
+  },
+  "AXR": {
+   "example": "butter (r-coloured schwa)",
+   "phones": [
+    "ER"
+   ],
+   "family": [
+    "ER"
+   ],
+   "family_v2": [
+    "ER"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "IX": {
+   "example": "roses (reduced i)",
+   "phones": [
+    "IH"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "UX": {
+   "example": "dude (fronted u)",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "DX": {
+   "example": "butter, water (flap)",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true,
+   "note": "the West Coast flap: tongue tip, TDN"
+  },
+  "EL": {
+   "example": "bottle (syllabic l)",
+   "phones": [
+    "L"
+   ],
+   "family": [
+    "L"
+   ],
+   "family_v2": [
+    "L"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true,
+   "note": "no vowel shape before it"
+  },
+  "EM": {
+   "example": "rhythm (syllabic m)",
+   "phones": [
+    "M"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "EN": {
+   "example": "button (syllabic n)",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "NX": {
+   "example": "winner (nasal flap)",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true
+  },
+  "Q": {
+   "example": "uh-oh (glottal stop)",
+   "phones": [],
+   "family": [],
+   "family_v2": [
+    "KG"
+   ],
+   "source": "TIMIT (not in CMUdict)",
+   "new": true,
+   "note": "no shape of its own: the mouth holds",
+   "v2_why": "the User 2026-10-21: 'Q is KG'"
+  }
+ },
+ "espeak": {
+  "p": {
+   "example": "pay",
+   "phones": [
+    "P"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "b": {
+   "example": "be",
+   "phones": [
+    "B"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "m": {
+   "example": "me",
+   "phones": [
+    "M"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "f": {
+   "example": "fee",
+   "phones": [
+    "F"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "v": {
+   "example": "vee",
+   "phones": [
+    "V"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "T": {
+   "example": "thin",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ]
+  },
+  "D": {
+   "example": "this",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ]
+  },
+  "s": {
+   "example": "see",
+   "phones": [
+    "S"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "z": {
+   "example": "zoo",
+   "phones": [
+    "Z"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "S": {
+   "example": "she",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "Z": {
+   "example": "measure",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "tS": {
+   "example": "church",
+   "phones": [
+    "CH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "dZ": {
+   "example": "judge",
+   "phones": [
+    "JH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "t": {
+   "example": "tea",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "d": {
+   "example": "do",
+   "phones": [
+    "D"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "n": {
+   "example": "no",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "N": {
+   "example": "sing",
+   "phones": [
+    "NG"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "k": {
+   "example": "key",
+   "phones": [
+    "K"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "g": {
+   "example": "go",
+   "phones": [
+    "G"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "x": {
+   "example": "loch (velar fricative)",
+   "phones": [
+    "K"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "l": {
+   "example": "low",
+   "phones": [
+    "L"
+   ],
+   "family": [
+    "L"
+   ],
+   "family_v2": [
+    "L"
+   ]
+  },
+  "r": {
+   "example": "red",
+   "phones": [
+    "R"
+   ],
+   "family": [
+    "R"
+   ],
+   "family_v2": [
+    "R"
+   ]
+  },
+  "j": {
+   "example": "yes",
+   "phones": [
+    "Y"
+   ],
+   "family": [
+    "Y"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "w": {
+   "example": "we",
+   "phones": [
+    "W"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "h": {
+   "example": "he",
+   "phones": [
+    "HH"
+   ],
+   "family": [
+    "H"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "i": {
+   "example": "happy (final)",
+   "phones": [
+    "IY"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "i:": {
+   "example": "see",
+   "phones": [
+    "IY"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "I": {
+   "example": "sit",
+   "phones": [
+    "IH"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "E": {
+   "example": "red",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH"
+   ]
+  },
+  "e": {
+   "example": "(rare)",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH"
+   ]
+  },
+  "a": {
+   "example": "cat",
+   "phones": [
+    "AE"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Aa"
+   ]
+  },
+  "aa": {
+   "example": "bath, dance",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Ah"
+   ]
+  },
+  "A:": {
+   "example": "father",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Ah"
+   ]
+  },
+  "V": {
+   "example": "cut",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ]
+  },
+  "@": {
+   "example": "about",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ]
+  },
+  "3": {
+   "example": "butter (r-coloured schwa)",
+   "phones": [
+    "ER"
+   ],
+   "family": [
+    "ER"
+   ],
+   "family_v2": [
+    "ER"
+   ]
+  },
+  "3:": {
+   "example": "her",
+   "phones": [
+    "ER"
+   ],
+   "family": [
+    "ER"
+   ],
+   "family_v2": [
+    "ER"
+   ]
+  },
+  "0": {
+   "example": "lot (the User 09-24: Loch = l-oh-k)",
+   "phones": [
+    "AO"
+   ],
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "Ah"
+   ],
+   "v2_why": "lot (loch, bob): his AA pick, Ah; 09-24's l-oh-k is replaced by his 10-21 picks"
+  },
+  "O:": {
+   "example": "thought, waters",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "OH"
+   ],
+   "v2_why": "thought (all, caught): his AO pick, OH"
+  },
+  "O": {
+   "example": "(rare)",
+   "phones": [
+    "AO"
+   ],
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH"
+   ]
+  },
+  "u:": {
+   "example": "too",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "U": {
+   "example": "book",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "eI": {
+   "example": "day (one shape, 09-24)",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH",
+    "H+Y"
+   ]
+  },
+  "aI": {
+   "example": "five",
+   "phones": [
+    "AE",
+    "IY"
+   ],
+   "family": [
+    "AH",
+    "EE"
+   ],
+   "family_v2": [
+    "Ah",
+    "EE"
+   ]
+  },
+  "aU": {
+   "example": "now",
+   "phones": [
+    "AE",
+    "UW"
+   ],
+   "family": [
+    "AH",
+    "WOO"
+   ],
+   "family_v2": [
+    "Aa",
+    "WOO"
+   ]
+  },
+  "OI": {
+   "example": "boy",
+   "phones": [
+    "AO",
+    "IY"
+   ],
+   "family": [
+    "OH",
+    "EE"
+   ],
+   "family_v2": [
+    "OH",
+    "EE"
+   ]
+  },
+  "oU": {
+   "example": "go",
+   "phones": [
+    "AO",
+    "UW"
+   ],
+   "family": [
+    "OH",
+    "WOO"
+   ],
+   "family_v2": [
+    "OH",
+    "WOO"
+   ]
+  },
+  "@U": {
+   "example": "go (GB)",
+   "phones": [
+    "AO",
+    "UW"
+   ],
+   "family": [
+    "OH",
+    "WOO"
+   ],
+   "family_v2": [
+    "OH",
+    "WOO"
+   ]
+  },
+  "e@": {
+   "example": "air",
+   "phones": [
+    "EH",
+    "ER"
+   ],
+   "family": [
+    "EH",
+    "ER"
+   ],
+   "family_v2": [
+    "EH",
+    "ER"
+   ]
+  },
+  "i@": {
+   "example": "near",
+   "phones": [
+    "IY",
+    "ER"
+   ],
+   "family": [
+    "EE",
+    "ER"
+   ],
+   "family_v2": [
+    "EE",
+    "ER"
+   ]
+  },
+  "A@": {
+   "example": "car",
+   "phones": [
+    "AA",
+    "R"
+   ],
+   "family": [
+    "AH",
+    "R"
+   ],
+   "family_v2": [
+    "Ah",
+    "R"
+   ]
+  },
+  "o@": {
+   "example": "more",
+   "phones": [
+    "AO",
+    "R"
+   ],
+   "family": [
+    "OH",
+    "R"
+   ],
+   "family_v2": [
+    "OH",
+    "R"
+   ]
+  },
+  "O@": {
+   "example": "fork",
+   "phones": [
+    "AO",
+    "R"
+   ],
+   "family": [
+    "OH",
+    "R"
+   ],
+   "family_v2": [
+    "OH",
+    "R"
+   ]
+  },
+  "U@": {
+   "example": "tour",
+   "phones": [
+    "UW",
+    "ER"
+   ],
+   "family": [
+    "WOO",
+    "ER"
+   ],
+   "family_v2": [
+    "WOO",
+    "ER"
+   ]
+  },
+  "aI@": {
+   "example": "fire",
+   "phones": [
+    "AE",
+    "IY",
+    "ER"
+   ],
+   "family": [
+    "AH",
+    "EE",
+    "ER"
+   ],
+   "family_v2": [
+    "Ah",
+    "EE",
+    "ER"
+   ]
+  },
+  "aU@": {
+   "example": "hour",
+   "phones": [
+    "AE",
+    "UW",
+    "ER"
+   ],
+   "family": [
+    "AH",
+    "WOO",
+    "ER"
+   ],
+   "family_v2": [
+    "Aa",
+    "WOO",
+    "ER"
+   ]
+  },
+  "@L": {
+   "example": "able, bottle (syllabic l)",
+   "phones": [
+    "L"
+   ],
+   "family": [
+    "L"
+   ],
+   "family_v2": [
+    "L"
+   ],
+   "new": true
+  },
+  "n-": {
+   "example": "button (syllabic n)",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "new": true
+  },
+  "i@3": {
+   "example": "nearer, period",
+   "phones": [
+    "IY",
+    "ER"
+   ],
+   "family": [
+    "EE",
+    "ER"
+   ],
+   "family_v2": [
+    "EE",
+    "ER"
+   ],
+   "new": true
+  },
+  "aI3": {
+   "example": "fiery, tiring",
+   "phones": [
+    "AE",
+    "IY",
+    "ER"
+   ],
+   "family": [
+    "AH",
+    "EE",
+    "ER"
+   ],
+   "family_v2": [
+    "Ah",
+    "EE",
+    "ER"
+   ],
+   "new": true
+  },
+  "A~": {
+   "example": "(nasal, a French loan)",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Ah"
+   ],
+   "new": true
+  },
+  "O~": {
+   "example": "(nasal, a French loan)",
+   "phones": [
+    "AO"
+   ],
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH"
+   ],
+   "new": true
+  },
+  ";": {
+   "example": "(a palatal mark after a vowel)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "new": true
+  },
+  "?": {
+   "example": "uh-oh (glottal stop)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "new": true
+  },
+  ":": {
+   "example": "(a length mark)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "new": true
+  },
+  "|": {
+   "example": "(a word break)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "new": true
+  },
+  "!": {
+   "example": "(an emphasis mark)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "new": true
+  }
+ },
+ "misaki": {
+  "A": {
+   "example": "day (eɪ)",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH",
+    "H+Y"
+   ],
+   "note": "eI: one shape, as espeak's"
+  },
+  "I": {
+   "example": "five (aɪ)",
+   "phones": [
+    "AE",
+    "IY"
+   ],
+   "family": [
+    "AH",
+    "EE"
+   ],
+   "family_v2": [
+    "Ah",
+    "EE"
+   ]
+  },
+  "O": {
+   "example": "go (oʊ)",
+   "phones": [
+    "AO",
+    "UW"
+   ],
+   "family": [
+    "OH",
+    "WOO"
+   ],
+   "family_v2": [
+    "OH",
+    "WOO"
+   ]
+  },
+  "W": {
+   "example": "now (aʊ)",
+   "phones": [
+    "AE",
+    "UW"
+   ],
+   "family": [
+    "AH",
+    "WOO"
+   ],
+   "family_v2": [
+    "Aa",
+    "WOO"
+   ]
+  },
+  "Y": {
+   "example": "boy (ɔɪ)",
+   "phones": [
+    "AO",
+    "IY"
+   ],
+   "family": [
+    "OH",
+    "EE"
+   ],
+   "family_v2": [
+    "OH",
+    "EE"
+   ]
+  },
+  "b": {
+   "example": "be",
+   "phones": [
+    "B"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "d": {
+   "example": "do",
+   "phones": [
+    "D"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "f": {
+   "example": "fee",
+   "phones": [
+    "F"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "h": {
+   "example": "he",
+   "phones": [
+    "HH"
+   ],
+   "family": [
+    "H"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "i": {
+   "example": "see",
+   "phones": [
+    "IY"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "j": {
+   "example": "yes",
+   "phones": [
+    "Y"
+   ],
+   "family": [
+    "Y"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "k": {
+   "example": "key",
+   "phones": [
+    "K"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "l": {
+   "example": "low",
+   "phones": [
+    "L"
+   ],
+   "family": [
+    "L"
+   ],
+   "family_v2": [
+    "L"
+   ]
+  },
+  "m": {
+   "example": "me",
+   "phones": [
+    "M"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "n": {
+   "example": "no",
+   "phones": [
+    "N"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "p": {
+   "example": "pay",
+   "phones": [
+    "P"
+   ],
+   "family": [
+    "MBP"
+   ],
+   "family_v2": [
+    "MBP"
+   ]
+  },
+  "s": {
+   "example": "see",
+   "phones": [
+    "S"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "t": {
+   "example": "tea",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "u": {
+   "example": "too",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "v": {
+   "example": "vee",
+   "phones": [
+    "V"
+   ],
+   "family": [
+    "FV"
+   ],
+   "family_v2": [
+    "FV"
+   ]
+  },
+  "w": {
+   "example": "we",
+   "phones": [
+    "W"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "z": {
+   "example": "zoo",
+   "phones": [
+    "Z"
+   ],
+   "family": [
+    "S/Z"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ]
+  },
+  "æ": {
+   "example": "cat",
+   "phones": [
+    "AE"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Aa"
+   ]
+  },
+  "ð": {
+   "example": "this",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ]
+  },
+  "ŋ": {
+   "example": "sing",
+   "phones": [
+    "NG"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "ɑ": {
+   "example": "father, lot",
+   "phones": [
+    "AA"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Ah"
+   ],
+   "note": "West Coast: also caught"
+  },
+  "ɔ": {
+   "example": "all, thought",
+   "phones": [
+    "AO"
+   ],
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH"
+   ],
+   "note": "his Aw under v2"
+  },
+  "ə": {
+   "example": "about",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ]
+  },
+  "ɛ": {
+   "example": "red",
+   "phones": [
+    "EH"
+   ],
+   "family": [
+    "EH"
+   ],
+   "family_v2": [
+    "EH"
+   ]
+  },
+  "ɜ": {
+   "example": "her (with ɹ)",
+   "phones": [
+    "ER"
+   ],
+   "family": [
+    "ER"
+   ],
+   "family_v2": [
+    "ER"
+   ]
+  },
+  "ɡ": {
+   "example": "go",
+   "phones": [
+    "G"
+   ],
+   "family": [
+    "KG"
+   ],
+   "family_v2": [
+    "KG"
+   ]
+  },
+  "ɪ": {
+   "example": "sit",
+   "phones": [
+    "IH"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "ɹ": {
+   "example": "red",
+   "phones": [
+    "R"
+   ],
+   "family": [
+    "R"
+   ],
+   "family_v2": [
+    "R"
+   ]
+  },
+  "ɾ": {
+   "example": "butter, water (the flap)",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "note": "the West Coast flap"
+  },
+  "T": {
+   "example": "waiting, water, bottle (the flap as misaki writes it)",
+   "phones": [
+    "T"
+   ],
+   "family": [
+    "TDN"
+   ],
+   "family_v2": [
+    "TDN+S/Z"
+   ],
+   "note": "misaki rewrites ɾ to T on the way out; not in its US_VOCAB, but what Kokoro is given"
+  },
+  "ʃ": {
+   "example": "she",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "ʊ": {
+   "example": "book",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "ʌ": {
+   "example": "cut",
+   "phones": [
+    "AH"
+   ],
+   "family": [
+    "AH"
+   ],
+   "family_v2": [
+    "Uh"
+   ]
+  },
+  "ʒ": {
+   "example": "measure",
+   "phones": [
+    "SH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "ʔ": {
+   "example": "uh-oh (glottal stop)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "note": "no shape of its own"
+  },
+  "ʤ": {
+   "example": "judge",
+   "phones": [
+    "JH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "ʧ": {
+   "example": "church",
+   "phones": [
+    "CH"
+   ],
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ]
+  },
+  "θ": {
+   "example": "thin",
+   "phones": [
+    "TH"
+   ],
+   "family": [
+    "TH"
+   ],
+   "family_v2": [
+    "TH"
+   ]
+  },
+  "ᵊ": {
+   "example": "bottle (a syllabic schwa)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "note": "no vowel shape before l / n"
+  },
+  "ᵻ": {
+   "example": "roses (reduced i)",
+   "phones": [
+    "IH"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "ˈ": {
+   "example": "(primary stress)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "note": "a mark, not a sound"
+  },
+  "ˌ": {
+   "example": "(secondary stress)",
+   "phones": [],
+   "family": [],
+   "family_v2": [],
+   "note": "a mark, not a sound"
+  }
+ },
+ "house": {
+  "OO": {
+   "example": "food (letters)",
+   "phones": [
+    "UW"
+   ],
+   "family": [
+    "WOO"
+   ],
+   "family_v2": [
+    "WOO"
+   ]
+  },
+  "EE": {
+   "example": "see (letters)",
+   "phones": [
+    "IY"
+   ],
+   "family": [
+    "EE"
+   ],
+   "family_v2": [
+    "EE"
+   ]
+  },
+  "H": {
+   "example": "he (letters)",
+   "phones": [
+    "HH"
+   ],
+   "family": [
+    "H"
+   ],
+   "family_v2": [
+    "H+Y"
+   ]
+  },
+  "-": {
+   "example": "a pause",
+   "phones": [
+    "-"
+   ],
+   "family": [
+    "rest"
+   ],
+   "family_v2": [
+    "rest"
+   ]
+  },
+  "AI": {
+   "example": "rain (letters)",
+   "phones": [
+    "AE",
+    "IY"
+   ],
+   "family": [
+    "AH",
+    "EE"
+   ],
+   "family_v2": [
+    "Aa",
+    "EE"
+   ]
+  },
+  "OI": {
+   "example": "oil (letters)",
+   "phones": [
+    "AO",
+    "IY"
+   ],
+   "family": [
+    "OH",
+    "EE"
+   ],
+   "family_v2": [
+    "OH",
+    "EE"
+   ]
+  },
+  "OU": {
+   "example": "out (letters)",
+   "phones": [
+    "AE",
+    "UW"
+   ],
+   "family": [
+    "AH",
+    "WOO"
+   ],
+   "family_v2": [
+    "Aa",
+    "WOO"
+   ]
+  }
+ },
+ "turbo_tags": {
+  "[laugh]": {
+   "kind": "sound",
+   "family": [
+    "AH",
+    "rest-open"
+   ],
+   "family_v2": [
+    "H+Y",
+    "Ah"
+   ],
+   "paint": "open, pulsing: AH on each energy peak of the gap, rest-open between (measured: a 0.94 s voiced gap, ~330 Hz)"
+  },
+  "[chuckle]": {
+   "kind": "sound",
+   "family": [
+    "EH",
+    "rest-open"
+   ],
+   "family_v2": [
+    "EH",
+    "rest-open"
+   ],
+   "paint": "smaller than a laugh, lips spread: EH on each peak (0.58 s voiced gap)"
+  },
+  "[cough]": {
+   "kind": "sound",
+   "family": [
+    "rest",
+    "AH"
+   ],
+   "family_v2": [
+    "rest-open",
+    "OH"
+   ],
+   "paint": "shut, then the burst: rest (closed) to the burst, AH through it (0.72 s gap)"
+  },
+  "[clear throat]": {
+   "kind": "sound",
+   "family": [
+    "rest",
+    "KG"
+   ],
+   "family_v2": [
+    "rest-open",
+    "EH"
+   ],
+   "paint": "closed, then a back-of-the-mouth rasp"
+  },
+  "[sigh]": {
+   "kind": "sound",
+   "family": [
+    "rest-open"
+   ],
+   "family_v2": [
+    "EE",
+    "rest-open"
+   ],
+   "paint": "soft open, breath out; at a line's start it may come out silent (0.11 s, -71 dB measured)"
+  },
+  "[shush]": {
+   "kind": "sound",
+   "family": [
+    "SH/CH"
+   ],
+   "family_v2": [
+    "SH/CH"
+   ],
+   "paint": "held through the gap (1.12 s, 44 % high band measured)"
+  },
+  "[gasp]": {
+   "kind": "sound",
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH"
+   ],
+   "paint": "a quick rounded open, breath in"
+  },
+  "[groan]": {
+   "kind": "sound",
+   "family": [
+    "OH"
+   ],
+   "family_v2": [
+    "OH",
+    "WOO"
+   ],
+   "paint": "a held, low open"
+  },
+  "[sniff]": {
+   "kind": "sound",
+   "family": [
+    "rest"
+   ],
+   "family_v2": [
+    "rest",
+    "MBP"
+   ],
+   "paint": "closed; the nose does it"
+  },
+  "[advertisement]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[angry]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[crying]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[dramatic]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[fear]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[happy]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[narration]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[sarcastic]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[surprised]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  },
+  "[whispering]": {
+   "kind": "style",
+   "family": [],
+   "family_v2": [],
+   "paint": "no shape of its own: colours the voice of its own sentence only (measured 10-21: a tag at a sentence start moved that sentence ~30 Hz up and the next one came back to plain; Turbo writes each sentence separately)"
+  }
+ },
+ "_turbo_tags": "Chatterbox Turbo's 19 bracket tags (ResembleAI/chatterbox-turbo@749d1c1a added_tokens.json; no closing form). A sound tag is a stretch of audio the aligner leaves as a gap between words (no word to align): the sheet paints it with its family over the gap, a pulsing one on the gap's own energy peaks. A style tag paints nothing. Proposals for the User's eye, not applied.",
+ "v2_decided": "the User 2026-10-21 on the phoneme map (https://claude.ai/artifact/7k69hf5zCMaBCn4yJyngbY) and in chat; a phoneme he skipped keeps today's family ('If i skipped it was meant to be keep with no notes'), with the 10-18 merges applied ('Apply the 10-18 merges')"
+}

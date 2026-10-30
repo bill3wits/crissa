@@ -1,0 +1,22 @@
+{
+  "schema": "mouth_playlist/v1",
+  "clip": "v2-away",
+  "file": "clip-v2-away.mp4",
+  "pose": "away",
+  "fps": 24.0,
+  "n": 0,
+  "lead_ms": 100,
+  "pad": 0.55,
+  "bins": [],
+  "index": {},
+  "how": {},
+  "frames": [],
+  "coverage": {
+    "bins": 0,
+    "classes": 21,
+    "have": 1,
+    "need": 1,
+    "missing": [],
+    "ready": true
+  }
+}
