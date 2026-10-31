@@ -1,0 +1,8 @@
+# The presence module's env (modules/presence/scripts/crissa-presence.py --install): the service, the camera grabber
+# and the registration panel share it. Face work is MediaPipe Face Landmarker + AuraFace on onnxruntime (CPU).
+numpy>=1.26,<2.3
+opencv-python-headless>=4.10,<5
+mediapipe>=0.10.21
+onnxruntime>=1.18
+Pillow>=10.1
+python-pam>=2.0

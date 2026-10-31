@@ -1,0 +1,11 @@
+# The ear's env (modules/ear/crissa_ear/setup.py): the microphone's turns, the VADs, the voice encoder's runtime.
+# torch is the Silero VAD package's import (CPU index). The WeSpeaker ONNX encoder needs numpy and onnxruntime only.
+numpy
+onnxruntime
+webrtcvad
+silero-vad
+soundfile
+sounddevice
+PyYAML
+torch
+torchaudio

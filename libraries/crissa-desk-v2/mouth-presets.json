@@ -1,0 +1,45 @@
+{
+ "presets": [
+  {
+   "name": "first tune forward only",
+   "at": "2026-10-23T13:41:14",
+   "by": "composer",
+   "dials": {
+    "warp": "cheeks",
+    "fit": "take",
+    "pin": "nose-pixel",
+    "hole": "arch",
+    "alpha": "square",
+    "anchor": "head",
+    "scale": 1.0,
+    "nose_u": 0.0,
+    "nose_v": 0.0,
+    "nose_ema": 0.0,
+    "turn_u": 0.0,
+    "turn_v": 0.0,
+    "neck_cut": true,
+    "idle_rest": true,
+    "fit_under_pixel": true,
+    "pin_hold": false,
+    "xfade_ms": 42.0,
+    "edge_s": 0.4,
+    "sag_k": 1.0,
+    "sheet_lead_ms": 0.0,
+    "sheet_lead_semis": 0.0,
+    "semi_ms": 20.833333333333332,
+    "timing_lead_ms": 0.0,
+    "min_hold": 1,
+    "cons_hold": 1,
+    "sent_pad": 6,
+    "word_pad": 2,
+    "pause_words": 0.0,
+    "blip_words": 0.0,
+    "tail_words": 0.0,
+    "buffer": false,
+    "paint_all": false,
+    "velLo": 3.0,
+    "velHi": 12.0
+   }
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "description": "Local fixture for x_fetch.fetch_replies_to (card t_5ebdee13). No network, no X SDK: this file is the only data source the stub's interface is exercised against.",
+  "items": [
+    {
+      "id": "3333333333333333333",
+      "in_reply_to": "1111111111111111111",
+      "text": "fixture reply one",
+      "created_at": "2026-10-19T12:15:00Z",
+      "author": "@fixture_author_c"
+    },
+    {
+      "id": "4444444444444444444",
+      "in_reply_to": "1111111111111111111",
+      "text": "fixture reply two",
+      "created_at": "2026-10-19T12:45:00Z",
+      "author": "@fixture_author_a"
+    }
+  ]
+}

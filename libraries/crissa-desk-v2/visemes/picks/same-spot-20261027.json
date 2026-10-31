@@ -1,0 +1,170 @@
+{
+ "schema": "same-spot/1",
+ "source": "clip-v2-talk-pause-soft",
+ "picks": "visemes/picks/map-best-v2-listen-screen.json",
+ "day": "20261027",
+ "bands": {
+  "v2-talk-pause-soft-45l": {
+   "station": "profile/0",
+   "moved": {
+    "profile/0/Aa": {
+     "how": "same-spot:v2-talk-pause-soft#29 -> v2-talk-pause-soft-45l#4 (Now q=0.14)",
+     "src_f": 29,
+     "f": 4,
+     "word": "Now",
+     "k": 0,
+     "q": 0.143
+    },
+    "profile/0/EE": {
+     "how": "same-spot:v2-talk-pause-soft#141 -> v2-talk-pause-soft-45l#118 (really? q=0.92)",
+     "src_f": 141,
+     "f": 118,
+     "word": "really?",
+     "k": 10,
+     "q": 0.923
+    },
+    "profile/0/TH": {
+     "how": "same-spot:v2-talk-pause-soft#36 -> v2-talk-pause-soft-45l#12 (and q=0.25)",
+     "src_f": 36,
+     "f": 12,
+     "word": "and",
+     "k": 1,
+     "q": 0.25
+    },
+    "profile/0/Ah": {
+     "how": "same-spot:v2-talk-pause-soft#67 -> v2-talk-pause-soft-45l#47 (calm q=0.11)",
+     "src_f": 67,
+     "f": 47,
+     "word": "calm",
+     "k": 5,
+     "q": 0.111
+    },
+    "profile/0/L": {
+     "how": "same-spot:v2-talk-pause-soft#85 -> v2-talk-pause-soft-45l#65 (helped q=0.14)",
+     "src_f": 85,
+     "f": 65,
+     "word": "helped",
+     "k": 7,
+     "q": 0.143
+    },
+    "profile/0/S/Z": {
+     "how": "same-spot:v2-talk-pause-soft#80 -> v2-talk-pause-soft-45l#65 (voice q=0.83)",
+     "src_f": 80,
+     "f": 65,
+     "word": "voice",
+     "k": 6,
+     "q": 0.833
+    },
+    "profile/0/KG": {
+     "how": "same-spot:v2-talk-pause-soft#219 -> v2-talk-pause-soft-45l#189 (the q=0.50)",
+     "src_f": 219,
+     "f": 189,
+     "word": "the",
+     "k": 19,
+     "q": 0.5
+    },
+    "profile/0/H": {
+     "how": "same-spot:v2-talk-pause-soft#83 -> v2-talk-pause-soft-45l#66 (helped q=0.00)",
+     "src_f": 83,
+     "f": 66,
+     "word": "helped",
+     "k": 7,
+     "q": 0.0
+    },
+    "profile/0/OH": {
+     "how": "same-spot:v2-talk-pause-soft#121 -> v2-talk-pause-soft-45l#106 (Oh, q=0.00)",
+     "src_f": 121,
+     "f": 106,
+     "word": "Oh,",
+     "k": 9,
+     "q": 0.0
+    },
+    "profile/0/WOO": {
+     "how": "same-spot:v2-talk-pause-soft#127 -> v2-talk-pause-soft-45l#106 (Oh, q=0.60)",
+     "src_f": 127,
+     "f": 106,
+     "word": "Oh,",
+     "k": 9,
+     "q": 0.6
+    },
+    "profile/0/rest-open": {
+     "how": "same-spot:v2-talk-pause-soft#149 -> v2-talk-pause-soft-45l#118 (really? q=1.00)",
+     "src_f": 149,
+     "f": 118,
+     "word": "really?",
+     "k": 10,
+     "q": 1.0
+    },
+    "profile/0/SH/CH": {
+     "how": "same-spot:v2-talk-pause-soft#154 -> v2-talk-pause-soft-45l#145 (Sure, q=0.00)",
+     "src_f": 154,
+     "f": 145,
+     "word": "Sure,",
+     "k": 11,
+     "q": 0.0
+    },
+    "profile/0/ER": {
+     "how": "same-spot:v2-talk-pause-soft#163 -> v2-talk-pause-soft-45l#146 (Sure, q=0.42)",
+     "src_f": 163,
+     "f": 146,
+     "word": "Sure,",
+     "k": 11,
+     "q": 0.417
+    },
+    "profile/0/Y": {
+     "how": "same-spot:v2-talk-pause-soft#83 -> v2-talk-pause-soft-45l#66 (helped q=0.00)",
+     "src_f": 83,
+     "f": 66,
+     "word": "helped",
+     "k": 7,
+     "q": 0.0
+    },
+    "profile/0/TDN": {
+     "how": "same-spot:v2-talk-pause-soft#230 -> v2-talk-pause-soft-45l#198 (kitchen. q=0.77)",
+     "src_f": 230,
+     "f": 198,
+     "word": "kitchen.",
+     "k": 20,
+     "q": 0.769
+    },
+    "profile/0/R": {
+     "how": "same-spot:v2-talk-pause-soft#97 -> v2-talk-pause-soft-45l#77 (her. q=0.71)",
+     "src_f": 97,
+     "f": 77,
+     "word": "her.",
+     "k": 8,
+     "q": 0.714
+    },
+    "profile/0/FV": {
+     "how": "same-spot:v2-talk-pause-soft#181 -> v2-talk-pause-soft-45l#162 (laughed, q=0.54)",
+     "src_f": 181,
+     "f": 162,
+     "word": "laughed,",
+     "k": 13,
+     "q": 0.538
+    },
+    "profile/0/MBP": {
+     "how": "same-spot:v2-talk-pause-soft#51 -> v2-talk-pause-soft-45l#34 (my q=0.00)",
+     "src_f": 51,
+     "f": 34,
+     "word": "my",
+     "k": 3,
+     "q": 0.0
+    },
+    "profile/0/rest": {
+     "how": "same-spot:v2-talk-pause-soft#19 -> v2-talk-pause-soft-45l#2 (Now q=0.00)",
+     "src_f": 19,
+     "f": 2,
+     "word": "Now",
+     "k": 0,
+     "q": 0.0
+    }
+   },
+   "kept": [
+    "EH",
+    "AH"
+   ],
+   "missing_tiles": []
+  }
+ }
+}

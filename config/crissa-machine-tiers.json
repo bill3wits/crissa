@@ -1,0 +1,39 @@
+{
+  "_note": "The machine check's bars (lib/crissa_machine.py, 2026-10-05). A machine is `local` when every stage it measured clears its bar and both voice stages were measured, or were not installed yet (a new install: they are chosen from the hardware); a stage it could not measure or that misses its bar makes it `split` (the Wall here, the voice on another machine on the LAN). `remote` is never recommended: it is reported only when this install already sends its voice off the LAN. On by default in a pack behind Init's permission card (the User 2026-10-10); CRISSA_MACHINE_CHECK=0 switches it off. Copy to <state home>/crissa-machine-tiers.json to change a bar for one install.",
+  "render_x_realtime_min": 3.0,
+  "render_fps": 24,
+  "asr_rtf_max": 1.0,
+  "_asr_rtf_max": "1.0 (the User 2026-10-10; was 0.5): the ear decodes each turn as it closes, so what matters is that it keeps up with speech, rtf under 1.0. Measured on .101 (Ryzen 9 PRO 8945HS, no GPU, 2026-10-10): the card timed speech-to-text at rtf 0.54 and, in round 2 on the same machine, the ear's turns came 0.1-1.1 s after the end of each spoken line - well inside a conversation's pause. At 0.5 the card called that machine 'split' for a voice it heard in time.",
+  "tts_rtf_max": 0.5,
+  "tts_stream_rtf_max": 1.0,
+  "_tts_rtf_max": "tts_rtf_max (0.5) is the bar for a voice that makes the whole line before it plays (Kokoro here). A STREAMING voice (Pocket, Audio8, Turbo: `streamed` true on the timed line) passes with first audio at most tts_first_audio_s_max AND rtf under tts_stream_rtf_max (1.0): once it starts it stays ahead of playback, so the person never waits after the first sound (the User 2026-10-10). .101's numbers: Pocket first audio 0.15 s, rtf 0.62, streamed -> passes (it failed the old 0.5 bar); Audio8 2.10 s / 3.00 -> fails both; Kokoro 1.48 s (not streamed) -> fails first audio. With speech-to-text at 0.54 (bar 1.0) the card says 'local, Pocket' there.",
+  "tts_first_audio_s_max": 1.0,
+  "align_s_per_line_max": 0.5,
+  "frames_quick": 48,
+  "frames_full": 240,
+  "repeats_quick": 1,
+  "repeats_full": 3,
+  "probe_text": "Good evening. I'm here whenever you need me, just say my name.",
+  "density_candidates": [5.0, 4.0, 3.0, 2.0, 1.5, 1.0],
+  "density_floor_by_width": [[3000, 2.0], [2000, 1.5]],
+  "_density_floor_by_width": "Round 28 (.101 2026-10-17): when nothing fit (the probe ran while Setup's installs had the CPU) a glass at least this wide starts at this density, then one step finer, never the coarsest grid. CRISSA_DENSITY_FLOOR=0 turns it off.",
+  "density_frames": 6,
+  "density_timeout_s": 120,
+  "density_margin": 1.1,
+  "density_paint_ms": 5.0,
+  "density_child_start_s": 1.5,
+  "_density_margin": "The strict pick (round 21, .101 round 20: 4.0 picked, the glass drew 23-30/s at 100 % CPU): the card times the film child's round trip at each density, as the desk Wall draws, and a density fits only when its median times density_margin (1.1, the Wall's own stride margin) plus density_paint_ms (5.0, the rest of the Wall's pass: measured loop less round trip 4.9-5.2 ms) holds one film frame. Under the .101-like budget at 3440x1440 that picks 2.0 (4.0's round trip is 43-46 ms). density_child_start_s is the card's time estimate for the probe's one film child (it starts once; each density's first replies get its cold allowance). CRISSA_DENSITY_PICK_STRICT=0 is round 20's pick.",
+  "_density_candidates": "The desk Wall's density her first words are drawn at (round 15, 2026-10-12, .101's fresh install started at 1.0 where the User's own 5.0 looks far better): the card times the Wall's own whole render of density_frames listen frames at each candidate, highest first, on the Wall's glass size, and the highest whose median fits one film frame (1000 / render_fps ms) becomes the Wall's density unless the person has set one (lib/crissa_machine.stage_density, apply_density). CRISSA_MACHINE_DENSITY=0 turns it off.",
+  "better_mouths": {
+    "_doc": "Better mouths (lib/crissa_aligner.py) FOLLOWS THE MACHINE CHECK (the User 2026-10-10), not RAM: with no choice saved, an allowed check that timed the aligner sets the default (its align stage against align_s_per_line_max); a skipped check, or none, leaves it ON whenever the aligner is installed. The person's own tick or untick on the Connect page is saved and always wins. default_on_ram_gb is the RAM rule of 2026-10-07, used only with CRISSA_ALIGNER_RAM_RULE=1 (at least that much RAM: switched on and installed in the background); CRISSA_BETTER_MOUTHS_DEFAULT=0 turns every default off.",
+    "default_on_ram_gb": 16,
+    "measured": "2026-10-07, the pack's own aligner (MFA 3.4.2, english_us_arpa) in a scratch install, a 16-core desktop CPU held to 4 CPUs: 0.62 GB peak resident across its processes once warm (warm-up 2.4 s), 0.17-0.47 s a 7 s line, 1.9 GB on disk. 16 GB leaves it a small share beside Pocket (about 1.2 GB) and, on a robust machine, Audio8 (1.7-1.9 GB peak); an 8 GB machine keeps it unticked."
+  },
+  "card": {
+    "_doc": "Init's permission card says how long the check takes here (lib/crissa_machine.estimate_s): never a bar. The time on a computer that just clears every bar, for the stages that can run here now: render at render_x_realtime_min, each probe line at tts_first_audio_s_max, the speech-to-text's untimed cold decode at asr_cold_rtf plus each timed one at asr_rtf_max, the aligner's warm-up plus one line at align_s_per_line_max.",
+    "words_per_s": 2.4,
+    "asr_cold_rtf": 4.1,
+    "align_warm_s": 2.4,
+    "measured": "words_per_s: Init's speaking pace, 2.9 words a second at the house rate 1.2 (lib/house_wall_ascii_render ROOM_CLOCK_WPS), 2.4 at rate 1.0. asr_cold_rtf: a speech-to-text service's first decode, 4.1 rtf cold vs about 0.4 warm on the reference box (lib/crissa_machine.stage_asr). align_warm_s: the pack's aligner warm-up, 2.4 s (better_mouths.measured)."
+  }
+}

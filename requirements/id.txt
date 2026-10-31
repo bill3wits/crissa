@@ -1,0 +1,2 @@
+# The id module builds its own env from modules/id/locks on first use
+# (python3 modules/id/scripts/crissa-id.py --install); nothing to pip install here.
