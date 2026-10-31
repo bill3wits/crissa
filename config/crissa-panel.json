@@ -1,0 +1,50 @@
+{
+  "_note": "The Control Panel's shipped defaults (lib/crissa_panel_conf.py). A fresh install watches ITS OWN services: units named crissa-*, or whose program lives in this install's folder ({root}). Change them for one install in <state home>/panel.json (same keys); this file is the product's default, not any one machine's. {root} {state} {home} {python} are expanded when read.",
+  "host": "127.0.0.1",
+  "port": 8097,
+  "self_unit": "crissa-panel.service",
+  "self_label": "Control Panel - this screen",
+  "title": "Control Panel",
+  "self_section": "Wall services",
+  "registry": {
+    "scopes": ["user"],
+    "name_prefixes": ["crissa-"],
+    "exec_markers": ["{root}"],
+    "unit_dir": "{home}/.config/systemd/user",
+    "unit_dir_rule": false,
+    "system_user_rule": false,
+    "notes": "{state}/unit-notes.json",
+    "state_dir": "{state}/units",
+    "note_days": 7
+  },
+  "tiles": [],
+  "default_section": "Wall services",
+  "new_section": "New · not yet sorted",
+  "restarters": [],
+  "os_power": {
+    "state_dir": "{state}/panel",
+    "snapshot": "os-off.snapshot.json",
+    "report": "os-power.last.json",
+    "switch_name": "All OS Off",
+    "on_name": "Turn On All Services"
+  },
+  "gpu": {},
+  "refuse_env": [],
+  "lock_file": "",
+  "cron_exec_prefixes": ["{root}/"],
+  "doc": {"ttl_s": 900, "window": true, "max_lines": 400, "max_chars": 40000},
+  "journal_lines": 80,
+  "addons": {
+    "_note": "The bottom section (lib/crissa_panel_addons.py). An installed add-on drops one manifest (*.json) in a folder under paths and its tiles show here; a slot with no manifest shows its placeholder, the off mark and these words, like the clock's mark for a missing camera. Add a slot or a folder for one install in <state home>/panel.json.",
+    "section": "krew services",
+    "home_env": "KREW_HOME",
+    "paths": ["{state}/panel.d"],
+    "slots": [
+      {
+        "id": "krew",
+        "title": "Krew",
+        "missing": "krew not installed"
+      }
+    ]
+  }
+}

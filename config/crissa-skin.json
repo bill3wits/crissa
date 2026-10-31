@@ -1,0 +1,25 @@
+{
+ "schema": "crissa-skin/1",
+ "_doc": "A buyer's choice of skin (the User 2026-10-31: \"say a user buys one, how do THEY choose which Crissa to run that day?\" and \"Without a way to switch why would they buy any more?\"; crissa-6a, MP store \"a buyer's choice of skin\"). Every number lib/crissa_skin_days.py and lib/crissa_skin_add.py use; none in code.",
+ "days": {
+  "tick_s": 30,
+  "tick_why": "how often the panel asks whether today's skin is on yet. A day starts once; a switch waits for her to be quiet, so 30 s is the longest it waits past the moment she falls quiet, and the read is three local GETs.",
+  "probe_timeout_s": 1.5,
+  "probe_why": "each local busy read (the player's /v1/state, the ear's /health). A piece that refuses the connection is not running and holds nothing; one that answers late or with no busy keys is 'cannot tell' and the switch waits."
+ },
+ "add": {
+  "staged_keep_h": 24,
+  "staged_why": "a Store install downloads and checks the pack before it asks 'Install <name>?'; an answer never given leaves the staged copy, removed after this many hours (the store link itself still works for its own 7 days)."
+ },
+ "changing": {
+  "notice_s": 90,
+  "notice_why": "how long after a pick the desk Wall's stale-feed corner says \"Changing to <name>...\" instead of FEED STALE: a player lane restart measured in seconds; past this a stale feed is a real fault again and says so."
+ },
+ "offer": {
+  "agents": [
+   "crissa"
+  ],
+  "agents_why": "the User 2026-10-31 for 1.0.5: \"Crissa looks only for 1.0.5. V2 we can install the switcher. Everything works in store but for Bash so maybe we add a note that agent switcher to come in v2\". A skin changes only her picture; her voice, name, wake word, krew profile and phone persona stay Crissa, so another agent's face would answer as Crissa. A library is offered when its agent (library.json `agent`, else its face) is listed here; a shipped face keeps the 10-28 list (crissa-default-skin.json `hidden`). CRISSA_SKIN_ALL_AGENTS=1 lifts it (v2).",
+  "note": "Other agents (Bash and more): the agent switcher comes in Crissa v2."
+ }
+}

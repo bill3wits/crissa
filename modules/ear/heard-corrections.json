@@ -1,0 +1,7 @@
+{
+  "_why": "Phrases the ear mishears, fixed before Crissa reads the turn (crissa_bridge/heard_corrections.py). Whole words, any case. Add a row only for a mishearing that was MEASURED; a homophone that is also a real house word needs context in the phrase (e.g. 'render cue', never bare 'cue' - the conductor's cues are real). Measured 10-03: the line through the room speakers came back 'render cube'.",
+  "phrases": {
+    "render cue": "render queue",
+    "render cube": "render queue"
+  }
+}

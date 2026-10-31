@@ -1,0 +1,193 @@
+{
+ "schema": "loud-variants/1",
+ "within": false,
+ "dials": {
+  "classes": [
+   "AH",
+   "Ah",
+   "Aa",
+   "EH",
+   "EE",
+   "ER",
+   "OH",
+   "WOO"
+  ],
+  "_classes_why": "vowels only: a closure or a fricative is one shape at one opening (MBP must be shut, FV must bite); his Uh/Ah/Aa included (round 41).",
+  "k": 3,
+  "_k_why": "the v2 desk harvest (clip-v2-talk-pause, 289 f, 25 words) gives 4-14 same-shape candidates per vowel at shape_gate 0.12; three openings use them without repeating a frame.",
+  "pad": 1,
+  "_pad_why": "the speller's classes split a word's span evenly, not by phoneme; one frame either side takes the vowel's edges without reaching the next word (words are 4-8 f on this take).",
+  "shape_gate": 0.12,
+  "_shape_gate_why": "measured 2026-10-24 on the v2 desk contact sheet: at 0.25 the EH set took a lip-bite frame and the OH set an EE smile; at 0.12 every row is one shape at three openings; at 0.08 ER and WOO had under three candidates.",
+  "min_spread": 1.3,
+  "_min_spread_why": "a class whose widest variant opens under 1.3x its quietest has nothing to vary (Ah measured 0.108-0.119 = 1.10x, one tile); the rest measure 1.43-3.8x at gate 0.12.",
+  "min_open_of_anchor": 0.4,
+  "_min_open_why": "with no floor the EE and AH sets took near-shut transition frames (lip 0.010, 0.015 against anchors 0.094, 0.115); a vowel is never shut, so the quietest is at least 0.4x the picked opening.",
+  "within": false,
+  "_within_why": "false = one variant per note, ranked on the note's mean loudness; true = re-ranked at every hop. Set from the SyncNet A/B on :8116."
+ },
+ "tiles": {
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0029_forward_0_fc1.png": {
+   "class": "EE",
+   "anchor": 2,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0092_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 92,
+     "lip": 0.0649,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0090_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 90,
+     "lip": 0.0748,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0029_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 29,
+     "lip": 0.094,
+     "how": "anchor"
+    }
+   ]
+  },
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0032_forward_0_fc1.png": {
+   "class": "Aa",
+   "anchor": 1,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0175_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 175,
+     "lip": 0.1003,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0032_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 32,
+     "lip": 0.1304,
+     "how": "anchor"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0031_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 31,
+     "lip": 0.1426,
+     "how": "auto-loud"
+    }
+   ]
+  },
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0042_forward_0_fc1.png": {
+   "class": "EH",
+   "anchor": 1,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0045_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 45,
+     "lip": 0.0602,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0042_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 42,
+     "lip": 0.0794,
+     "how": "anchor"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0041_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 41,
+     "lip": 0.0988,
+     "how": "auto-loud"
+    }
+   ]
+  },
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0112_forward_0_fc1.png": {
+   "class": "AH",
+   "anchor": 2,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0100_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 100,
+     "lip": 0.0736,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0103_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 103,
+     "lip": 0.093,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0112_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 112,
+     "lip": 0.1148,
+     "how": "anchor"
+    }
+   ]
+  },
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0179_forward_0_fc1.png": {
+   "class": "OH",
+   "anchor": 1,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0169_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 169,
+     "lip": 0.0234,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0179_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 179,
+     "lip": 0.0557,
+     "how": "anchor"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0165_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 165,
+     "lip": 0.0878,
+     "how": "auto-loud"
+    }
+   ]
+  },
+  "visemes/phoneme-map/tiles/v2-talk-pause_f0243_forward_0_fc1.png": {
+   "class": "WOO",
+   "anchor": 0,
+   "variants": [
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0243_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 243,
+     "lip": 0.0127,
+     "how": "anchor"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0181_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 181,
+     "lip": 0.0212,
+     "how": "auto-loud"
+    },
+    {
+     "tile": "visemes/phoneme-map/tiles/v2-talk-pause_f0033_forward_0_fc1.png",
+     "clip": "v2-talk-pause",
+     "f": 33,
+     "lip": 0.0219,
+     "how": "auto-loud"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "_what": "The finished mouth patches' disk tier (lib/mouth_patch_disk.py): how much disk the install's build may fill. Each dial has the measurement that set it.",
+ "disk_share_of_free": 0.05,
+ "_disk_share_of_free_why": "Measured 2026-10-24 on the v2 desk bench (1280x720): 579 patches held 46.6 MB, 80 KB each, against 4.95 MB for one ASCII picture at 3440x1440 (lib/wall_ascii_disk). A hub loop's whole set is its frames x the tiles its playlist paints (v2-listen-screen: 259 frames), about 0.5 GB at 1280x720 and 2 GB at 2560x1440. The ASCII tier takes 10 % of free disk; half that holds every hub several times over on a 1 TB disk.",
+ "max_gb": 20,
+ "_max_gb_why": "Ten 2560x1440 hubs at the 2 GB a hub measured above; past it the rest are painted the first time they play, as before.",
+ "keep_free_gb": 20,
+ "_keep_free_gb_why": "The ASCII tier's own floor (lib/wall_ascii_disk: never below 20 GB left free), so the two builds leave the same room.",
+ "memory_mb": 768,
+ "_memory_mb_why": "Measured 2026-10-24 on the v2 desk bench (1280x720): 80 KB a patch, so one hub loop's whole set (about 0.5 GB) stays in memory; at 2560x1440 a hub is about 2 GB and the disk tier serves what memory dropped (a disk read is a few ms against a 30-40 ms paint)."
+}

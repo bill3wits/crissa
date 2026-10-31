@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect an Agent</title>
+<style>
+:root {
+  --bg: #f6f5f2; --panel: #ffffff; --ink: #1c1b19; --muted: #6b6860; --line: #dedbd3;
+  --accent: #2f6f5e; --accent-ink: #ffffff; --bad: #a33b2b; --good: #2f6f5e;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412; --panel: #1d1c1a; --ink: #ecebe6; --muted: #a09d94; --line: #34322e;
+    --accent: #6cc2a8; --accent-ink: #0f1a16; --bad: #f08a78; --good: #6cc2a8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412; --panel: #1d1c1a; --ink: #ecebe6; --muted: #a09d94; --line: #34322e;
+  --accent: #6cc2a8; --accent-ink: #0f1a16; --bad: #f08a78; --good: #6cc2a8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px;
+  display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+@media (max-width: 720px) { main { grid-template-columns: 1fr; } }
+h1 { font-size: 20px; margin: 0 0 4px; }
+p.lede { margin: 0 0 16px; color: var(--muted); }
+.face { background: #000; border-radius: 10px; overflow: hidden; aspect-ratio: 1296 / 704; }
+.face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.status { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--muted);
+  margin-right: 6px; vertical-align: 1px; }
+.dot.on { background: var(--good); }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+label { display: block; font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+label small { font-weight: 400; color: var(--muted); }
+input, select, textarea { width: 100%; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+textarea { min-height: 84px; resize: vertical; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+button { font: inherit; border-radius: 6px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button:disabled { opacity: .5; cursor: default; }
+.msg { margin-top: 12px; font-size: 13px; min-height: 1.4em; overflow-wrap: anywhere; }
+.msg.bad { color: var(--bad); } .msg.good { color: var(--good); }
+.hidden { display: none; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0 8px; }
+label.check { display: flex; gap: 8px; align-items: baseline; font-weight: 600; }
+label.check input { width: auto; flex: none; }
+.marks { margin-top: 6px; font-size: 11px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.marks span { white-space: nowrap; }
+#voice-lines { white-space: pre-line; font-size: 0.85em; opacity: 0.8; }
+footer { grid-column: 1 / -1; font-size: 12px; color: var(--muted); text-align: center; }
+.banner { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 14px; padding: 12px 14px;
+  border: 1px solid var(--accent); border-radius: 10px; background: var(--panel); font-size: 14px; }
+.banner span { flex: 1 1 240px; }
+.banner[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div>
+    <div class="face"><img id="face" alt="The avatar, live" src="/frame.mjpg"></div>
+    <div class="status"><span class="dot" id="dot"></span><span id="state">Checking…</span></div>
+    <div class="marks" id="marks" hidden aria-label="How each optional piece stands"></div>
+  </div>
+  <div>
+    <!-- SETUP (the User 2026-10-10): while Init runs, this page says so; a test that passes here, of the agent saved
+         here, counts for Init's Continue, and Continue setup carries the walk on (POST /v1/init connect_continue) -->
+    <div class="banner" id="init-banner" hidden>
+      <span id="init-banner-t"></span>
+      <button id="init-continue" type="button" class="primary" disabled>Continue setup</button>
+      <a id="init-back" href="/init">Back to setup</a>
+    </div>
+    <h1>Connect an agent</h1>
+    <p class="lede">She answers through any agent that speaks the OpenAI chat-completions API:
+      a local model server, a hosted API, or an agent framework's gateway.</p>
+    <section>
+      <div id="offers-box" hidden>
+        <label>Detected on this machine <small>— another program offered these; Use fills the form, then tests</small></label>
+        <div id="offers"></div>
+        <hr>
+      </div>
+      <label for="preset">Kind</label>
+      <select id="preset">
+        <option value="local">Local (this machine's own engine)</option>
+        <option value="claude">Claude (Anthropic)</option>
+        <option value="xai">xAI</option>
+        <option value="openai-compatible">OpenAI-compatible (any)</option>
+        <option value="none">Not connected</option>
+      </select>
+      <label for="url">Address <small>— base URL, e.g. http://127.0.0.1:8000/v1</small></label>
+      <input id="url" type="url" autocomplete="off" spellcheck="false" placeholder="https://api.example.com/v1">
+      <label for="key">API key <small id="keynote">— optional for a local server</small></label>
+      <input id="key" type="password" autocomplete="off" spellcheck="false">
+      <label for="model">Model <small>— the name your server expects; pick from its list or type one</small></label>
+      <input id="model" type="text" autocomplete="off" spellcheck="false" list="model-list">
+      <datalist id="model-list"></datalist>
+      <div class="msg" id="model-note" aria-live="polite"></div>
+      <label for="session">Session header <small>— optional; for a gateway that keeps its own memory per conversation</small></label>
+      <input id="session" type="text" autocomplete="off" spellcheck="false" placeholder="X-Agent-Session-Id">
+      <label for="prompt">Personality <small>— the system prompt; her words are spoken aloud. Her own persona
+        is filled in: edit it or replace it with yours.</small></label>
+      <div class="msg" id="persona-note"></div>
+      <label class="check"><input id="no_prompt" type="checkbox"> None — the agent brings its own personality</label>
+      <textarea id="prompt"></textarea>
+      <div class="row" style="margin-top:6px"><span class="msg" id="persona-use" aria-live="polite"></span>
+        <button id="stock" type="button" hidden>Reset to her stock persona</button></div>
+      <div class="row">
+        <button id="test" type="button">Test</button>
+        <button id="save" type="button" class="primary">Save</button>
+      </div>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      <hr>
+      <label for="say">Talk to her</label>
+      <input id="say" type="text" placeholder="Type a question and press Enter" autocomplete="off">
+      <div class="msg" id="reply" aria-live="polite"></div>
+      <div id="voice-box" hidden>
+        <hr>
+        <label>Her voice <small>&mdash; installed for this machine when Crissa starts (no terminal needed).</small></label>
+        <div class="msg" id="voice-state" role="status" aria-live="polite"></div>
+        <div class="msg" id="voice-lines"></div>
+        <div class="row"><button id="voice-retry" type="button">Retry voice install</button></div>
+      </div>
+      <div id="mouths-box" hidden>
+        <hr>
+        <label class="check"><input id="mouths" type="checkbox"> Better mouths
+          <small>— her lips follow each word as it is heard. Downloads a word aligner (about 0.6–2 GB) the
+          first time; then about 0.2 s and 0.65 GB of memory per line, no GPU. Off: her mouth follows the
+          letters of each word.</small></label>
+        <div class="msg" id="mouths-state" aria-live="polite"></div>
+      </div>
+      <div id="library-box" hidden>
+        <hr>
+        <label for="lib-url">Your library <small>— packs you make on the site arrive here by themselves.
+          Paste the library token from your account.</small></label>
+        <input id="lib-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://…">
+        <label for="lib-token">Library token <small id="lib-tokennote"></small></label>
+        <input id="lib-token" type="password" autocomplete="off" spellcheck="false">
+        <div class="row">
+          <button id="lib-save" type="button">Link</button>
+          <button id="lib-check" type="button">Check now</button>
+        </div>
+        <div class="msg" id="lib-state" aria-live="polite"></div>
+      </div>
+      <div id="import-box" hidden>
+        <hr>
+        <label>Add to her library
+          <small>— loops and mouth tiles made for her arrive as a pack. Upload the pack file (.zip) you
+          downloaded, or put it in the folder below, then add it. A pack only adds; nothing she has is
+          changed. Uploading stays on this computer.</small></label>
+        <div class="row">
+          <input type="file" id="import-file" accept=".zip,application/zip">
+          <button type="button" id="import-upload">Upload</button>
+        </div>
+        <div class="msg" id="import-folder"></div>
+        <div id="import-list"></div>
+        <div class="msg" id="import-state" aria-live="polite"></div>
+      </div>
+    </section>
+  </div>
+  <footer>Created with Grok. Credits and licences: CREDITS.md and MEDIA-LICENSE.md in this pack.</footer>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const DEFAULT_PROMPT = "You are Crissa, an avatar on the User's screen. Your words are spoken aloud: " +
+  "answer in one to three short sentences, plain text, no lists, no markdown.";
+let stored = {};
+let stockText = DEFAULT_PROMPT;
+
+// THE PERSONA (the User 2026-10-07): None is ticked only when the user chose it. An adopted agent that brings
+// its own personality (krew's) shows as a note, not as a ticked None; the form sends the persona only once the
+// user touches it, so a Save of the address keeps the agent's personality.
+let personaTouched = false;
+function persona() { return stored.persona || {}; }
+function form(forTest) {
+  const f = { preset: $("preset").value, url: $("url").value.trim(), model: $("model").value.trim(),
+    session_header: $("session").value.trim() };
+  if (persona().source === "offer" && !personaTouched) {
+    if (forTest && persona().agent_own) f.no_prompt = true;     // test as she will be asked: no system message
+  } else {
+    Object.assign(f, { system_prompt: $("prompt").value, no_prompt: $("no_prompt").checked });
+  }
+  const k = $("key").value.trim();
+  if (k) f.key = k;
+  return f;
+}
+function say(el, text, kind, detail) {
+  el.textContent = text || ""; el.className = "msg" + (kind ? " " + kind : ""); el.title = detail || "";
+}
+// PLAIN ERRORS (the User 2026-10-07): the headline says what to fix; the raw error is the message's tooltip.
+const EMPTY_ADDRESS = "The Address is empty - enter your agent's address.";
+function addressMissing() { return $("preset").value !== "none" && !$("url").value.trim(); }
+
+async function post(path, body) {
+  const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body) });
+  let j = {};
+  try { j = await r.json(); } catch (e) { j = { ok: false, error: "no answer (" + r.status + ")" }; }
+  return j;
+}
+
+// THE UPLOAD (the User 2026-10-02): the chosen .zip goes to this player only (POST /v1/import/upload on
+// this machine), lands in the drop folder after the same check Add runs, and shows up below to add.
+// No outbound call and no library sync.
+async function uploadPack() {
+  const f = ($("import-file").files || [])[0];
+  if (!f) { say($("import-state"), "Choose a loop file (.zip) first.", "bad"); return; }
+  $("import-upload").disabled = true;
+  say($("import-state"), "Uploading " + f.name + " …");
+  let j = {};
+  try {
+    const r = await fetch("/v1/import/upload", { method: "POST", body: f,
+      headers: { "Content-Type": "application/zip", "X-Pack-Name": encodeURIComponent(f.name), "X-By": "connect" } });
+    try { j = await r.json(); } catch (e) { j = { ok: false, error: "no answer (" + r.status + ")" }; }
+  } catch (e) { j = { ok: false, error: "the player did not answer" }; }
+  $("import-upload").disabled = false;
+  say($("import-state"), j.ok ? ("Uploaded " + j.id + ". Add it below.") : ("Not uploaded: " + (j.error || "unknown")),
+      j.ok ? "" : "bad");
+  if (j.ok) $("import-file").value = "";
+  await loadImport();
+}
+
+async function load() {
+  try {
+    const j = await (await fetch("/v1/agent", { cache: "no-store" })).json();
+    stored = j.agent || {};
+    // round 17: only the kinds the player offers (CRISSA_CONNECT_CLAUDE_PRESET=0 hides Claude); a stored kind that is
+    // hidden reads as OpenAI-compatible, its address and key unchanged
+    if (Array.isArray(j.presets)) {
+      for (const o of [...$("preset").options]) if (!j.presets.includes(o.value)) { o.remove(); delete KINDS[o.value]; }
+    }
+    $("preset").value = stored.preset || "openai-compatible";
+    if (!$("preset").value) $("preset").value = "openai-compatible";
+    $("url").value = stored.url || "";
+    $("model").value = stored.model || "";
+    $("session").value = stored.session_header || "";
+    // her stock persona (avatars/crissa/persona.md, served in agent.persona.stock) unless the user wrote their own
+    stockText = (stored.persona && stored.persona.stock) || DEFAULT_PROMPT;
+    const per = persona();
+    $("prompt").value = (per.agent_own ? "" : stored.system_prompt) || stockText;
+    $("no_prompt").checked = per.source ? per.source === "none" : false;
+    $("prompt").disabled = $("no_prompt").checked;
+    personaTouched = false;
+    $("persona-note").textContent = per.source === "offer"
+      ? (per.agent_own ? "In use: the personality " + (per.by || "the agent") + " gives her. "
+                       : "In use: the persona " + (per.by || "the agent") + " offered. ") +
+        "Edit the text below or tick None, then Save, to use your own instead."
+      : "";
+    personaState();
+    const ref = stored.key_ref;
+    $("key").placeholder = ref ? "read from " + (ref.env ? "$" + ref.env : ref.name + " in " + ref.file) + " — leave blank to keep"
+      : stored.has_key ? "stored — leave blank to keep" : "";
+    showOffers(j.offers || []);
+    $("dot").classList.toggle("on", !!stored.configured);
+    if (stored.url && (stored.has_key || stored.preset === "local")) lookupModels();
+    $("state").textContent = stored.configured ? "Connected to " + (stored.url || "") : "No agent connected";
+  } catch (e) {
+    $("state").textContent = "The player is not answering";
+  }
+}
+
+// DETECTED (2026-10-06): a program on this machine left an offer in <crissa home>/endpoints.d. Nothing
+// changes until the user clicks Use: that stores the offer (its key stays where it lives, by reference),
+// then runs Test so the user sees the agent answer.
+function showOffers(list) {
+  const box = $("offers");
+  box.textContent = "";
+  $("offers-box").hidden = !list.length;
+  for (const o of list) {
+    const row = document.createElement("div");
+    row.className = "row offer";
+    const t = document.createElement("span");
+    const key = o.key_ref ? (o.has_key ? "key found" : "key not found yet") : "no key";
+    t.textContent = o.ok ? (o.name + " — " + o.url + (o.model ? " (" + o.model + ")" : "") + ", " + key +
+      (o.by ? ", offered by " + o.by : "") + (o.no_prompt ? ", own personality" : ""))
+      : (o.id + ": not usable — " + (o.error || "unknown"));
+    row.appendChild(t);
+    if (o.ok) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = (stored.url === o.url) ? "Use again" : "Use";
+      b.addEventListener("click", () => useOffer(o, b));
+      row.appendChild(b);
+    }
+    box.appendChild(row);
+  }
+}
+async function useOffer(o, b) {
+  b.disabled = true; say($("msg"), "Using " + o.name + "…");
+  const j = await post("/v1/agent", { adopt: o.id, by: "connect" });
+  if (!j.ok) { say($("msg"), j.error || "not used", "bad"); b.disabled = false; return; }
+  await load();
+  say($("msg"), "Using " + o.name + ". Testing…");
+  const t = await post("/v1/agent/test", {});
+  say($("msg"), t.ok ? "Connected. Answered in " + t.ms + " ms: “" + t.reply + "”" : "Saved, but the test failed: " + (t.error || "failed"),
+      t.ok ? "good" : "bad", t.ok ? "" : t.detail);
+  b.disabled = false;
+}
+// THE KINDS (the User 2026-10-10): Local, Claude API and xAI fill the address and the model; the key field stays as
+// it is (it is yours). The same table as lib/crissa_agent.py KINDS (a test holds them equal). Round 17 (the User
+// 2026-10-13, "add the Claude preset"): the Claude kind fills claude-haiku-5-5, the one for a voice avatar, and carries
+// Claude's current models for the pick list until Anthropic's own list loads with the key.
+const KINDS = {"local": {"url": "http://127.0.0.1:8000/v1", "model": "ops"}, "claude": {"url": "https://api.anthropic.com/v1", "model": "claude-haiku-5-5", "models": ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5", "claude-fable-5-1"], "labels": {"claude-haiku-5-5": "Claude Haiku 5.5 - the fastest, the one for a voice avatar", "claude-sonnet-5-5": "Claude Sonnet 5.5", "claude-opus-5-5": "Claude Opus 5.5", "claude-fable-5-1": "Claude Fable 5.1 - the most capable, slower to answer"}}, "xai": {"url": "https://api.x.ai/v1", "model": "grok-4.20-0309-non-reasoning"}};
+$("preset").addEventListener("change", () => {
+  const k = KINDS[$("preset").value];
+  if (!k) return;
+  $("url").value = k.url;
+  $("model").value = k.model;
+  lookupModels();
+});
+// THE MODEL LIST (round 15, the User: "was it loading that whole API lookup? It should be."): once a key is entered,
+// the Kind or the address changes, the player asks the provider's own list (POST /v1/agent/models: GET <base>/models
+// with the key) and the Model field offers its chat models, the best for a voice avatar first. Typing stays open for
+// anything not listed. The key never comes back from the player; a failed list says so and keeps the typed field.
+let modelsAsked = 0, keyTimer = null;
+// round 17: the pick list's options, each with its name when the list names it (Claude: Haiku marked for her voice)
+function fillModels(models, labels) {
+  const list = $("model-list");
+  list.textContent = "";
+  for (const m of models || []) {
+    const o = document.createElement("option");
+    o.value = m;
+    if (labels && labels[m]) o.label = labels[m];
+    list.appendChild(o);
+  }
+}
+async function lookupModels() {
+  const url = $("url").value.trim();
+  if (!url || $("preset").value === "none") return;
+  const key = $("key").value.trim();
+  const kind = KINDS[$("preset").value] || {};
+  if (!key && !stored.has_key && $("preset").value !== "local" && !/127\.0\.0\.1|localhost/.test(url)) {
+    if (kind.models) {                            // the Claude kind: its current models until the key loads the list
+      ++modelsAsked;
+      fillModels(kind.models, kind.labels);
+      say($("model-note"), "Claude Haiku 5.5 is the one for a voice avatar. Enter your API key to load " +
+          "Anthropic's own list, or pick one now.");
+      return;
+    }
+    say($("model-note"), "Enter the API key to see this address's models, or type the model's name.");
+    return;
+  }
+  const n = ++modelsAsked;
+  say($("model-note"), "Looking up the models…");
+  const body = { url: url, preset: $("preset").value };
+  if (key) body.key = key;
+  const j = await post("/v1/agent/models", body);
+  if (n !== modelsAsked) return;                  // a newer lookup is on its way
+  fillModels(j.models || [], j.labels);           // a failed Claude list still offers Claude's current models
+  if (!j.ok) { say($("model-note"), j.error || "The model list did not load. Type the model's name.", "bad"); return; }
+  if (!$("model").value.trim() && j.models.length) $("model").value = j.models[0];
+  say($("model-note"), j.count + " model" + (j.count === 1 ? "" : "s") + " from " + j.host +
+      " — the best for her voice first" + (j.voice && j.labels && j.labels[j.voice] ? " (" + j.labels[j.voice] + ")" : "") +
+      "; click the Model field to pick, or type a name.", "good");
+}
+$("key").addEventListener("change", lookupModels);
+$("key").addEventListener("input", () => {
+  clearTimeout(keyTimer);
+  if ($("key").value.trim().length >= 8) keyTimer = setTimeout(lookupModels, 700);
+});
+$("url").addEventListener("change", lookupModels);
+// WHAT IS IN USE (round 15, .101: "Use her stock persona" looked like a button that did nothing - on a fresh setup the
+// box already holds her stock text). A label says what the box holds; "Reset to her stock persona" shows only when the
+// box differs from it, and says so after a reset. Save still decides what she wears.
+function sameText(a, b) { return String(a || "").split(/\s+/).join(" ").trim() === String(b || "").split(/\s+/).join(" ").trim(); }
+function personaState(note) {
+  const use = $("persona-use"), reset = $("stock");
+  if ($("no_prompt").checked) {
+    use.textContent = "In use: none - the agent brings its own personality.";
+    reset.hidden = true;
+  } else if (persona().source === "offer" && !personaTouched) {
+    use.textContent = "";                         // the note above says whose persona is in use
+    reset.hidden = sameText($("prompt").value, stockText);
+  } else if (sameText($("prompt").value, stockText)) {
+    use.textContent = note || "In use: her stock persona.";
+    reset.hidden = true;
+  } else {
+    use.textContent = "In use: your own text" + (personaTouched ? " (Save to keep it)." : ".");
+    reset.hidden = false;
+  }
+}
+$("stock").addEventListener("click", () => {
+  $("prompt").value = stockText; personaTouched = true;
+  personaState("Her stock persona is back in the box - Save to use it.");
+});
+$("prompt").addEventListener("input", () => { personaTouched = true; personaState(); });
+$("no_prompt").addEventListener("change", () => { $("prompt").disabled = $("no_prompt").checked; personaTouched = true; personaState(); });
+$("test").addEventListener("click", async () => {
+  if (addressMissing()) { say($("msg"), EMPTY_ADDRESS, "bad"); $("url").focus(); return; }
+  $("test").disabled = true; say($("msg"), "Testing…");
+  const j = await post("/v1/agent/test", form(true));
+  say($("msg"), j.ok ? "Answered in " + j.ms + " ms: “" + j.reply + "”" + (INIT.run ? " Save it, then Continue setup." : "")
+      : (j.error || "failed"), j.ok ? "good" : (j.thinking ? "" : "bad"), j.ok ? "" : j.detail);
+  $("test").disabled = false;
+  loadInit();
+});
+$("save").addEventListener("click", async () => {
+  if (addressMissing()) { say($("msg"), EMPTY_ADDRESS + " (Kind: Not connected disconnects her.)", "bad"); $("url").focus(); return; }
+  $("save").disabled = true;
+  const j = await post("/v1/agent", form());
+  say($("msg"), j.ok ? "Saved." : (j.error || "not saved"), j.ok ? "good" : "bad");
+  if (j.ok) { $("key").value = ""; await load(); }
+  $("save").disabled = false;
+  loadInit();
+});
+// SETUP (the User 2026-10-10, the .101 demo: the test passed here and there was no next step). While Init runs, the
+// banner names the step; on Connect, Continue setup is on once the latest test of the saved agent passed (here or in
+// the walk), and it carries the walk on and opens /init.
+const INIT = { run: "", timer: null };
+async function loadInit() {
+  let j = null;
+  try { const r = await fetch("/v1/init", { cache: "no-store" }); if (r.ok) j = await r.json(); } catch (e) {}
+  clearTimeout(INIT.timer);
+  const on = !!(j && j.status === "running");
+  INIT.run = on ? j.run_id : "";
+  $("init-banner").hidden = !on;
+  if (!on) return;
+  const step = (j.steps || [])[j.index || 0] || {};
+  const atConnect = j.step_id === "connect";
+  $("init-banner-t").textContent = "Setting up Crissa, step " + ((j.index || 0) + 1) + " of " + (j.total || 4) + ": " +
+    (step.eyebrow || j.step_id) + "." + (atConnect ? " Test and save your agent here, then Continue setup." : "");
+  $("init-continue").hidden = !atConnect;
+  $("init-continue").disabled = !((j.plate || {}).tested);
+  INIT.timer = setTimeout(loadInit, 2000);
+}
+$("init-continue").addEventListener("click", async () => {
+  $("init-continue").disabled = true;
+  const j = await post("/v1/init", { action: "connect_continue", run_id: INIT.run });
+  if (j.ok === false) { say($("msg"), j.error || "not yet", "bad"); loadInit(); return; }
+  location.href = "/init";
+});
+loadInit();
+$("say").addEventListener("keydown", async (ev) => {
+  if (ev.key !== "Enter" || !$("say").value.trim()) return;
+  const text = $("say").value.trim();
+  $("say").value = ""; say($("reply"), "Asking…");
+  const j = await post("/v1/ask", { text, wait: true, by: "connect" });
+  say($("reply"), j.reply ? "She says: “" + j.reply + "”" + (j.ok ? "" : " — not heard: " + (j.error || "")) : (j.error || "no answer"), j.ok ? "" : "bad");
+});
+function mouthsText(m) {
+  // who ticked it (the User 2026-10-10: the default follows the machine check, not memory; lib/crissa_aligner default_by)
+  const why = {check: "the machine check timed the aligner fast enough here",
+               default: "it is on by default and installs during setup",
+               memory: "this machine has plenty of memory"}[m.default_by] || "this machine's default";
+  const dflt = m.better && (m.by === "default" || m.by === "init") ? " (ticked for you: " + why + "; untick to turn it off)" : "";
+  if (m.installing) return "Downloading the aligner: " + (m.step || "starting") + "…" + dflt;
+  if (m.error) return "Not ready: " + m.error;
+  if (m.better && m.running) return "On: her lips follow the words." + dflt + (m.tested_here ? "" : " (Not yet tested on this kind of machine.)");
+  if (m.better && m.installed) return "On: starting the aligner…";
+  if (m.better) return "Not installed yet: her mouth follows the letters until it is. Untick and tick to install it now.";
+  return "Off: her mouth follows the letters.";
+}
+// HER VOICE (the User 2026-10-07): what is installing or why it failed, in plain words, and a key to try again.
+// GET/POST /v1/voice-install on this player (lib/crissa_voice_install); absent on the house, so the box stays hidden.
+let voiceTimer = null;
+function voiceText(v) {
+  if (v.state === "installing") return "Installing her voice" + (v.label ? " (" + v.label + ")" : "") + "…";
+  if (v.line) return v.line;
+  if (v.main === "text") return "No voice this machine can run: she answers in text.";
+  return v.label ? "Her voice: " + v.label + "." : "";
+}
+async function loadVoice() {
+  let v = null;
+  try { const r = await fetch("/v1/voice-install", { cache: "no-store" }); if (r.ok) v = await r.json(); } catch (e) {}
+  if (!v || !v.ok) { $("voice-box").hidden = true; return; }
+  $("voice-box").hidden = false;
+  say($("voice-state"), voiceText(v), v.state === "failed" ? "bad" : (v.state === "done" ? "good" : ""));
+  $("voice-lines").textContent = v.state === "installing" ? (v.lines || []).slice(-3).join("\n") : "";
+  $("voice-retry").disabled = !v.on || v.state === "installing";
+  $("voice-retry").hidden = !v.on || !(v.state === "failed" || v.main === "text" || v.installed === false);
+  clearTimeout(voiceTimer);
+  if (v.state === "installing") voiceTimer = setTimeout(loadVoice, 1500);
+}
+$("voice-retry").addEventListener("click", async () => {
+  $("voice-retry").disabled = true;
+  const j = await post("/v1/voice-install", { by: "connect" });
+  if (!j.ok) say($("voice-state"), j.error || "could not start the install", "bad");
+  setTimeout(loadVoice, 300);
+});
+let mouthsTimer = null;
+async function loadMouths() {
+  let m = {};
+  try { m = await (await fetch("/v1/mouths", { cache: "no-store" })).json(); } catch (e) { return; }
+  if (!m.applicable) { $("mouths-box").hidden = true; return; }    // the house runs its own aligner
+  $("mouths-box").hidden = false;
+  $("mouths").checked = !!m.better;
+  say($("mouths-state"), mouthsText(m), m.error ? "bad" : "");
+  clearTimeout(mouthsTimer);
+  if (m.installing || (m.better && !m.running && !m.error)) mouthsTimer = setTimeout(loadMouths, 2000);
+}
+$("mouths").addEventListener("change", async () => {
+  $("mouths").disabled = true;
+  const j = await post("/v1/mouths", { better: $("mouths").checked, by: "connect" });
+  if (!j.ok) say($("mouths-state"), j.error || "not changed", "bad");
+  $("mouths").disabled = false;
+  await loadMouths();
+});
+async function loadMarks() {
+  let j = null;
+  try { const r = await fetch("/v1/marks", { cache: "no-store" }); if (r.ok) j = await r.json(); } catch (e) {}
+  if (!j || !j.marks) { $("marks").hidden = true; return; }      // off: no marks row at all
+  $("marks").replaceChildren(...j.marks.map((m) => {
+    const el = document.createElement("span");
+    el.textContent = m.mark + " " + m.note;
+    el.title = m.piece;
+    return el;
+  }));
+  $("marks").hidden = false;
+  setTimeout(loadMarks, 5000);
+}
+async function loadImport() {
+  let j = null;
+  try { const r = await fetch("/v1/import", { cache: "no-store" }); if (r.ok) j = await r.json(); } catch (e) {}
+  if (!j || !j.on) {
+    if (!new URLSearchParams(location.search).get("fetch")) $("import-box").hidden = true;
+    return;
+  }    // off: no import box at all, unless Export just sent this wall a pack
+  $("import-box").hidden = false;
+  say($("import-folder"), "Folder: " + j.folder);
+  $("import-list").replaceChildren(...(j.waiting || []).map((w) => {
+    const row = document.createElement("div");
+    row.className = "row";
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = "Add " + w.id;
+    b.disabled = !w.ok;
+    b.title = w.ok ? (w.files + " files") : (w.why || "not a pack");
+    b.addEventListener("click", async () => {
+      b.disabled = true;
+      const out = await post("/v1/import", { pack: w.id, by: "connect" });
+      say($("import-state"), out.ok
+        ? "Added." + (out.restart_needed ? " Restart the player to see the new loops." : "")
+        : (out.error || "not added"), out.ok ? "" : "bad");
+      await loadImport();
+    });
+    row.appendChild(b);
+    return row;
+  }));
+}
+function libraryText(j) {
+  if (!j.linked) return "Not linked.";
+  const l = j.last || {};
+  if (l.state === "unreachable") return "Linked. The library is not reachable right now.";
+  if (l.state === "never") return "Linked.";
+  const bits = [];
+  if ((l.fetched || []).length) bits.push(l.fetched.length + " arrived");
+  if ((l.added || []).length) bits.push(l.added.length + " added");
+  const now = ((j.waiting_now || {}).pulled || []).length;       // in the folder now, not the last pull's count
+  if (now) bits.push(now + " waiting below");
+  return "Linked. " + (bits.length ? bits.join(", ") + "." : "Nothing new.");
+}
+async function loadLibrary() {
+  let j = null;
+  try { const r = await fetch("/v1/library", { cache: "no-store" }); if (r.ok) j = await r.json(); } catch (e) {}
+  if (!j || !j.on) { $("library-box").hidden = true; return; }   // off: no library box at all
+  $("library-box").hidden = false;
+  if (document.activeElement !== $("lib-url")) $("lib-url").value = j.url || "";
+  $("lib-tokennote").textContent = j.token_set ? "— one is stored; leave blank to keep it" : "";
+  say($("lib-state"), libraryText(j));
+}
+$("import-upload").addEventListener("click", uploadPack);
+$("lib-save").addEventListener("click", async () => {
+  const j = await post("/v1/library", { url: $("lib-url").value.trim(), token: $("lib-token").value.trim(), by: "connect" });
+  $("lib-token").value = "";
+  if (!j.ok) { say($("lib-state"), j.error || "not linked", "bad"); return; }
+  await loadLibrary();
+});
+$("lib-check").addEventListener("click", async () => {
+  $("lib-check").disabled = true;
+  say($("lib-state"), "Checking…");
+  await post("/v1/library/sync", { by: "connect" });
+  $("lib-check").disabled = false;
+  await loadLibrary();
+  await loadImport();
+});
+loadVoice();
+/* INSTALL FROM THE STORE AS A SKIN (the User 2026-10-31): the player fetches the sale (the store only), checks and
+   converts it, then this page asks "Install <name>?". Yes installs it whole into Choose skin, never worn; No leaves
+   nothing. False when the player does not offer it (CRISSA_SKIN_STORE off: 404), and the import flow runs as before. */
+async function skinReturn(url) {
+  let r;
+  try {
+    say($("import-state"), "Checking the pack you bought…");
+    r = await fetch("/v1/skin/stage", {method: "POST", headers: {"Content-Type": "application/json"},
+                                       body: JSON.stringify({url: url, by: "store"})});
+  } catch (e) { return false; }
+  if (r.status === 404) return false;
+  const j = await r.json().catch(() => ({}));
+  if (!j.ok) { say($("import-state"), j.error || "Not added.", "bad"); return true; }
+  const row = document.createElement("div"); row.id = "skin-ask";
+  const yes = Object.assign(document.createElement("button"), {type: "button", id: "skin-yes", textContent: "Install"});
+  const no = Object.assign(document.createElement("button"), {type: "button", id: "skin-no", textContent: "Not now"});
+  row.append(yes, no);
+  $("import-state").after(row);
+  say($("import-state"), j.ask || ("Install " + (j.name || "this pack") + "?"));
+  const answer = async (y) => {
+    yes.disabled = no.disabled = true;
+    const a = await post("/v1/skin/answer", {token: j.token, yes: y, by: "store"});
+    row.remove();
+    if (!y) { say($("import-state"), "Not installed. The store link still works until it expires."); return; }
+    say($("import-state"), a.ok ? (a.note || (j.name + " is in Choose skin.")) : (a.error || "Not installed."), a.ok ? "" : "bad");
+  };
+  yes.addEventListener("click", () => answer(true));
+  no.addEventListener("click", () => answer(false));
+  return true;
+}
+async function directorReturn() {
+  const q = new URLSearchParams(location.search);
+  const url = q.get("fetch") || "";
+  if (!url) return;
+  const box = $("import-box");
+  if (box) box.hidden = false;
+  if (await skinReturn(url)) return;          // CRISSA_SKIN_STORE: the pack becomes a skin, on the buyer's yes
+  say($("import-state"), "Adding the pack…");
+  const j = await post("/v1/import/fetch", { url: url, play: q.get("play") || "", by: "director" });
+  if (!j.ok) {
+    say($("import-state"), j.error || "Not added. This page is not playing it.", "bad");
+    return;
+  }
+  if (j.restart_needed) {
+    say($("import-state"), "Added to the library. Restart the player and open the wall. The work loop plays then. It is not playing yet.");
+    return;
+  }
+  location.href = "/wall";
+}
+loadMouths();
+loadLibrary();
+loadMarks();
+loadImport();
+directorReturn();
+$("face").addEventListener("error", () => { $("face").alt = "No picture from the player"; });
+load();
+</script>
+</body>
+</html>
