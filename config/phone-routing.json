@@ -1,0 +1,6 @@
+{
+ "schema": "phone-routing/1",
+ "_doc": "How the phone page walks her clips (display/phone-app/app.js choose(); scripts/phone-app-server.py hands it over in /api/show `routing`). Switches are the server's (env), the numbers are here, none in code.",
+ "idle_up_s": 35,
+ "idle_up_why": "seconds of quiet (no line, nothing typed or said) after which a conversation is over: at the talk hub she may settle down to work, and under CRISSA_PHONE_TALK_DOWN a conversation that went down with a tool call ends, so the next one starts fresh (the User 2026-10-31: 'Nearly all the time we drop to multitasking for conversation'). 35 s is the value the page has always used (app.js IDLE_UP_S since 2026-10-17); a ?idle= on the page still wins for a test."
+}

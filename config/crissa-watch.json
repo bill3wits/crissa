@@ -1,0 +1,14 @@
+{
+  "_doc": "Who restarts Crissa's own lanes when they go down (lib/crissa_watch.py, the launcher scripts/crissa.py, 2026-10-06). Later wins: this file, then <crissa home>/watch.json. Every restart is logged with its reason in <crissa home>/logs/lanes.log and shown on the Control Panel (<crissa home>/lanes.json).",
+  "restart": ["asr", "stt", "ear", "aligner", "tts", "turbo", "presence", "panel", "wall"],
+  "health": {"asr": "/health", "stt": "/health", "aligner": "/health", "tts": "/health", "turbo": "/health", "presence": "/health", "panel": "/health"},
+  "health_every_s": 10,
+  "health_fails": 3,
+  "health_timeout_s": 2,
+  "boot_grace_s": {"default": 120, "aligner": 300, "turbo": 600},
+  "backoff_s": [2, 5, 15, 30, 60],
+  "steady_s": 120,
+  "give_up_after": 0,
+  "closable": ["wall"],
+  "closable_why": "a lane the person may close on purpose (2026-10-10): restarted only when it crashed; a close (Ctrl+Q, Close the Wall, its unit stopped) holds until Open the Wall (lib/crissa_watch CLOSED)"
+}

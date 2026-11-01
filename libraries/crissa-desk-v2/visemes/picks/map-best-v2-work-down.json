@@ -1,0 +1,197 @@
+{
+ "schema": "phoneme_map/v3 \u2014 ranked rows, clip+frame, best first",
+ "series": {},
+ "by": "the User 2026-10-28: one down take - the heads-down working harvest, his down spots moved by word and fraction; the bowed take retired (museum/one-down-20261028)",
+ "library": "v2-work-down",
+ "clips": [
+  "clip-v2-talk-pause-work"
+ ],
+ "row_order": [
+  "rest",
+  "MBP",
+  "FV",
+  "TH",
+  "TDN",
+  "L",
+  "R",
+  "KG",
+  "S/Z",
+  "SH/CH",
+  "EE",
+  "EH",
+  "ER",
+  "AH",
+  "OH",
+  "WOO",
+  "Y",
+  "H",
+  "rest-open",
+  "Ah",
+  "Aa"
+ ],
+ "map": {
+  "Aa": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 29,
+    "how": "same-spot:spots:female#29 -> v2-talk-pause-work#29 (Now q=0.14)"
+   }
+  ],
+  "TDN": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 216,
+    "how": "same-spot:spots:female#230 -> v2-talk-pause-work#216 (kitchen. q=0.77)"
+   }
+  ],
+  "WOO": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 124,
+    "how": "same-spot:spots:female#127 -> v2-talk-pause-work#124 (Oh, q=0.60) | kept by his eye 10-28"
+   }
+  ],
+  "TH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 36,
+    "how": "same-spot:spots:female#36 -> v2-talk-pause-work#36 (and q=0.25)"
+   }
+  ],
+  "EH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 214,
+    "how": "same-spot:spots:female#200 -> v2-talk-pause-work#214 (kitchen. q=0.69)"
+   }
+  ],
+  "MBP": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 50,
+    "how": "same-spot:spots:female#51 -> v2-talk-pause-work#50 (my q=0.00)"
+   }
+  ],
+  "FV": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 171,
+    "how": "same-spot:spots:female#181 -> v2-talk-pause-work#171 (laughed, q=0.54)"
+   }
+  ],
+  "Ah": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 70,
+    "how": "same-spot:spots:female#67 -> v2-talk-pause-work#70 (calm q=0.11)"
+   }
+  ],
+  "S/Z": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 81,
+    "how": "same-spot:spots:female#61 -> v2-talk-pause-work#81 (voice q=0.55)"
+   }
+  ],
+  "KG": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 206,
+    "how": "same-spot:spots:female#219 -> v2-talk-pause-work#206 (the q=0.50)"
+   }
+  ],
+  "L": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 86,
+    "how": "same-spot:spots:female#85 -> v2-talk-pause-work#86 (helped q=0.14)"
+   }
+  ],
+  "rest": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 105,
+    "how": "same-spot:spots:female#19 -> v2-talk-pause-work#105 (Now q=0.00) | kept by his eye 10-28"
+   }
+  ],
+  "rest-open": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 19,
+    "how": "same-spot:spots:female#149 -> v2-talk-pause-work#19 (really? q=1.00) | kept by his eye 10-28"
+   }
+  ],
+  "SH/CH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 155,
+    "how": "same-spot:spots:female#138 -> v2-talk-pause-work#155 (Sure, q=0.08)"
+   }
+  ],
+  "ER": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 154,
+    "how": "same-spot:spots:female#163 -> v2-talk-pause-work#154 (Sure, q=0.42)"
+   }
+  ],
+  "EE": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 134,
+    "how": "same-spot:spots:female#141 -> v2-talk-pause-work#134 (really? q=0.92)"
+   }
+  ],
+  "R": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 96,
+    "how": "same-spot:spots:female#97 -> v2-talk-pause-work#96 (her. q=0.71)"
+   }
+  ],
+  "AH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 188,
+    "how": "same-spot:spots:female#172 -> v2-talk-pause-work#188 (rushed q=0.33)"
+   }
+  ],
+  "OH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 119,
+    "how": "same-spot:spots:female#121 -> v2-talk-pause-work#119 (Oh, q=0.00)"
+   }
+  ],
+  "H": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 84,
+    "how": "same-spot:spots:female#83 -> v2-talk-pause-work#84 (helped q=0.00)"
+   }
+  ],
+  "Y": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 84,
+    "how": "same-spot:spots:female#83 -> v2-talk-pause-work#84 (helped q=0.00)"
+   }
+  ],
+  "Z": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 82,
+    "how": "same-spot:spots:female#80 -> v2-talk-pause-work#82 (voice q=0.83)"
+   }
+  ],
+  "CH": [
+   {
+    "clip": "clip-v2-talk-pause-work",
+    "f": 151,
+    "how": "same-spot:spots:female#154 -> v2-talk-pause-work#151 (Sure, q=0.00)"
+   }
+  ]
+ },
+ "pose": {},
+ "saved": "2026-10-28T01:40:11"
+}

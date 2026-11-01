@@ -1,0 +1,34 @@
+{
+  "_note": "Mouth defaults the player starts with (the User 2026-10-08). Applied in scripts/crissa.py plan() onto the player env with setdefault, so a named environment variable still wins. Code defaults stay off: the tests pin those. A missing file leaves the player on the code defaults.",
+  "env": {
+    "HOUSE_MOUTH_TURN_FILL": "1",
+    "HOUSE_TURN_P45_MAX": "90",
+    "HOUSE_TURN_FRONT_MAX": "27",
+    "HOUSE_TURN_LIB_45": "profile-45",
+    "HOUSE_TURN_LIB_90": "profile-90",
+    "HOUSE_MOUTH_TURN_PLACE": "lips",
+    "HOUSE_MOUTH_LIPS_ALL": "1",
+    "HOUSE_FLOURISH_CONVERSATION_HOLD": "1",
+    "HOUSE_MOUTH_SEMI_GRID": "1",
+    "HOUSE_MOUTH_POLL_S": "0.02",
+    "HOUSE_MOUTH_XFADE_MS": "20.833",
+    "HOUSE_MOUTH_CHEEKS_MAPS": "1024",
+    "HOUSE_MOUTH_DENTAL_MAPS": "1024",
+    "HOUSE_SPEAK_STAMP_HOLD": "0",
+    "HOUSE_SPEECH_HOLD_CLIPS": "flourish-yawn-work,flourish-stretch-*,flourish-bun-wobble-work",
+    "HOUSE_SPEECH_TAIL_HOLD_S": "3",
+    "HOUSE_MOUTH_IDLE_REST": "0",
+    "CRISSA_LIPSYNC_DEFAULT_MS": "375",
+    "CRISSA_LIPSYNC_SETUP_WRITES": "0"
+  },
+  "faces": {
+    "lila": {
+      "HOUSE_TURN_FRONT_MAX": "20",
+      "HOUSE_MOUTH_PIN_CELLS": "1",
+      "HOUSE_MOUTH_PIN_SPAN": "8"
+    }
+  },
+  "_note_r23": "Round 23 (the User 2026-10-15, .101's round-22 trial: \"smoothing should ship with those settings as defaults. perfect run in that respect\"): the semiframe grid, a 20 ms mouth poll, a 1-semiframe crossfade (20.833 ms, over the lock's 42), warp-map caches of 1024, and no stamp hold (\"Hold off. I feel it is perfect.\"). The Wall's 48 and the paint cores are in their own modules.",
+  "_note_r36_lipsync": "Round 36 (the User 2026-10-20, via crissa-b3: \"yes go with +375 as the start\"): a machine with no lip-sync.json starts at +375 ms (18 half frames; .101 set it by hand on rounds 33-35 and his eye was happy there), and Setup's measurement is a report and a suggestion in the menu, never written, until it matches his eye on two machines. His own menu value still wins and survives a restart.",
+  "_note_r23_bag": "Round 23 (the User 2026-10-15, .101: \"no yawns/stretches under speech\"): yawn and the stretches wait for a pause; 3 s after a line still counts as speaking, so a reading's pages are one turn and she stays on her talking loop through it."
+}
