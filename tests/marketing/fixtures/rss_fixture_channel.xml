@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCFIX00000000000000000"/>
+ <id>yt:channel:FIX00000000000000000</id>
+ <yt:channelId>UCFIX00000000000000000</yt:channelId>
+ <title>Fixture Channel</title>
+ <link rel="alternate" href="https://www.youtube.com/channel/UCFIX00000000000000000"/>
+ <author>
+  <name>Fixture Channel</name>
+  <uri>https://www.youtube.com/channel/UCFIX00000000000000000</uri>
+ </author>
+ <published>2020-01-01T00:00:00+00:00</published>
+ <entry>
+  <id>yt:video:FIXAAA00001</id>
+  <yt:videoId>FIXAAA00001</yt:videoId>
+  <yt:channelId>UCFIX00000000000000000</yt:channelId>
+  <title>Clip One: Teaching, then quizzing</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=FIXAAA00001"/>
+  <author>
+   <name>Fixture Channel</name>
+   <uri>https://www.youtube.com/channel/UCFIX00000000000000000</uri>
+  </author>
+  <published>2026-10-19T16:00:00+00:00</published>
+  <updated>2026-10-19T18:00:00+00:00</updated>
+  <media:group>
+   <media:title>Clip One: Teaching, then quizzing</media:title>
+   <media:content url="https://www.youtube.com/v/FIXAAA00001?version=3" type="application/x-shockwave-flash" width="640" height="360"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/FIXAAA00001/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Teach a concept, then quiz on it.
+The crew cards land overnight.
+
+Timestamps
+0:00 - Setup
+2:10 - The quiz loop
+9:45 - What moved
+https://example.invalid/support
+   </media:description>
+   <media:community>
+    <media:starRating count="120" average="5.00" min="1" max="5"/>
+    <media:statistics views="1500"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:FIXAAA00002</id>
+  <yt:videoId>FIXAAA00002</yt:videoId>
+  <yt:channelId>UCFIX00000000000000000</yt:channelId>
+  <title>Clip Two: Live debugging on the wall</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=FIXAAA00002"/>
+  <author>
+   <name>Fixture Channel</name>
+   <uri>https://www.youtube.com/channel/UCFIX00000000000000000</uri>
+  </author>
+  <published>2026-10-19T14:00:00+00:00</published>
+  <updated>2026-10-19T15:00:00+00:00</updated>
+  <media:group>
+   <media:title>Clip Two: Live debugging on the wall</media:title>
+   <media:content url="https://www.youtube.com/v/FIXAAA00002?version=3" type="application/x-shockwave-flash" width="640" height="360"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/FIXAAA00002/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Debug a failing build live, in the open.
+   </media:description>
+   <media:community>
+    <media:starRating count="40" average="4.90" min="1" max="5"/>
+    <media:statistics views="800"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:FIXBBB00003</id>
+  <yt:videoId>FIXBBB00003</yt:videoId>
+  <yt:channelId>UCFIX00000000000000000</yt:channelId>
+  <title>Clip Three: A charted answer</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=FIXBBB00003"/>
+  <author>
+   <name>Fixture Channel</name>
+   <uri>https://www.youtube.com/channel/UCFIX00000000000000000</uri>
+  </author>
+  <published>2026-10-18T12:00:00+00:00</published>
+  <updated>2026-10-18T13:00:00+00:00</updated>
+  <media:group>
+   <media:title>Clip Three: A charted answer</media:title>
+   <media:content url="https://www.youtube.com/v/FIXBBB00003?version=3" type="application/x-shockwave-flash" width="640" height="360"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/FIXBBB00003/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Chart the answer so it can be checked.
+   </media:description>
+   <media:community>
+    <media:starRating count="10" average="4.80" min="1" max="5"/>
+    <media:statistics views="300"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:FIXCCC00004</id>
+  <yt:videoId>FIXCCC00004</yt:videoId>
+  <yt:channelId>UCFIX00000000000000000</yt:channelId>
+  <title>Clip Four: A cited brief</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=FIXCCC00004"/>
+  <author>
+   <name>Fixture Channel</name>
+   <uri>https://www.youtube.com/channel/UCFIX00000000000000000</uri>
+  </author>
+  <published>2026-10-17T10:00:00+00:00</published>
+  <updated>2026-10-17T11:00:00+00:00</updated>
+  <media:group>
+   <media:title>Clip Four: A cited brief</media:title>
+   <media:content url="https://www.youtube.com/v/FIXCCC00004?version=3" type="application/x-shockwave-flash" width="640" height="360"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/FIXCCC00004/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Every claim carries its source.
+   </media:description>
+   <media:community>
+    <media:starRating count="5" average="4.70" min="1" max="5"/>
+    <media:statistics views="120"/>
+   </media:community>
+  </media:group>
+ </entry>
+</feed>

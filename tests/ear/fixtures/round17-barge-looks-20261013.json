@@ -1,0 +1,2076 @@
+{
+"_why": "Round 17 barge (2026-10-13): what the kit's ASR (ARK-ASR 0.6B INT8, one core) decoded in 0.6-1.2 s looks at synthetic speech (Kokoro stock voices; her lines at her measured 15 chars/s through a small room, RAW or what an echo canceller leaves). echo_bent: looks of her echo alone that round 16's line match took for someone's words; echo_runs: whole runs of her echo alone; barges: the first looks after a person's onset. her = the stretch of her line the ear compared against. No person was recorded.",
+"echo_bent": [
+{
+"text": "With class.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light"
+},
+{
+"text": "Nebra, I.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and"
+},
+{
+"text": "Nevi, I.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and"
+},
+{
+"text": "Outs.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by"
+},
+{
+"text": "Damp, dreary.",
+"her": "find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"text": "And a.",
+"her": "pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a"
+},
+{
+"text": "I'm",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then,"
+},
+{
+"text": "Noting people.",
+"her": "hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as"
+},
+{
+"text": "Time or up.",
+"her": "get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"text": "So we.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"text": "So we can.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"text": "And a speck.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a"
+},
+{
+"text": "I'm not a.",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then,"
+},
+{
+"text": "Thinkingly knocking people.",
+"her": "upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon"
+}
+],
+"echo_runs": [
+{
+"line": "echo-dry-aec:None",
+"regime": "aec",
+"looks": [
+{
+"t": 0.6,
+"text": "Whenever.",
+"her": "Whenever I find myself growing grim about the mouth;"
+},
+{
+"t": 0.9,
+"text": "Whenever I.",
+"her": "Whenever I find myself growing grim about the mouth; whenever"
+},
+{
+"t": 1.2,
+"text": "Whenever I find my.",
+"her": "Whenever I find myself growing grim about the mouth; whenever"
+},
+{
+"t": 1.5,
+"text": "Whenever I find myself.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it"
+},
+{
+"t": 1.8,
+"text": "Ever, I find myself growing.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a"
+},
+{
+"t": 2.4,
+"text": "self-growing grin about.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly"
+},
+{
+"t": 2.7,
+"text": "Growing grim about the man.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November"
+},
+{
+"t": 3.9,
+"text": "Whenever.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul;"
+},
+{
+"t": 4.2,
+"text": "Whenever it is.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever"
+},
+{
+"t": 4.5,
+"text": "Whenever it is a day.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I"
+},
+{
+"t": 4.8,
+"text": "Whenever it is a damp.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find"
+},
+{
+"t": 5.4,
+"text": "Damp, dreary.",
+"her": "find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"t": 6.0,
+"text": "Drievly November.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"t": 6.3,
+"text": "Grievs November in my.",
+"her": "growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing"
+},
+{
+"t": 6.6,
+"text": "In November, in my cell.",
+"her": "growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before"
+},
+{
+"t": 7.8,
+"text": "Whenever.",
+"her": "the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses,"
+},
+{
+"t": 8.1,
+"text": "Never.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and"
+},
+{
+"t": 8.4,
+"text": "Never, I find myself.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing"
+},
+{
+"t": 9.3,
+"text": "Myself involuntarily.",
+"her": "it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear"
+},
+{
+"t": 10.2,
+"text": "Momentarily pausing before.",
+"her": "damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral"
+},
+{
+"t": 10.8,
+"text": "Pausing before coughing.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"t": 11.1,
+"text": "Before coffin, where.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and"
+},
+{
+"t": 11.7,
+"text": "",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"t": 12.3,
+"text": "And bring.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever"
+},
+{
+"t": 12.6,
+"text": "And bringing up.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos"
+},
+{
+"t": 13.5,
+"text": "Bringing up the rear of every.",
+"her": "find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an"
+},
+{
+"t": 14.1,
+"text": "Of every funeral.",
+"her": "myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand"
+},
+{
+"t": 14.4,
+"text": "Every funeral I meet.",
+"her": "involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me,"
+},
+{
+"t": 14.7,
+"text": "Funeral, I meet.",
+"her": "involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that"
+},
+{
+"t": 15.6,
+"text": "And a.",
+"her": "pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a"
+},
+{
+"t": 15.9,
+"text": "Especially.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong"
+},
+{
+"t": 16.2,
+"text": "Especially whenever.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral"
+},
+{
+"t": 17.1,
+"text": "Whenever my hypos get.",
+"her": "coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to"
+},
+{
+"t": 18.0,
+"text": "Get such an upper hand.",
+"her": "warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from"
+},
+{
+"t": 18.3,
+"text": "Such an upper hand of me.",
+"her": "and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately"
+},
+{
+"t": 19.2,
+"text": "That it were.",
+"her": "up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping"
+},
+{
+"t": 19.5,
+"text": "That it requires.",
+"her": "of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into"
+},
+{
+"t": 20.1,
+"text": "That it requires a strong.",
+"her": "rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street,"
+},
+{
+"t": 21.0,
+"text": "Strong moral principles.",
+"her": "funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically"
+},
+{
+"t": 21.9,
+"text": "Principle to prevent.",
+"her": "meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's"
+},
+{
+"t": 22.2,
+"text": "To prevent me from.",
+"her": "and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's"
+},
+{
+"t": 22.8,
+"text": "Preventing from deliberately.",
+"her": "especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off,"
+},
+{
+"t": 23.1,
+"text": "I'm",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then,"
+},
+{
+"t": 23.4,
+"text": "",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I"
+},
+{
+"t": 24.0,
+"text": "Stepping into the street.",
+"her": "my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it"
+},
+{
+"t": 24.9,
+"text": "And method.",
+"her": "get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get"
+},
+{
+"t": 25.5,
+"text": "And methodically not.",
+"her": "an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as"
+},
+{
+"t": 25.8,
+"text": "Methodically, noting.",
+"her": "upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon"
+},
+{
+"t": 26.1,
+"text": "Noting people.",
+"her": "hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as"
+},
+{
+"t": 26.7,
+"text": "People's hats off.",
+"her": "of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This"
+},
+{
+"t": 27.0,
+"text": "Then.",
+"her": "requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my"
+},
+{
+"t": 27.6,
+"text": "I.",
+"her": "requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute"
+},
+{
+"t": 28.2,
+"text": "I account it.",
+"her": "requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol"
+},
+{
+"t": 28.8,
+"text": "Count it high times.",
+"her": "strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball."
+},
+{
+"t": 29.7,
+"text": "I'm to get to see as soon as possible.",
+"her": "principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing"
+},
+{
+"t": 30.0,
+"text": "Get to see as soon as I can.",
+"her": "principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising"
+},
+{
+"t": 31.5,
+"text": "This is.",
+"her": "from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they"
+},
+{
+"t": 31.8,
+"text": "This is my.",
+"her": "deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but"
+},
+{
+"t": 32.4,
+"text": "This is my substitute.",
+"her": "deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost"
+},
+{
+"t": 33.3,
+"text": "Institute for Pistol and.",
+"her": "stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in"
+},
+{
+"t": 33.6,
+"text": "For pistol and ball.",
+"her": "into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their"
+},
+{
+"t": 34.5,
+"text": "There.",
+"her": "methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some"
+},
+{
+"t": 34.8,
+"text": "There is nothing.",
+"her": "and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time"
+},
+{
+"t": 35.4,
+"text": "There is nothing surprising.",
+"her": "methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish"
+},
+{
+"t": 36.0,
+"text": "Something surprising in this.",
+"her": "methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very"
+},
+{
+"t": 36.9,
+"text": "If.",
+"her": "people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same"
+},
+{
+"t": 37.2,
+"text": "If they but.",
+"her": "people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings"
+},
+{
+"t": 37.5,
+"text": "If they but knew it.",
+"her": "people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings"
+},
+{
+"t": 38.1,
+"text": "But knew it.",
+"her": "off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the"
+},
+{
+"t": 38.4,
+"text": "Knew it, almost.",
+"her": "then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean"
+},
+{
+"t": 39.0,
+"text": "Almost all men and women.",
+"her": "I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 39.3,
+"text": "Almost all men in their degree.",
+"her": "account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 39.6,
+"text": "All men in their degrees.",
+"her": "account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 40.2,
+"text": "Degree, sometime.",
+"her": "high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 40.5,
+"text": "Time or up.",
+"her": "get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 41.4,
+"text": "Or other cherry.",
+"her": "to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 42.0,
+"text": "Cherish very near.",
+"her": "soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 42.9,
+"text": "Very nearly the same feel.",
+"her": "can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 43.5,
+"text": "Same feelings toward.",
+"her": "This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 43.8,
+"text": "Feelings towards the.",
+"her": "is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 44.1,
+"text": "The ocean.",
+"her": "substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 44.4,
+"text": "The ocean with the.",
+"her": "substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 0.6,
+"text": "Sure.",
+"her": "Sure. The weather tomorrow looks mild in the morning,"
+},
+{
+"t": 0.9,
+"text": "Sure.",
+"her": "Sure. The weather tomorrow looks mild in the morning,"
+},
+{
+"t": 1.2,
+"text": "Sure.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with"
+},
+{
+"t": 1.5,
+"text": "Sure, the weather.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds"
+},
+{
+"t": 1.8,
+"text": "The weather tomorrow.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building"
+},
+{
+"t": 2.1,
+"text": "The weather tomorrow will.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building"
+},
+{
+"t": 2.4,
+"text": "Whether tomorrow looks like.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after"
+},
+{
+"t": 3.0,
+"text": "Looks mild in the morning.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and"
+},
+{
+"t": 3.9,
+"text": "With class.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light"
+},
+{
+"t": 4.2,
+"text": "With clouds.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain"
+},
+{
+"t": 4.8,
+"text": "Clouds building up.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the"
+},
+{
+"t": 5.1,
+"text": "Building after month.",
+"her": "The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening."
+},
+{
+"t": 5.7,
+"text": "After lunch, and a change.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you"
+},
+{
+"t": 6.0,
+"text": "After lunch, and a chance of.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"t": 6.6,
+"text": "A chance of light rain.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out,"
+},
+{
+"t": 6.9,
+"text": "Of light, rain by.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take"
+},
+{
+"t": 7.5,
+"text": "The evening.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light"
+},
+{
+"t": 8.4,
+"text": "If you.",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+},
+{
+"t": 8.7,
+"text": "If you are heading.",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks"
+},
+{
+"t": 9.6,
+"text": "Heading out. Take a look.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and"
+},
+{
+"t": 9.9,
+"text": "Out, take a light.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday"
+},
+{
+"t": 10.2,
+"text": "Take a light, Jack.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should"
+},
+{
+"t": 10.5,
+"text": "Take a light jacket.",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"t": 11.4,
+"text": "So we.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"t": 11.7,
+"text": "So we can.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"t": 12.6,
+"text": "Ken looks drier.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"t": 13.2,
+"text": "Dryer and.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good"
+},
+{
+"t": 13.5,
+"text": "And Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"t": 13.8,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+},
+{
+"t": 14.1,
+"text": "And Sunday should be the.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 14.4,
+"text": "One day should be the warmest.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 15.0,
+"text": "Stay of the.",
+"her": "heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 15.9,
+"text": "So we.",
+"her": "take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 16.2,
+"text": "So it is a.",
+"her": "take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 17.1,
+"text": "It's a good day for the part.",
+"her": "light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+},
+{
+"line": "echo-dry-raw:None",
+"regime": "raw",
+"looks": [
+{
+"t": 0.6,
+"text": "Whenever.",
+"her": "Whenever I find myself growing grim about the mouth;"
+},
+{
+"t": 0.9,
+"text": "Whenever I.",
+"her": "Whenever I find myself growing grim about the mouth; whenever"
+},
+{
+"t": 1.2,
+"text": "Whenever I find my.",
+"her": "Whenever I find myself growing grim about the mouth; whenever"
+},
+{
+"t": 1.5,
+"text": "Whenever I find myself.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it"
+},
+{
+"t": 1.8,
+"text": "Ever, I find myself growing.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a"
+},
+{
+"t": 2.4,
+"text": "self growing grim about.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly"
+},
+{
+"t": 2.7,
+"text": "Growing grim about the matter.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November"
+},
+{
+"t": 3.9,
+"text": "Whenever.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul;"
+},
+{
+"t": 4.2,
+"text": "Whenever it is.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever"
+},
+{
+"t": 4.8,
+"text": "Whenever it is a damp.",
+"her": "Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find"
+},
+{
+"t": 5.4,
+"text": "Damp drizzle.",
+"her": "find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"t": 5.7,
+"text": "Drizzly Nov.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"t": 6.0,
+"text": "Drizzly November.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"t": 6.3,
+"text": "Dressly November in my.",
+"her": "growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing"
+},
+{
+"t": 6.9,
+"text": "November in my soul.",
+"her": "grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before"
+},
+{
+"t": 7.8,
+"text": "Whenever.",
+"her": "the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses,"
+},
+{
+"t": 8.1,
+"text": "Nevi, I.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and"
+},
+{
+"t": 8.7,
+"text": "Whenever I find myself in.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing"
+},
+{
+"t": 9.6,
+"text": "Involuntarily.",
+"her": "is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of"
+},
+{
+"t": 10.5,
+"text": "Really, pausing before.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"t": 10.8,
+"text": "Pausing before coffin.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"t": 11.4,
+"text": "For coffin warehouses.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"t": 11.7,
+"text": "houses.",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"t": 12.3,
+"text": "And bring.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever"
+},
+{
+"t": 12.6,
+"text": "And bringing up.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos"
+},
+{
+"t": 13.5,
+"text": "Up the rear of every.",
+"her": "find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an"
+},
+{
+"t": 14.1,
+"text": "Of every funeral, I.",
+"her": "myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand"
+},
+{
+"t": 14.4,
+"text": "Every funeral I meet.",
+"her": "involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me,"
+},
+{
+"t": 15.6,
+"text": "And a speck.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a"
+},
+{
+"t": 16.2,
+"text": "And especially whenever.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral"
+},
+{
+"t": 16.5,
+"text": "Especially whenever my.",
+"her": "before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle"
+},
+{
+"t": 16.8,
+"text": "Whenever my hypo.",
+"her": "coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle"
+},
+{
+"t": 17.4,
+"text": "My hypos get such a.",
+"her": "warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent"
+},
+{
+"t": 17.7,
+"text": "H",
+"her": "warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me"
+},
+{
+"t": 18.0,
+"text": "Get such an upper hand.",
+"her": "warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from"
+},
+{
+"t": 18.3,
+"text": "Such an upper hand of me.",
+"her": "and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately"
+},
+{
+"t": 18.6,
+"text": "An upper hand of me.",
+"her": "bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately"
+},
+{
+"t": 19.2,
+"text": "Of me, that it required.",
+"her": "up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping"
+},
+{
+"t": 19.8,
+"text": "That it requires a.",
+"her": "of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the"
+},
+{
+"t": 20.4,
+"text": "Requires a strong.",
+"her": "every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and"
+},
+{
+"t": 21.3,
+"text": "Long moral principle.",
+"her": "funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically"
+},
+{
+"t": 22.2,
+"text": "To prevent me from.",
+"her": "and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's"
+},
+{
+"t": 22.5,
+"text": "To prevent me from delving.",
+"her": "especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats"
+},
+{
+"t": 23.1,
+"text": "I'm not a.",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then,"
+},
+{
+"t": 23.7,
+"text": "I'm stepping into the street.",
+"her": "whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account"
+},
+{
+"t": 24.9,
+"text": "And method.",
+"her": "get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get"
+},
+{
+"t": 25.5,
+"text": "And methodically knock.",
+"her": "an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as"
+},
+{
+"t": 25.8,
+"text": "Thinkingly knocking people.",
+"her": "upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon"
+},
+{
+"t": 26.4,
+"text": "Knocking people's hats.",
+"her": "hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can."
+},
+{
+"t": 26.7,
+"text": "Hats off.",
+"her": "that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This"
+},
+{
+"t": 27.0,
+"text": "Hats off, then.",
+"her": "that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my"
+},
+{
+"t": 28.2,
+"text": "I account it.",
+"her": "requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol"
+},
+{
+"t": 29.1,
+"text": "That time to get to.",
+"her": "moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There"
+},
+{
+"t": 29.4,
+"text": "Time to get to see.",
+"her": "moral principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is"
+},
+{
+"t": 30.0,
+"text": "Get to see as soon as I can.",
+"her": "principle to prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising"
+},
+{
+"t": 30.3,
+"text": "I can.",
+"her": "prevent me from deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising"
+},
+{
+"t": 31.5,
+"text": "This is.",
+"her": "deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they"
+},
+{
+"t": 31.8,
+"text": "This is my.",
+"her": "deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but"
+},
+{
+"t": 32.7,
+"text": "My substitute for.",
+"her": "deliberately stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost"
+},
+{
+"t": 33.3,
+"text": "Institute for Pistol and.",
+"her": "stepping into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in"
+},
+{
+"t": 33.6,
+"text": "For pistol and ball.",
+"her": "into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their"
+},
+{
+"t": 33.9,
+"text": "Pistol and ball.",
+"her": "into the street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree,"
+},
+{
+"t": 34.5,
+"text": "Ball, there is.",
+"her": "street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some"
+},
+{
+"t": 34.8,
+"text": "There is nothing.",
+"her": "street, and methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time"
+},
+{
+"t": 35.1,
+"text": "Nothing.",
+"her": "methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other,"
+},
+{
+"t": 35.7,
+"text": "There's nothing surprising in.",
+"her": "methodically knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish"
+},
+{
+"t": 36.3,
+"text": "Surprising in this.",
+"her": "knocking people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly"
+},
+{
+"t": 37.5,
+"text": "If they but knew it.",
+"her": "people's hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings"
+},
+{
+"t": 37.8,
+"text": "If they but knew it.",
+"her": "hats off, then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards"
+},
+{
+"t": 38.4,
+"text": "Knew it almost.",
+"her": "then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean"
+},
+{
+"t": 38.7,
+"text": "Most all.",
+"her": "account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with"
+},
+{
+"t": 39.3,
+"text": "Almost all men in their degree.",
+"her": "account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 40.5,
+"text": "Some time or other.",
+"her": "time to get to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 41.4,
+"text": "Or other, cher.",
+"her": "to sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 41.7,
+"text": "Cherish very.",
+"her": "sea as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 42.0,
+"text": "Cherish very near.",
+"her": "as soon as I can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 42.6,
+"text": "Very nearly the same.",
+"her": "can. This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 43.2,
+"text": "The same feelings.",
+"her": "This is my substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 44.1,
+"text": "Towards the ocean.",
+"her": "substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 44.7,
+"text": "The ocean with me.",
+"her": "substitute for pistol and ball. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+},
+{
+"t": 0.6,
+"text": "Sure.",
+"her": "Sure. The weather tomorrow looks mild in the morning,"
+},
+{
+"t": 0.9,
+"text": "Sure.",
+"her": "Sure. The weather tomorrow looks mild in the morning,"
+},
+{
+"t": 1.2,
+"text": "Sure. The.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with"
+},
+{
+"t": 1.5,
+"text": "Sure, the weather.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds"
+},
+{
+"t": 1.8,
+"text": "The weather tomorrow.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building"
+},
+{
+"t": 2.1,
+"text": "The weather tomorrow looked.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building"
+},
+{
+"t": 2.7,
+"text": "Tomorrow looks mild and.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch"
+},
+{
+"t": 3.0,
+"text": "Looks mild in the morning.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and"
+},
+{
+"t": 3.3,
+"text": "Smiled in the morning.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance"
+},
+{
+"t": 3.9,
+"text": "In the morning, with claps.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light"
+},
+{
+"t": 4.5,
+"text": "Build.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by"
+},
+{
+"t": 4.8,
+"text": "Building F.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the"
+},
+{
+"t": 5.4,
+"text": "Building after lunch and.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If"
+},
+{
+"t": 6.3,
+"text": "And a chance of light.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"t": 6.9,
+"text": "Of light, reigned by.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take"
+},
+{
+"t": 7.5,
+"text": "Rain by the evening.",
+"her": "in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light"
+},
+{
+"t": 8.4,
+"text": "Evening, if you are.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+},
+{
+"t": 8.7,
+"text": "If you are heading.",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks"
+},
+{
+"t": 9.6,
+"text": "Heading out. Take a.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and"
+},
+{
+"t": 10.5,
+"text": "Take a light jacket.",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"t": 11.4,
+"text": "The week.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"t": 12.0,
+"text": "The weekend looks.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"t": 12.6,
+"text": "Kend looks drier.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"t": 13.5,
+"text": "And Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"t": 13.8,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+},
+{
+"t": 14.4,
+"text": "One day should be the warmest.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 14.7,
+"text": "Should be the warmest day.",
+"her": "If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 15.3,
+"text": "Day of the week.",
+"her": "heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 16.2,
+"text": "So it is a good.",
+"her": "out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"t": 17.1,
+"text": "It is a good day for the park.",
+"her": "light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+}
+],
+"barges": [
+{
+"clip": "b01",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.38,
+"text": "Wait.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 0.68,
+"text": "Wait. What was that?",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 0.98,
+"text": "Wait. What was that?",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 2.18,
+"text": "And so.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good"
+},
+{
+"rel": 2.48,
+"text": "And Sunday.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"rel": 3.08,
+"text": "And Sunday should be the.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+},
+{
+"clip": "b02",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.01,
+"text": "Take a light jacket.",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"rel": 0.61,
+"text": "Hold on.",
+"her": "lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest"
+},
+{
+"rel": 0.91,
+"text": "Hold on a sec.",
+"her": "and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 1.21,
+"text": "Hold on a second.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 1.51,
+"text": "Second.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 2.71,
+"text": "And so.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good"
+}
+]
+},
+{
+"clip": "b03",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.69,
+"text": "Can you say that?",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday"
+},
+{
+"rel": 1.29,
+"text": "Can you say that again?",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"rel": 2.19,
+"text": "The week.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 2.79,
+"text": "The weekend looks.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 3.09,
+"text": "The weekend looks dry.",
+"her": "of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 3.39,
+"text": "Ken looks drier.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+}
+]
+},
+{
+"clip": "b04",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.63,
+"text": "Actually.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should"
+},
+{
+"rel": 0.93,
+"text": "Actually, tell me.",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"rel": 1.23,
+"text": "Actually, tell me what time.",
+"her": "lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the"
+},
+{
+"rel": 1.83,
+"text": "Tell me what time it is.",
+"her": "and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 2.73,
+"text": "It's.",
+"her": "of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 3.63,
+"text": "And so.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good"
+}
+]
+},
+{
+"clip": "b05",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.16,
+"text": "Voluntarily.",
+"her": "damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every"
+},
+{
+"rel": 0.76,
+"text": "Stop.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 1.36,
+"text": "Job.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and"
+},
+{
+"rel": 2.56,
+"text": "And bring.",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever"
+},
+{
+"rel": 3.16,
+"text": "I'm not sure.",
+"her": "find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get"
+},
+{
+"rel": 3.76,
+"text": "Up the rear of every.",
+"her": "find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an"
+}
+]
+},
+{
+"clip": "b06",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.02,
+"text": "With clouds building.",
+"her": "Sure. The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by"
+},
+{
+"rel": 0.62,
+"text": "Sorry, I'm.",
+"her": "The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening."
+},
+{
+"rel": 0.92,
+"text": "Sorry, I missed the.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If"
+},
+{
+"rel": 1.52,
+"text": "I missed the last part.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 1.82,
+"text": "Miss the last part.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 2.12,
+"text": "Last part.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out,"
+}
+]
+},
+{
+"clip": "b07",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.46,
+"text": "What is that?",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing"
+},
+{
+"rel": 1.36,
+"text": "Does that word mean?",
+"her": "is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of"
+},
+{
+"rel": 2.26,
+"text": "Mean.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 2.56,
+"text": "Pausing before coffin.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"rel": 3.16,
+"text": "For coffin warehouses.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"rel": 3.46,
+"text": "",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+}
+]
+},
+{
+"clip": "b08",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.44,
+"text": "Okay.",
+"her": "I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself"
+},
+{
+"rel": 0.74,
+"text": "Okay, that's.",
+"her": "find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"rel": 1.34,
+"text": "Okay, that's enough.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"rel": 1.64,
+"text": "That's enough. Read.",
+"her": "growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing"
+},
+{
+"rel": 2.24,
+"text": "Read the next chapter.",
+"her": "grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before"
+},
+{
+"rel": 2.54,
+"text": "Read the next chapter.",
+"her": "about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin"
+}
+]
+},
+{
+"clip": "b09",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.15,
+"text": "No.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 0.45,
+"text": "No, I.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"rel": 0.75,
+"text": "No, I meant.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and"
+},
+{
+"rel": 1.05,
+"text": "No, I meant the other.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"rel": 1.65,
+"text": "The other ones.",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever"
+},
+{
+"rel": 2.55,
+"text": "And bringing up the.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get"
+}
+]
+},
+{
+"clip": "b10",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.09,
+"text": "Building after like.",
+"her": "The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening."
+},
+{
+"rel": 0.69,
+"text": "A quick question.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you"
+},
+{
+"rel": 0.99,
+"text": "A quick question about.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 1.29,
+"text": "A quick question about tomorrow.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 1.59,
+"text": "Question about tomorrow.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out,"
+},
+{
+"rel": 3.39,
+"text": "If you are.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+}
+]
+},
+{
+"clip": "b11",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.23,
+"text": "Never.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 0.53,
+"text": "Never mind.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 1.13,
+"text": "Never mind. Let's talk about.",
+"her": "of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 1.73,
+"text": "Let's talk about dinner.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a"
+},
+{
+"rel": 2.33,
+"text": "Dinner.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"rel": 2.63,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+}
+]
+},
+{
+"clip": "b12",
+"regime": "aec",
+"looks": [
+{
+"rel": 0.38,
+"text": "Two.",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+},
+{
+"rel": 0.68,
+"text": "Who wrote that?",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks"
+},
+{
+"rel": 1.58,
+"text": "Wrote that book.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and"
+},
+{
+"rel": 2.18,
+"text": "Okay.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should"
+},
+{
+"rel": 3.68,
+"text": "The weekend.",
+"her": "of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 3.98,
+"text": "The weekend looks.",
+"her": "of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+}
+]
+},
+{
+"clip": "b01",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.68,
+"text": "Wait. What was that?",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 1.58,
+"text": "Was that?",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"rel": 2.48,
+"text": "And Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"rel": 2.78,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+},
+{
+"rel": 3.38,
+"text": "Today should be the warmest.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"rel": 3.68,
+"text": "Should be the warmest day.",
+"her": "If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+},
+{
+"clip": "b02",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.61,
+"text": "Jacket. Hold on.",
+"her": "lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest"
+},
+{
+"rel": 1.21,
+"text": "Hold on a second.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 1.81,
+"text": "Looks dry.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 2.11,
+"text": "Looks drier.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"rel": 3.01,
+"text": "And Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"rel": 3.61,
+"text": "And Sunday should be the.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+},
+{
+"clip": "b03",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.39,
+"text": "Heading out. Can you?",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and"
+},
+{
+"rel": 1.29,
+"text": "Can you say that again?",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"rel": 2.19,
+"text": "The week.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 2.79,
+"text": "The weekend looks.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 3.99,
+"text": "Drier and sun.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good"
+},
+{
+"rel": 4.59,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+}
+]
+},
+{
+"clip": "b04",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.63,
+"text": "Actually.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should"
+},
+{
+"rel": 1.53,
+"text": "Tell me what time it is.",
+"her": "lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest"
+},
+{
+"rel": 2.13,
+"text": "What time it is?",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 2.73,
+"text": "Looks dry.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+},
+{
+"rel": 3.03,
+"text": "Looks drier.",
+"her": "rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"rel": 3.93,
+"text": "And Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+}
+]
+},
+{
+"clip": "b05",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.16,
+"text": "And voluntarily pause.",
+"her": "damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every"
+},
+{
+"rel": 0.76,
+"text": "Stop.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 1.06,
+"text": "Stop.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"rel": 1.36,
+"text": "For coffin warehouse.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and"
+},
+{
+"rel": 1.66,
+"text": "For coffin warehouses.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"rel": 1.96,
+"text": "Houses.",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+}
+]
+},
+{
+"clip": "b06",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.02,
+"text": "Build.",
+"her": "weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by"
+},
+{
+"rel": 0.62,
+"text": "Sorry, I'm.",
+"her": "The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening."
+},
+{
+"rel": 1.52,
+"text": "I missed the last part.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 2.42,
+"text": "Of light, rain by.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take"
+},
+{
+"rel": 3.02,
+"text": "It rain by the evening.",
+"her": "in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light"
+},
+{
+"rel": 3.92,
+"text": "Evening, if you are.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+}
+]
+},
+{
+"clip": "b07",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.16,
+"text": "Whenever I find myself.",
+"her": "whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing"
+},
+{
+"rel": 1.06,
+"text": "What does that word?",
+"her": "it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear"
+},
+{
+"rel": 1.96,
+"text": "",
+"her": "damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral"
+},
+{
+"rel": 2.26,
+"text": "Really pausing before.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 2.56,
+"text": "Hazing before coffin.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"rel": 3.16,
+"text": "For coffin warehouses.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+}
+]
+},
+{
+"clip": "b08",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.44,
+"text": "It is a damp. Okay.",
+"her": "I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself"
+},
+{
+"rel": 1.04,
+"text": "Okay, that's enough.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"rel": 1.34,
+"text": "Okay, that's in November.",
+"her": "myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily"
+},
+{
+"rel": 1.94,
+"text": "Read the next.",
+"her": "growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before"
+},
+{
+"rel": 2.24,
+"text": "Read the next chapter.",
+"her": "grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before"
+},
+{
+"rel": 2.54,
+"text": "Read the next chapter.",
+"her": "about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin"
+}
+]
+},
+{
+"clip": "b09",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.15,
+"text": "Really pausing before.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I"
+},
+{
+"rel": 0.45,
+"text": "No, I.",
+"her": "drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;"
+},
+{
+"rel": 1.05,
+"text": "No, I meant the other.",
+"her": "November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially"
+},
+{
+"rel": 1.65,
+"text": "The other ones.",
+"her": "soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever"
+},
+{
+"rel": 2.25,
+"text": "And bringing up.",
+"her": "whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos"
+},
+{
+"rel": 3.15,
+"text": "Up the rear of every.",
+"her": "find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an"
+}
+]
+},
+{
+"clip": "b10",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.09,
+"text": "Building after life.",
+"her": "The weather tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening."
+},
+{
+"rel": 0.99,
+"text": "A quick question about.",
+"her": "tomorrow looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading"
+},
+{
+"rel": 1.89,
+"text": "Is out tomorrow.",
+"her": "looks mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take"
+},
+{
+"rel": 2.19,
+"text": "Light rain by the evening.",
+"her": "mild in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light"
+},
+{
+"rel": 2.49,
+"text": "Rain by the evening.",
+"her": "in the morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light"
+},
+{
+"rel": 3.39,
+"text": "If you are.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+}
+]
+},
+{
+"clip": "b11",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.53,
+"text": "Never mind.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of"
+},
+{
+"rel": 1.43,
+"text": "Let's talk about dinner.",
+"her": "light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it"
+},
+{
+"rel": 2.33,
+"text": "Dinner and Sunday.",
+"her": "by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for"
+},
+{
+"rel": 2.63,
+"text": "And Sunday should be.",
+"her": "the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the"
+},
+{
+"rel": 3.23,
+"text": "One day should be the warmest.",
+"her": "evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+},
+{
+"rel": 3.83,
+"text": "Stay of the.",
+"her": "heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week, so it is a good day for the park."
+}
+]
+},
+{
+"clip": "b12",
+"regime": "raw",
+"looks": [
+{
+"rel": 0.38,
+"text": "Evening.",
+"her": "morning, with clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend"
+},
+{
+"rel": 0.98,
+"text": "Too right.",
+"her": "clouds building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks"
+},
+{
+"rel": 1.58,
+"text": "The book.",
+"her": "building after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and"
+},
+{
+"rel": 2.48,
+"text": "Take a light jacket.",
+"her": "after lunch and a chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be"
+},
+{
+"rel": 3.38,
+"text": "The week.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day"
+},
+{
+"rel": 3.98,
+"text": "The weekend looks.",
+"her": "chance of light rain by the evening. If you are heading out, take a light jacket. The weekend looks drier, and Sunday should be the warmest day of the week,"
+}
+]
+}
+]
+}

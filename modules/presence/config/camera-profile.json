@@ -1,0 +1,8 @@
+{
+  "_doc": "Camera profile: the product default for the Insta360 Link PTZ (v4l2 pan_absolute / tilt_absolute). Degrees come in, units are computed once here (units = deg x units_per_deg; one control step = one degree on both axes). pan_limit is the hardware's +/- pan range; the grabber wraps pan modulo 2 x pan_limit, so +pan_limit itself becomes -pan_limit and an aim stops one step inside it. tilt_min/tilt_max are the hardware tilt range. Override the path with RAIL_CAMERA_PROFILE. The User 2026-10-04, Init v2.",
+  "model": "Insta360 Link",
+  "units_per_deg": 3600,
+  "pan_limit": 522000,
+  "tilt_min": -324000,
+  "tilt_max": 360000
+}

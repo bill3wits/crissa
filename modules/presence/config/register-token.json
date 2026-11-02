@@ -1,0 +1,4 @@
+{
+  "_doc": "Register's camera token (Init step 3): how long Register (and Init's room sweep / Crissa-seat look) may hold the camera before it goes home to the door. A product default, not one user's or machine's value; RAIL_REGISTER_TTL overrides.",
+  "ttl_sec": 180
+}

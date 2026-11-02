@@ -1,0 +1,13 @@
+# The announcer env (modules/voice/crissa_voice/audio8_setup.py): Audio8 TTS's ONNX runtime requirements at
+# Edge0-AI/Audio8_TTS 7b6a5a15 (onnx_runtime/requirements.txt), CPU only, no torch.
+numpy==2.4.3
+onnxruntime==1.24.4
+soundfile==0.13.1
+scipy==1.17.1
+fastapi==0.135.2
+uvicorn==0.42.0
+pydantic>=2.9,<3
+python-multipart==0.0.22
+# Not in upstream's requirements.txt at 7b6a5a15, but arktts_runtime/prompt.py imports it: without it the server
+# never starts (found by the real install, 2026-10-07). The house's own Audio8 env runs this version.
+tokenizers==0.23.2

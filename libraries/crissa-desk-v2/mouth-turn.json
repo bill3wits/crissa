@@ -1,0 +1,19 @@
+{
+ "_why": "the neck cut (the User 10-20, 'the keystone'): chin_cut + front_cut jaw copied from the kit desk's mouth-turn.json; the rest of that file is the old face's turn tuning and stays out",
+ "chin_cut": {
+  "lip_half": 0.42,
+  "chin_half": 0.18,
+  "fade": 0.06
+ },
+ "front_cut": {
+  "from": 20,
+  "jaw": true
+ },
+ "_why_20261027": "the User: 'slight double image on the jaw edges, wrap it to the jaw' - cut 0.04 s closer to her chin and fade twice as wide; was chin_half 0.22 / fade 0.06 (backup mouth-turn.json.before-jaw-20261027). The file is mtime-cached: live on the bench at the next paint, no restart.",
+ "_chin_cut_20261028": "the User 10-28 'a slight doubling on the jaw both sides': lip_half 0.5->0.42, fade 0.10->0.06 (chin_half 0.18 kept); backup mouth-turn.json.before-jaw-tighten-20261028",
+ "deep_hole": {
+  "below": -25.0,
+  "hole": "ellipse"
+ },
+ "_deep_hole": "the User 10-28: at the deepest bow the arch hole chased bobbing lip dots and smeared under her chin; below -25 deg (the downs' own filmed span) the hole is an ellipse"
+}

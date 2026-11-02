@@ -1,0 +1,187 @@
+{
+ "schema": "render_loop_spec/v1",
+ "type": "work-loop-multitask",
+ "version": 3,
+ "label": "Working loop, multitasking",
+ "role": "loop",
+ "station": "down",
+ "_doc": "A hub loop rendered on the box from ONE anchor still (the User 2026-10-20: 'innate loop making on the nano anchors'). Same shape as config/imagine-specs: `words` are exactly what the model is sent, slots filled from the order; `targets` names the bar, the numbers are below in `qc` and in config/imagine-qc.json. Read by lib/render_loop_specs.py (OFF unless HOUSE_RENDER_LOOP_SPECS=1).",
+ "anchors": {
+  "start": "anchor",
+  "end": "anchor",
+  "_doc": "The pack rule (config/imagine-pack-rule.json): every hub clip starts AND ends on the one anchor. flf2v sends the anchor as first and last frame; i2v sends it as the first frame and the words bring her back to it. After QC the finished clip gets the anchor held 10 frames in front and 20 at the end (config/imagine-qc.json anchor_tags), so the seam is the pack rule's own."
+ },
+ "frames": {
+  "desk": {
+   "aspect": "16:9",
+   "size_by_recipe": {
+    "ltx25-flf2v": "1280x704",
+    "ltx23-flf2v": "1280x704",
+    "wan22-i2v": "1280x704"
+   },
+   "intake_fit": "1296x704 (the Wall size; the intake crops 1.84 and scales, one size per face)",
+   "look_default": "the same hair and clothes, at the same desk, in the same room, the laptop lid along the bottom edge of the frame as in this photo"
+  },
+  "portrait": {
+   "aspect": "9:16",
+   "size_by_recipe": {
+    "ltx25-flf2v": "704x1280",
+    "ltx23-flf2v": "704x1280",
+    "wan22-i2v": "704x1280"
+   },
+   "intake_fit": "720x1280 (the phone pack size)",
+   "look_default": "the same hair in a loose bun and the same black top, in front of the same cream linen curtain"
+  },
+  "_doc": "LTX wants width and height in multiples of 32 and 8k+1 frames; Wan wants 4k+1. The anchor is cut to the output's exact aspect BEFORE it is sent (LTXVAddGuide scales the guide image to the latent size without cropping; a 1296x704 plate sent to 736x384 was squeezed 4 % and read 0.95 against itself on every old render, docs/plans/RENDERS-LOOP-REVIEW-20261020.md)."
+ },
+ "duration_s": 10.7,
+ "_duration": "257 frames at 24 fps = the Veo listen loop's 258 nearest the 8k+1 rule (the conductor 2026-10-20). A 15 s loop is 361 frames.",
+ "fps": 24,
+ "words": [
+  "The same {subject} as in this photo, with {look}.",
+  "Filmed on a locked-off camera at eye level: no zoom, no pan, no cut, no change of light. {pronoun_cap} stays centred and the same size in the frame for the whole clip.",
+  "{pronoun_cap} is multitasking, absorbed, for the whole clip: a quiet, even rhythm with nothing that stands out, so the clip can repeat all day.",
+  "{pronoun_pos_cap} eyes start where they are in this photo and move between the laptop screen and the monitor behind it, a few seconds on each; three times, spread through the clip, {pronoun} looks at the keys for a beat and types a short burst, then back to a screen.",
+  "{pronoun_pos_cap} head stays within a few degrees of this photo the whole time: no turn and no tilt beyond a few degrees, and any glance is with the eyes only, the head staying where it is.",
+  "Within that band there is real life: {pronoun} breathes and {pronoun_pos} shoulders rise and settle, {pronoun} blinks slowly a few times, {pronoun_pos} head makes small natural movements as {pronoun} reads, a slight nod and a little to one side and back, and {pronoun} shifts {pronoun_pos} weight once; never a big nod, never a real turn.",
+  "{pronoun_pos_cap} eyes never go to the camera.",
+  "{pronoun_pos_cap} lips stay softly closed with tame, minimal mouth movement; {pronoun} does not speak.",
+  "{ends_note}",
+  "No audio."
+ ],
+ "words_source": "The User's rules from the phone pack (docs/plans/PHONE-PACK-MASTER-PROMPT-20261017.md): locked camera, 'tame, minimal mouth movement; lips mostly closed', 'ends exactly on the last frame, completely still for the last second'. The lesson of 2026-10-15 (avatar-films-need-motion): the words ASK for breath, blinks, small head moves and a glance; stillness only in the last second; no 'head steady / no turn / barely move'. The beats (glances, blinks) are counted by QC, so they are named and spread. | v2 (the User 2026-10-20 11:1x): the head band is in the WORDS ('our yaw has specific tolerances given our current method... intense physical editing'): glances with the eyes only, the head within a few degrees, no turn or tilt past a few degrees; the natural-motion asks stay so it does not freeze. | v3 (the User 2026-10-20 on clip 2, 'too still'): the gate is two-sided, a ceiling (the band) and a floor of liveliness; the life is written into the words (nod, small turn and back, weight shift, breath, blinks).",
+ "negative": [
+  "talking",
+  "speech",
+  "open mouth",
+  "teeth",
+  "head turned away from the camera",
+  "hands in frame",
+  "zoom",
+  "camera move",
+  "cut",
+  "flicker",
+  "change of light",
+  "blur",
+  "warping face",
+  "a second person",
+  "text",
+  "watermark",
+  "frozen",
+  "still photo",
+  "cartoon",
+  "low quality"
+ ],
+ "_negative": "LTX 2.5 reads a negative prompt at cfg 1 only weakly (the distilled graph runs cfg 1.0); it is sent anyway. Wan 2.2 takes its own stock negative (render-submit WAN_NEG) and these are appended in English.",
+ "recipes": {
+  "ltx25-flf2v": {
+   "first": "anchor",
+   "last": "anchor",
+   "steps": 8,
+   "cfg": 1.0,
+   "guide": 1.0,
+   "noise_seed": 42,
+   "seeds_to_try": [
+    42,
+    7,
+    1234
+   ],
+   "img_compression": 25,
+   "_why": "The flf2v graph pins both ends (LTXVAddGuide frame 0 and -1). Guide 0.7 already lands 0.996-0.999 against an aspect-true plate (measured 2026-10-20); 1.0 is the test's setting for a harder pin, 0.7 the fallback if 1.0 stiffens the motion. Measured 2026-09-29: 736x384 x 97 frames = 24-40 s of Comfy time on the RTX PRO 6000; 704x1280 x 257 is ~8x the tokens.",
+   "workflow": "ltx25-flf2v.json",
+   "graph_nodes": {
+    "prompt": "4",
+    "negative": "5",
+    "latent": "7",
+    "sampler": "8",
+    "first_image": "12",
+    "last_image": "13",
+    "guide_first": "14",
+    "guide_last": "15",
+    "fps": "10",
+    "save": "11"
+   }
+  },
+  "ltx23-flf2v": {
+   "first": "anchor",
+   "last": "anchor",
+   "steps": 8,
+   "cfg": 1.0,
+   "guide": 1.0,
+   "noise_seed": 42,
+   "_why": "The 2.3 graph is the same 15 nodes; kept as the fallback recipe.",
+   "workflow": "ltx23-flf2v.json",
+   "graph_nodes": {
+    "prompt": "4",
+    "negative": "5",
+    "latent": "7",
+    "sampler": "8",
+    "first_image": "12",
+    "last_image": "13",
+    "guide_first": "14",
+    "guide_last": "15",
+    "fps": "10",
+    "save": "11"
+   }
+  },
+  "wan22-i2v": {
+   "first": "anchor",
+   "last": "words + tags (the recipe is first-frame only; the last frame is scored against the plate and the 20 end tags carry the seam)",
+   "steps": 20,
+   "cfg": 3.5,
+   "noise_seed": 42,
+   "seconds_max": 5.0,
+   "_why": "Wan 2.2 i2v 14B high+low fp8: measured 19-31 min for 4 s at 1296x704 (scripts/render-window.py), so it is the quality fallback, not the pitch. A first/last Wan (2.1 FLF2V 14B, ~32 GB) is a download the User must OK.",
+   "workflow": "apple_split_wan_i2v.json",
+   "graph_nodes": {
+    "prompt": "9",
+    "negative": "10",
+    "latent": "12",
+    "samplers": [
+     "13",
+     "14"
+    ],
+    "first_image": "11",
+    "fps": "16",
+    "save": "17"
+   }
+  },
+  "_graph_nodes": "The node ids of the reference install's API graphs in its Comfy workflows folder (checked 2026-10-20 against the files); a pack's render.json names its own workflows folder and the same ids hold for a copied graph. render_loop_specs.order_overrides turns a spec into NODE.INPUT=VALUE overrides for lib/render_orders (the render module's orders)."
+ },
+ "anchor_tags": {
+  "front": 10,
+  "end": 20
+ },
+ "qc": {
+  "motion_min": 0.3,
+  "seam_min": 0.97,
+  "ends_vs_anchor_min": 0.995,
+  "identity": "the avatar's bar from config/imagine-qc.json identity.rule (lowest same-person score - margin; a new avatar: the anchor's own score - 0.2, never under the floor)",
+  "head": "loop: |pitch dev| <= 8, |yaw| <= 8, |roll| <= 4 against the anchor's pose (imagine-qc.json head)",
+  "mouth": "closed and still: aperture <= 0.03, step p95 <= 0.002 (imagine-qc.json mouth.still)",
+  "_doc": "motion = mean abs change between sampled frames on a 184x100 grey thumbnail (scripts/imagine-qc-measure.py); seam = NCC of the take's first vs last frame at 368x200; ends = NCC of each end against the anchor CUT TO THE SAME ASPECT. Measured 2026-10-20 on every old LTX render: the first frame reads 0.996-0.999 against the plate once the plate is cropped to the output's aspect (the 0.95 every old report carried was the instrument squeezing a 736x400 plate to 736x384), so the local bar is the pack's own 0.995 (config/imagine-qc.json ends.bar). The anchor tags (10 front / 20 end) are added after QC and make the packed seam exact.",
+  "head_band": {
+   "pitch_dev_max": 8.0,
+   "yaw_max": 8.0,
+   "roll_max": 4.0,
+   "per_frame": true,
+   "rule": "HARD GATE (the User 2026-10-20): any frame outside the band against the anchor pose is a retake, automatic, before a human looks; never a label.",
+   "floor": {
+    "excursion_min_deg": 2.0,
+    "moves_min": 2,
+    "blinks_min": 1,
+    "rule": "FLOOR (the User 2026-10-20: clip 2 at 2.6/1.3/0.8 deg \"too still\"): pitch or yaw must travel at least excursion_min_deg inside the band with at least moves_min distinct moves (a move = the angle leaves its running level by 1 deg and comes back) and a blink; under it = retake, like the ceiling."
+   }
+  }
+ },
+ "targets": {
+  "motion_min": 0.3,
+  "seam_min": 0.97,
+  "ends_vs_anchor_min": 0.95,
+  "identity": "avatar bar",
+  "head": "loop",
+  "mouth": "closed",
+  "blinks_min": 1,
+  "key_glances_min": 2
+ }
+}

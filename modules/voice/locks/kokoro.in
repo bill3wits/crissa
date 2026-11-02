@@ -1,0 +1,12 @@
+# The Kokoro env (modules/voice/crissa_voice/kokoro_setup.py). misaki WITHOUT its [en] extra: that extra brings
+# phonemizer-fork and espeakng-loader (GPL espeak-ng). num2words is LGPL-2.1, installed unmodified from PyPI.
+torch==2.6.0
+numpy==1.26.4
+onnxruntime==1.18.0
+transformers==4.51.3
+spacy==3.8.16
+num2words==0.5.14
+addict==2.4.0
+regex==2024.11.6
+misaki==0.9.4
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl

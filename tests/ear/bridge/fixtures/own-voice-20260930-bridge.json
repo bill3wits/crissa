@@ -1,0 +1,215 @@
+{
+ "note": "ear-bridge events 2026-09-30 09:15:30-09:16:40",
+ "events": [
+  {
+   "event": "heard",
+   "text": "Love you, my.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 90.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:15:41"
+  },
+  {
+   "event": "dispatch",
+   "user": "Love you, my.",
+   "level": "bau",
+   "pid": "user",
+   "hc": 0,
+   "mode": "user_auth_only",
+   "profile": "crissa",
+   "route": "direct",
+   "addressed": null,
+   "ts": "2026-09-30T09:15:42"
+  },
+  {
+   "event": "ttfs_clause",
+   "profile": "crissa",
+   "ms": 1469,
+   "clause": "There we go, love.",
+   "ts": "2026-09-30T09:15:43"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 4801,
+   "ok": true,
+   "chars": 18,
+   "ts": "2026-09-30T09:15:48"
+  },
+  {
+   "event": "reply",
+   "reply": "There we go, love. Love you too",
+   "level": "bau",
+   "profile": "crissa",
+   "addressed": null,
+   "ttfs": true,
+   "predicted": true,
+   "ts": "2026-09-30T09:15:48"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 2760,
+   "ok": true,
+   "chars": 12,
+   "ts": "2026-09-30T09:15:51"
+  },
+  {
+   "event": "heard",
+   "text": "There we go, love.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 90.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:15:51"
+  },
+  {
+   "event": "dispatch",
+   "user": "There we go, love.",
+   "level": "bau",
+   "pid": "user",
+   "hc": 0,
+   "mode": "user_auth_only",
+   "profile": "crissa",
+   "route": "direct",
+   "addressed": null,
+   "ts": "2026-09-30T09:15:51"
+  },
+  {
+   "event": "ttfs_clause",
+   "profile": "crissa",
+   "ms": 1327,
+   "clause": "You're welcome, love.",
+   "ts": "2026-09-30T09:15:53"
+  },
+  {
+   "event": "heard",
+   "text": "Me too.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 90.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:15:54"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 4027,
+   "ok": true,
+   "chars": 21,
+   "ts": "2026-09-30T09:15:58"
+  },
+  {
+   "event": "reply",
+   "reply": "You're welcome, love. Right here",
+   "level": "bau",
+   "profile": "crissa",
+   "addressed": null,
+   "ttfs": true,
+   "predicted": true,
+   "ts": "2026-09-30T09:15:58"
+  },
+  {
+   "event": "revise_ms",
+   "profile": "crissa",
+   "ms": 865,
+   "stream": true,
+   "ttfs": false,
+   "chars": 11,
+   "ts": "2026-09-30T09:15:59"
+  },
+  {
+   "event": "remainder_revise",
+   "extra": "Me too.",
+   "chars": 11,
+   "ts": "2026-09-30T09:15:59"
+  },
+  {
+   "event": "heard",
+   "text": "You welcome love.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 90.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:16:01"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 3964,
+   "ok": true,
+   "chars": 11,
+   "ts": "2026-09-30T09:16:05"
+  },
+  {
+   "event": "heard",
+   "text": "Marlowe.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 152.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:16:08"
+  },
+  {
+   "event": "dispatch",
+   "user": "Marlowe.",
+   "level": "bau",
+   "pid": "user",
+   "hc": 0,
+   "mode": "user_auth_only",
+   "profile": "crissa",
+   "route": "direct",
+   "addressed": null,
+   "ts": "2026-09-30T09:16:09"
+  },
+  {
+   "event": "ttfs_clause",
+   "profile": "crissa",
+   "ms": 1369,
+   "clause": "I don't know that name, love.",
+   "ts": "2026-09-30T09:16:10"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 6892,
+   "ok": true,
+   "chars": 29,
+   "ts": "2026-09-30T09:16:17"
+  },
+  {
+   "event": "reply",
+   "reply": "I don't know that name, love. Not in the roster, not in the room, not anywhere on record here.",
+   "level": "bau",
+   "profile": "crissa",
+   "addressed": null,
+   "ttfs": true,
+   "predicted": true,
+   "ts": "2026-09-30T09:16:17"
+  },
+  {
+   "event": "heard",
+   "text": "I don't know that name, love, as.",
+   "pid": null,
+   "via": "ear",
+   "beam_angle": 161.0,
+   "paused": false,
+   "crissa_hears": true,
+   "ts": "2026-09-30T09:16:21"
+  },
+  {
+   "event": "speak",
+   "rc": 0,
+   "ms": 9539,
+   "ok": true,
+   "chars": 64,
+   "ts": "2026-09-30T09:16:27"
+  }
+ ]
+}

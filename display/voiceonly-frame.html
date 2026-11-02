@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>__FRAME_NAME__ — __HER_NAME__</title>
+<link rel="icon" href="/zos.svg" type="image/svg+xml"/>
+<style>
+/* The frame. Krew is the agent framework's own React bundle on :9119 — a server this page
+   does not own and must not patch (the agent framework's update hard-resets that tree).
+   It is held in a frame here on :8099, and this page contributes exactly
+   one thing: the house toolbar. Before it existed those buttons were one-way
+   doors — you got to the board and there was no way back to the wall.
+   :8099 serves this ONE file, substituting __FRAME_* at serve time.
+   Composer LEFT this frame on 2026-09-11: it is our own page (:8199,
+   display/clip-doctor.html) and carries the same rail itself, so
+   :8099/composer 302s there. The rbComposer key below stays: the 302 is what
+   makes it land right. */
+html,body{margin:0;height:100%;background:#0A0C0F;overflow:hidden}
+/* The board is cross-origin, so a mouse moving over it never reaches this
+   page — `mousemove` cannot wake the toolbar the way it does on the wall and
+   the Control Panel. This hairline strip is OURS: the pointer touching the
+   top edge of the glass is the gesture, and the handle says so. It is a real
+   reserved strip, not an overlay, so it steals no click from the board. */
+#hot{
+  position:fixed; left:0; right:0; top:0; height:10px; z-index:5;
+  background:#0A0C0F; border-bottom:1px solid #15171B; cursor:pointer;
+}
+#hot::after{
+  content:""; position:absolute; left:50%; top:3px; transform:translateX(-50%);
+  width:64px; height:3px; border-radius:2px; background:#2B2F36;
+}
+#hot:hover::after{background:#D9A05B}
+#board{
+  /* 10, not 46: the pill is parked, so the only thing the page gives up is
+     the handle that wakes it (the User 2026-09-16). */
+  position:fixed; left:0; top:10px; width:100%; height:calc(100% - 10px);
+  border:0; display:block; background:#0A0C0F;
+}
+/* ── the house toolbar ────────────────────────────────────────────────────
+   ONE toolbar, byte-identical on the wall, the Control Panel and Krew
+   (User 2026-08-31). Before this each surface carried a different set and you
+   could get INTO Krew but not back out of it. One mode and four places, fixed
+   order: VO · WALL · CP · KREW · COMPOSER. Add a fifth place to every surface
+   or to none — a control that exists on one screen is how this started.
+   It drops out of the crown when called and parks itself again — on EVERY
+   surface (the User 2026-09-16, having seen both: "should have gone your way …
+   Yes hidden bars that pop out just like Wall"). Two rules keep it the SAME
+   OBJECT and not merely a similar one:
+   the type is the mono stack, because the wall loads no webfonts and anything
+   else renders differently there; and every measurement is in px, because
+   these three pages set three different root sizes and rem/em would quietly
+   make the same block come out a different size on each. */
+#rail{
+  position:fixed;left:50%;top:0;z-index:6;
+  display:flex;gap:7px;align-items:center;justify-content:center;
+  padding:8px 14px;
+  background:linear-gradient(180deg,rgba(10,12,15,.97),rgba(10,12,15,.86));
+  border:1px solid #121417;border-top:none;border-radius:0 0 4px 4px;
+  box-shadow:0 6px 16px rgba(0,0,0,.5);
+  transform:translate(-50%,-130%);transition:transform .32s cubic-bezier(.2,.8,.2,1);
+}
+body.chrome #rail{transform:translate(-50%,0)}
+/* ── the house toolbar: keys ──────────────────────────────────────────────
+   Same block on all three surfaces. VO is a MODE and the other three are
+   PLACES, which is what the hairline between them says. */
+.railbtn{
+  position:relative;box-sizing:border-box;
+  font-family:ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  font-size:11.5px;line-height:1;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:#99A0A9;text-decoration:none;
+  min-width:51px;padding:6px 13px;border-radius:3px;
+  border:1px solid #15171B;
+  background:linear-gradient(180deg,#31353C,#272A30);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.085), 0 1px 2px rgba(0,0,0,.55);
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+}
+/* the wallpaper's rail is symbols at 15px in the same 51px key (the User
+   2026-09-07: "html nav buttons need to conform to Wallpaper desktop
+   version"); the words stay in the tip and the aria-label. */
+.railbtn.sym{font-size:15px;letter-spacing:0}
+.railbtn:hover{filter:brightness(1.16)}
+.railbtn:focus-visible{outline:1px solid #E9A63F;outline-offset:1px}
+/* the surface you are already standing on: lit, and it goes nowhere */
+.railbtn[aria-current="page"]{
+  color:#DEE2E7;border-color:#3A4048;
+  background:linear-gradient(180deg,#3C424A,#2F343B);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), inset 0 -2px 0 #D9A05B;
+  cursor:default;
+}
+#rail .railsep{width:1px;height:22px;background:#2B2F36;margin:0 2px}
+/* tips hang BELOW a top rail or they render off the top of the glass */
+#rail .tip{
+  display:none;position:absolute;left:50%;top:calc(100% + 8px);
+  transform:translateX(-50%);z-index:9;
+  width:max-content;max-width:240px;padding:8px 11px;text-align:left;
+  background:#0A0C0F;border:1px solid #3A3020;border-radius:3px;
+  color:#99A0A9;font-size:11px;line-height:1.4;letter-spacing:0;
+  text-transform:none;font-weight:400;white-space:normal;pointer-events:none;
+  box-shadow:0 6px 19px rgba(0,0,0,.6);
+}
+#rail .railbtn:hover .tip, #rail .railbtn:focus-visible .tip{display:block}
+</style>
+</head>
+<body>
+<div id="hot" title="House toolbar — Wall, Control Panel, Krew, Composer"></div>
+<!-- No ?profile: the Krew button opens the dashboard as `default`, the User's own channel
+     (the User 2026-09-19: "Default could be assigned as User"). Its comments sign
+     "dashboard", which the house reads as the User; T0 keeps the crew off :9119.
+     Crissa's shell page and her plugin open her view with ?profile=crissa. -->
+<iframe id="board" title="__FRAME_NAME__"
+  src="__FRAME_SRC__"
+  allow="clipboard-read; clipboard-write; autoplay"></iframe>
+<!-- The house toolbar. The SAME controls in the SAME order on every
+     surface, so there is a way back from all of them. Keep the ids: paint and
+     the VO handler key on them. -->
+<div id="rail" role="toolbar" aria-label="House surfaces">
+  <!-- Four places, symbols, the same on every surface (the User 2026-09-07:
+       "unify all nav buttons for user"): ⌂ back to the wall · ⚒ Krew ·
+       ▶ Composer · ⚙ Control Panel. No VO key — Voice-Only is the
+       wallpaper's job. The words stay in the tip and the aria-label. -->
+  <a href="http://wall.home.arpa:8099/" id="rbWall" class="railbtn sym" aria-label="Wall">⌂<span class="tip">The wall — __HER_NAME__'s glass, the room and the roll</span></a>
+  <a href="" id="rbKrew" class="railbtn sym" aria-label="Krew">⚒<span class="tip">Krew — the agent dashboard and the board board</span></a>
+  <a href="https://store.zoeyos.dev/store/" id="rbComposer" class="railbtn sym" aria-label="Composer">▶<span class="tip">Composer — the cue rack for __HER_NAME__'s body: queue, seams, freelance</span></a>
+  <a href="http://127.0.0.1:8097/" id="rbPanel" class="railbtn sym" aria-label="Control Panel">⚙<span class="tip">Control Panel — voice, display, presence, Render</span></a>
+</div>
+<!-- THE AGENT MENU on the Composer key (the User 2026-10-16: "add to menu button on wall up top as well"): hover or
+     focus the ▶ key and the libraries the Composer lists (its /faces, HOUSE_FACES) drop under it - Crissa, Lila, Crissa.
+     Built from the Composer's own roster, so a new library needs no edit here; if the Composer does not answer the
+     key stays a plain link. The same block on the Wall, the Control Panel and the frame. -->
+<div id="agentMenu" role="menu" aria-label="Agent libraries" hidden></div>
+<style>
+#agentMenu{position:fixed;z-index:1002;min-width:150px;padding:4px 0;background:#0A0C0F;border:1px solid #3A3020;
+  border-radius:3px;box-shadow:0 6px 19px rgba(0,0,0,.6);font-size:12px;line-height:1.3}
+#agentMenu a{display:block;padding:7px 14px;color:#C9CDD3;text-decoration:none;white-space:nowrap}
+#agentMenu a:hover,#agentMenu a:focus-visible{background:#1E1A10;color:#E9E5DB;outline:none}
+#agentMenu a.on{color:#E8B84A}
+#rail #rbComposer.has-agents:hover .tip,#rail #rbComposer.has-agents:focus-visible .tip{display:none}
+</style>
+<script>
+(function(){
+  var key = document.getElementById("rbComposer"), box = document.getElementById("agentMenu");
+  if(!key || !box) return;
+  var base = key.getAttribute("href") || "", t = null, state = 0, over = false;   /* 0 unread, 1 reading, 2 read */
+  function place(){ var r = key.getBoundingClientRect(); box.style.left = Math.round(r.left) + "px"; box.style.top = Math.round(r.bottom + 6) + "px"; }
+  function show(){ clearTimeout(t); if(!box.children.length) return; place(); box.hidden = false; }
+  function hide(){ clearTimeout(t); t = setTimeout(function(){ if(!over) box.hidden = true; }, 250); }
+  function load(){
+    if(state) return; state = 1;
+    fetch(base.replace(/\/?$/, "/") + "faces", {cache: "no-store"}).then(function(r){ return r.json(); }).then(function(d){
+      (d.faces || []).forEach(function(f){
+        var a = document.createElement("a"); a.href = String(f.url || "").replace(/\/?$/, "/"); a.textContent = f.label || f.name;
+        a.setAttribute("role", "menuitem"); if(f.name === "crissa") a.className = "on"; box.appendChild(a);
+      });
+      state = 2; if(box.children.length){ key.classList.add("has-agents"); if(over) show(); }
+    }).catch(function(){ state = 0; });
+  }
+  key.addEventListener("mouseenter", function(){ over = true; load(); show(); });
+  key.addEventListener("focus", function(){ over = true; load(); show(); });
+  key.addEventListener("mouseleave", function(){ over = false; hide(); });
+  key.addEventListener("blur", function(){ over = false; hide(); });
+  box.addEventListener("mouseenter", function(){ over = true; clearTimeout(t); });
+  box.addEventListener("mouseleave", function(){ over = false; hide(); });
+})();
+</script>
+<script>
+"use strict";
+(function(){
+var rail=document.getElementById("rail"), hot=document.getElementById("hot");
+/* 1000 ms, the same linger as the wallpaper's CHROME_IDLE_S. the User asked for
+   it on 2026-09-08 ("Turn fade of all down to 1sec") and only the wallpaper
+   got it; finished on the Brave surfaces 09-16 ("Give we a 1 sec retract menu
+   linger. Hardly need more and it is in the way on some screens. Universal
+   adjust there for Wall and Brave instances"). One number, five surfaces —
+   lib/house_wall_ascii.CHROME_IDLE_S is its twin. */
+var timer=null, IDLE=1000;
+function show(){
+  document.body.classList.add("chrome");
+  clearTimeout(timer); timer=setTimeout(hide, IDLE);
+}
+function hide(){ document.body.classList.remove("chrome"); clearTimeout(timer); }
+hot.addEventListener("mouseenter", show);
+hot.addEventListener("click", show);
+rail.addEventListener("mouseenter", function(){ clearTimeout(timer); });
+rail.addEventListener("mouseleave", show);
+addEventListener("keydown", function(e){
+  if(e.key==="Escape"){ hide(); return; }
+  show();
+});
+/* Only a real mouse move in OUR strip counts; the board swallows the rest. */
+addEventListener("mousemove", function(e){ if(e.clientY <= 24) show(); }, {passive:true});
+
+rail.addEventListener("click", function(e){
+  var a=e.target.closest("a.railbtn");
+  if(!a) return;
+  if(a.getAttribute("aria-current")==="page"){ e.preventDefault(); return; }
+  if(a.id==="rbWall"){
+    /* ⌂ = back to the WALL. When the wallpaper is the glass that means putting
+       Crissa's Brave away (kiosk_home minimises it); when the wall is this
+       browser's own tab, it is the link (the User 2026-09-08: "The home button
+       does not work to get back to Wall"). */
+    e.preventDefault();
+    var href=a.getAttribute("href")||"/";
+    fetch("/v1/action",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({action:"kiosk_home"})})
+      .then(function(r){ return r.json(); }).catch(function(){ return null; })
+      .then(function(d){ if(!(d && d.wall==="wallpaper")) location.href=href; });
+  }
+});
+})();
+</script>
+<script>
+/* THE MENU IS LOCKED AND LEGIBLE (the User 2026-09-16: "delink the bottons if
+   possible to keep the monu legible but locked across all UIs").
+
+   The toolbar is ONE object on every surface, so it has no business changing
+   size because the page under it zoomed. Measured on this house with the tabs
+   at 110%: the same rail rendered 389 / 344 / 255 / 255 DEVICE px across the
+   four surfaces, purely because each surface keeps its own zoom now. This
+   counter-zooms the rail by exactly the page's factor, so its px stay px on
+   the glass and the menu reads the same everywhere.
+
+   Chromium reports page zoom in devicePixelRatio (display DPR x zoom). This
+   house measures a 1.0 display — screen 2560 and 1280 both report dpr 1.0
+   with a tab at 100% — so that ratio IS the zoom. window.RAIL_BASE_DPR is the
+   hook for a HiDPI desk, where it would be that display's own ratio.
+
+   `zoom` and not `transform:scale()`: the park and the reveal are transforms
+   in the shared block, and a second transform here would have to restate
+   them, which is the exact drift that block exists to prevent. Verified on a
+   live tab before landing: the rail went 344 -> 313 device px (= 344/1.1) and
+   its centre offset did not move (0.23 px before and after), so
+   left:50% + translate(-50%) still centres it. */
+(function(){
+  var BASE = window.RAIL_BASE_DPR || 1;
+  function lockRail(){
+    var r = document.getElementById("rail");
+    if(!r) return;
+    var z = (window.devicePixelRatio || BASE) / BASE;
+    r.style.zoom = z > 0 ? (1 / z).toFixed(4) : "";
+  }
+  addEventListener("resize", lockRail);   /* a zoom change fires resize */
+  lockRail();
+})();
+</script>
+</body>
+</html>

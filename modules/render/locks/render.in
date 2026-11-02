@@ -1,0 +1,3 @@
+# The render module's env (modules/render/crissa_render/install.py): the one third-party package the
+# work-in-progress watcher needs. Comfy itself is the user's own install, named in <state>/render.json.
+websocket-client==1.8.0

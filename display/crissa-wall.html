@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crissa Wall</title>
+<!--
+  The Wall in a browser (2026-10-05). Served by the player at /wall (CRISSA_WALL_PAGE=1).
+  - the frame: /frame.mjpg
+  - Talk: this page's microphone (getUserMedia, echo cancellation on) feeds the voice module through /v1/mic
+  - Mute: her voice, in this page
+  - Connect: /connect
+  - the Crissa key (bottom left, 2026-10-10): the menu the desk Wall shares - microphone, Connect, Control Panel,
+    Composer, Voice ID again, Lip sync (2026-10-11: this machine's one timing dial, - / + in half film frames, and a
+    test line through /v1/speak), Help, Exit full screen (while the browser is full screen), Open the Wall (when the
+    desk Wall is closed), Close Agent / Open Agent and All OS Off (2026-10-12; was Stop Crissa) (GET/POST /v1/menu)
+  - on air, and the status marks (/v1/marks when CRISSA_STATUS_MARKS is on, plus this page's own)
+  - THE ASCII GLASS (2026-10-10): when the feed answers, the page shows the feed's glass (the look the desk Wall draws)
+    whole, with the Crissa key, the first-boot gate and a type-to-her box over it; ?film=1 keeps the film view, and
+    CRISSA_WALL_GLASS=0 turns it off (lib/crissa_menu.glass_view)
+  With CRISSA_AUDIO_AT=page her lines play HERE (WebAudio) and this page answers when each one is heard,
+  on the player's clock: that answer is the line's air_at, so her mouth and her voice share one clock.
+  With `host` (the default) her voice plays on the player's machine and Talk / Mute are off here.
+  ?start=1 starts the microphone and the sound on load where the browser allows it (a kiosk; tests).
+  A FIRST BOOT GOES TO SETUP (the User 2026-10-10): while the player's Init is needed or running (GET /v1/init), this
+  page sends the browser to /init, the short walk's page; ?noinit=1 stays here.
+-->
+<style>
+:root {
+  --bg: #0f0f0e; --panel: #1b1a18; --ink: #ecebe6; --muted: #a09d94; --line: #34322e;
+  --accent: #6cc2a8; --accent-ink: #0f1a16; --air: #f0a24a; --bad: #f08a78;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f6f5f2; --panel: #ffffff; --ink: #1c1b19; --muted: #6b6860; --line: #dedbd3;
+  --accent: #2f6f5e; --accent-ink: #ffffff; --air: #b5651d; --bad: #a33b2b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f5f2; --panel: #ffffff; --ink: #1c1b19; --muted: #6b6860; --line: #dedbd3;
+    --accent: #2f6f5e; --accent-ink: #ffffff; --air: #b5651d; --bad: #a33b2b;
+    color-scheme: light;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  display: flex; flex-direction: column; }
+.stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 12px 16px 0; }
+.face { position: relative; background: #000; border-radius: 10px; overflow: hidden;
+  aspect-ratio: 1296 / 704; width: min(100%, calc((100vh - 120px) * 1296 / 704)); }
+.face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* while a card is up her render sits on the Oracle live tile (GET /v1/layout, config/crissa-wall-layout.json);
+   only the render moves - the card and the art on it stay where they are */
+.face img.on-tile { position: fixed; width: auto; height: auto; z-index: 6; border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.air { position: absolute; top: 10px; left: 10px; font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  padding: 3px 8px; border-radius: 999px; background: rgba(0,0,0,.55); color: #ddd; }
+.air .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #777;
+  margin-right: 6px; vertical-align: 0; }
+.air.on { color: #fff; } .air.on .dot { background: var(--air); box-shadow: 0 0 6px var(--air); }
+.unlock { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.35); color: #fff; font-size: 15px; cursor: pointer; border: 0; width: 100%; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; padding: 10px 16px 6px; }
+button, .link { font: inherit; border-radius: 6px; padding: 8px 14px; cursor: pointer; text-decoration: none;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button:disabled { opacity: .45; cursor: default; }
+input { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 8px 10px; width: min(360px, 100%); }
+.marks { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; padding: 0 16px 12px;
+  font-size: 11px; color: var(--muted); }
+.marks span { white-space: nowrap; }
+.marks .bad { color: var(--bad); }
+/* the card a helper puts beside her (POST /v1/screen): words, art, a page or a web address; nothing shortened, it scrolls */
+.card { position: absolute; top: 10px; right: 10px; bottom: 10px; width: 46%; display: flex; flex-direction: column;
+  background: rgba(16,16,18,.92); color: #eee; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.card[hidden] { display: none; }
+.card header { display: flex; align-items: center; gap: 8px; padding: 6px 10px; font-weight: 600; font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,.12); }
+.card header span { flex: 1; overflow-wrap: anywhere; }
+.card header button { padding: 2px 8px; font-size: 12px; }
+.card .body { flex: 1; overflow: auto; padding: 8px 10px; font-size: 13px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.card pre { margin: 0; font: 11px/1.1 ui-monospace, Menlo, Consolas, monospace; white-space: pre; }
+.card iframe { flex: 1; border: 0; width: 100%; background: #fff; }
+.msg { text-align: center; font-size: 12px; color: var(--muted); min-height: 1.3em; padding: 0 16px; overflow-wrap: anywhere; }
+/* THE CRISSA KEY (the User 2026-10-10, .101): one small key, always on screen, opens the menu both Walls share
+   (GET/POST /v1/menu, lib/crissa_menu.py) */
+/* ONE LOOK ON BOTH WALLS, MUTED (the User 2026-10-12, .101 round 14: "They both need to be more muted on the weakened
+   template to match others"): the key wears the glass's rail keys' face (grey gradient, #99A0A9 type, dark hairline,
+   brighter under the pointer) and the menu is a panel in the glass's muted palette (INK2 type, INK on a HAIR wash under
+   the pointer, INK3 when not available, SAGE for a state that is on). The desk Wall draws the same
+   (lib/crissa_wall_key.py: KEY_*, menu_panel). */
+.ckey { position: fixed; left: 16px; bottom: 16px; z-index: 30; font: 600 11.5px/1 ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: .16em; padding: 6px 13px; border-radius: 3px; color: #99A0A9;
+  background: linear-gradient(#31353C, #272A30); border: 1px solid #15171B; box-shadow: inset 0 1px 0 rgba(255,255,255,.086); }
+.ckey:hover, .ckey:focus-visible { filter: brightness(1.16); outline: none; }
+.ckey[aria-expanded="true"] { filter: brightness(1.16); }
+.cmenu { position: fixed; left: 16px; bottom: 56px; z-index: 31; width: min(400px, calc(100vw - 32px));   /* 2026-10-28: room for the places row */
+  max-height: calc(100vh - 80px); overflow: auto; background: rgba(21,25,34,.96); color: #8B93A6;
+  font: 13px/1.3 ui-monospace, Menlo, Consolas, monospace;
+  border: 1px solid #242A37; border-radius: 6px; box-shadow: 0 6px 24px rgba(0,0,0,.35); padding: 6px 0; }
+.cmenu[hidden] { display: none; }
+.cmenu button, .cmenu a { display: block; width: 100%; text-align: left; border: 0; border-radius: 0; background: none;
+  padding: 7px 14px; color: #8B93A6; text-decoration: none; font: inherit; cursor: pointer; }
+.cmenu button:hover, .cmenu a:hover, .cmenu button:focus-visible, .cmenu a:focus-visible { background: #242A37; color: #E9E5DB; outline: none; }
+.cmenu button:disabled { opacity: 1; color: #4A5163; cursor: default; background: none; }
+.cmenu hr { border: 0; border-top: 1px solid #242A37; margin: 6px 0; }
+.cmenu .on { color: #6F9B7E; font-weight: 600; }
+.cmenu .places { display: flex; gap: 8px; padding: 4px 14px 6px; }
+.cmenu .places a, .cmenu .places button { display: inline-block; width: auto; flex: 1 1 auto; text-align: center; border: 1px solid #242A37;
+  border-radius: 3px; padding: 7px 8px; font-size: 12px; white-space: nowrap; }
+.cmenu .places a:hover, .cmenu .places button:hover { background: #242A37; color: #E9E5DB; }
+.cmenu .places button:disabled { color: #4A5163; }
+.cmenu .help { padding: 4px 14px 8px; font-size: 12px; color: #8B93A6; }
+.cmenu a.connected { color: #6F9B7E; font-weight: 600; }   /* round 29: one Connect button, green when connected */
+.cmenu .na-i { cursor: help; }
+.cmenu .help p { margin: 4px 0; }
+.cmenu .why { padding: 0 14px 6px; font-size: 12px; color: var(--bad); }
+.cmenu .lip-value { padding: 8px 14px 4px; font-weight: 600; color: #E9E5DB; }
+.cmenu .lip-row { display: flex; gap: 8px; padding: 4px 14px 6px; }
+.cmenu #m-visitor-name { display: block; margin: 4px 14px 8px; width: calc(100% - 28px); box-sizing: border-box; }
+.cmenu .lip-row button { display: inline-block; width: auto; flex: 1; text-align: center; border: 1px solid #242A37;
+  border-radius: 6px; padding: 8px 10px; }
+@media (max-width: 700px) { .marks { padding-bottom: 56px; } }   /* the key never covers the last row of marks */
+/* THE ASCII GLASS (the User 2026-10-10, .101): with the feed up, this page shows the glass the desk Wall draws (the
+   feed's /), whole, and keeps the Crissa key, the first-boot gate and a small type-to-her box over it */
+#glass { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 1; background: #000; display: none; }
+body.glass #glass { display: block; }
+body.glass .stage, body.glass .marks, body.glass #create, body.glass #learn, body.glass #talk, body.glass #mute { display: none; }
+body.glass .bar { position: fixed; left: 140px; right: 16px; bottom: 12px; z-index: 30; padding: 0; justify-content: flex-start;
+  flex-wrap: nowrap; }
+body.glass .bar input { width: min(360px, 100%); opacity: .82; }
+body.glass .bar input:focus { opacity: 1; }
+body.glass .msg { position: fixed; left: 140px; right: 16px; bottom: 56px; z-index: 30; text-align: left;
+  color: #ddd; text-shadow: 0 1px 2px #000; }
+@media (max-width: 520px) { body.glass .bar { left: 16px; bottom: 60px; } body.glass .msg { left: 16px; bottom: 104px; } }
+/* THE MIDDLE IS SHARED (the User 2026-10-10, .101 round 3: "the Say bar covers the menu and dock keys"; he keeps the
+   Say bar): with the glass, the Crissa key and the Say bar are one row centred at the bottom, the glass's own corner
+   keys (the camera box and its dials on the left, her picture and its keys on the right) beside it, never under it.
+   The row's width is the free middle between those corners (CORNER_PX), and below 900 px wide it rises above them.
+   The key goes with the idle chrome after IDLE_MS without a pointer or a key, and comes back on the next one (2026-10-12). */
+#dockRow { display: none; }
+body.glass #dockRow { display: flex; position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 30;
+  gap: 8px; align-items: center; max-width: calc(100vw - 2 * var(--corner, 340px)); }
+body.glass #dockRow .ckey { position: static; flex: none; }
+body.glass #dockRow .bar { position: static; padding: 0; flex: 1 1 auto; min-width: 0; justify-content: flex-start;
+  flex-wrap: nowrap; }
+body.glass #dockRow .bar input { width: clamp(220px, 26vw, 560px); }
+body.glass .msg { left: 50%; right: auto; transform: translateX(-50%); width: min(720px, calc(100vw - 32px));
+  text-align: center; bottom: 56px; }
+@media (max-width: 900px) { body.glass #dockRow { --corner: 16px; bottom: 96px; flex-wrap: wrap; justify-content: center; }
+  body.glass #dockRow .bar input { width: min(260px, calc(100vw - 140px)); }
+  body.glass .msg { bottom: 150px; } }
+/* the key goes with the idle chrome (the User 2026-10-12: "it can hide with mouse still like the rest"): after
+   IDLE_MS (the glass's own chrome idle, 1 s) it fades out and takes no clicks; the next pointer or key brings it back */
+.ckey { transition: opacity .3s ease; }
+.ckey.idle { opacity: 0; pointer-events: none; }
+/* CLOSE AGENT SHOWS (round 15, .101 13:37: "just closed agent, nothing happened"): while her agent is closed the glass
+   and her picture are dimmed and still to the eye, and one small muted plate says so with its key */
+body.agent-closed #glass, body.agent-closed .stage { filter: brightness(.4) saturate(.5); pointer-events: none; }
+#agentPlate { position: fixed; left: 50%; bottom: 72px; transform: translateX(-50%); z-index: 40; display: none;
+  align-items: center; gap: 12px; padding: 7px 14px; border-radius: 6px; background: rgba(21, 25, 34, .86);
+  border: 1px solid #242A37; color: #8B93A6; font: 13px ui-monospace, Menlo, Consolas, monospace; }
+body.agent-closed #agentPlate, body.starting #agentPlate, body.started #agentPlate, body.building #agentPlate { display: flex; }
+/* THE START BAR (round 15): the same plate while she waits for her ear, a print or her voice; green when she hears */
+body.starting #agentOpen, body.started #agentOpen, body.building #agentOpen { display: none; }
+body.started #agentPlate { color: #6F9B7E; border-color: #6F9B7E; }
+#agentPlate button { font: inherit; color: #E9E5DB; background: #2C2F36; border: 1px solid #3a3e46; border-radius: 5px;
+  padding: 4px 10px; cursor: pointer; }
+#agentPlate button:focus-visible { outline: 2px solid #D9A05B; outline-offset: 2px; }
+</style>
+<div id="agentPlate" role="status"><span>Agent closed</span><button type="button" id="agentOpen">Open Agent</button></div>
+</head>
+<body>
+<iframe id="glass" title="Crissa's Wall" referrerpolicy="no-referrer"></iframe>
+<div class="stage">
+  <div class="face">
+    <img id="face" alt="The avatar, live" src="/frame.mjpg">
+    <div class="air" id="air" role="status" aria-live="polite"><span class="dot"></span><span id="air-t">off air</span></div>
+    <button class="unlock" id="unlock" type="button" hidden>Click to hear her</button>
+    <section class="card" id="card" hidden aria-live="polite">
+      <header><span id="card-t"></span><button id="card-x" type="button" title="Take the card down">Close</button></header>
+      <div class="body" id="card-b"></div>
+      <iframe id="card-f" hidden title="A page a helper put up" referrerpolicy="no-referrer"></iframe>
+    </section>
+  </div>
+</div>
+<div class="bar">
+  <button id="talk" type="button" aria-pressed="false" title="Use this page's microphone">Talk</button>
+  <button id="mute" type="button" aria-pressed="false" title="Mute her voice in this page">Mute</button>
+  <input id="say" type="text" placeholder="Or type to her and press Enter" autocomplete="off" aria-label="Type to her">
+  <a class="link" id="connect" href="/connect">Connect</a>
+  <!-- TODO(crissa-rename 2026-10-09): store.crissa.ai once that host exists; the working link stays store.zoeyos.dev (three places in this file). -->
+  <a class="link" id="create" href="https://store.zoeyos.dev/store/" title="Crissa's store: packs of new loops for her">Store</a>
+  <a class="link" id="learn" href="https://www.skool.com/rocks-cry-out-labs-4621/about" target="_blank" rel="noopener" title="Community on Skool">Learn</a>
+</div>
+<div class="msg" id="msg" aria-live="polite"></div>
+<div class="msg" id="cut" aria-live="polite" hidden><span id="cut-t"></span> <a id="cut-a" target="_blank" rel="noopener">Show all</a></div>
+<div class="marks" id="marks" aria-label="How each piece stands"></div>
+<!-- ONE MENU, ONE MARK (the User 2026-10-28): the key says Menu, never the agent's name (a whitelabel); the places
+     row at the top, the quick keys, then the rest - the same order as the desk Wall's key (lib/crissa_wall_key) -->
+<button class="ckey" id="ckey" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="cmenu"
+  title="Menu: the places, microphone, Agent only, your phone, Security, Connect, Voice ID, Help, All OS Off">&#9670; MENU</button>
+<div class="cmenu" id="cmenu" role="menu" aria-label="Menu" hidden></div>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const Q = new URLSearchParams(location.search);
+const PAGE_ID = "p" + Math.random().toString(36).slice(2, 10);
+const W = {
+  audioAt: "host",        // the player's answer at /v1/clock
+  offset: 0,              // player clock - this page's clock, seconds
+  ctx: null, gain: null,  // her voice
+  muted: false, clockMoves: false,
+  v: 0, polling: null,
+  playing: {},            // line id -> {src}
+  mic: "off",             // off | on | denied | none | error
+  micCtx: null, micNode: null, micStream: null, micSent: 0,
+  marks: [], heard: 0, lastLine: null,
+};
+
+function msg(t) { $("msg").textContent = t || ""; }
+async function getJSON(path, opts) {
+  const r = await fetch(path, Object.assign({cache: "no-store"}, opts || {}));
+  if (!r.ok) { const e = new Error(path + " " + r.status); e.status = r.status; throw e; }
+  return r.json();
+}
+function nowHost() { return (performance.timeOrigin + performance.now()) / 1000 + W.offset; }
+
+// ---- the player's clock -------------------------------------------------
+async function syncClock() {
+  let best = null;
+  for (let i = 0; i < 5; i++) {
+    const p0 = performance.now();
+    let j;
+    try { j = await getJSON("/v1/clock"); } catch (e) { return false; }
+    const p1 = performance.now();
+    const mid = (performance.timeOrigin + (p0 + p1) / 2) / 1000;
+    const s = {rtt: p1 - p0, off: j.t - mid, audioAt: j.audio_at};
+    if (!best || s.rtt < best.rtt) best = s;
+  }
+  W.offset = best.off;
+  W.audioAt = best.audioAt || "host";
+  return true;
+}
+
+// ---- her voice in this page --------------------------------------------
+function ensureOut() {
+  if (W.ctx) return W.ctx;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  W.ctx = new AC({latencyHint: "interactive"});
+  W.gain = W.ctx.createGain();
+  W.gain.gain.value = W.muted ? 0 : 1;
+  W.gain.connect(W.ctx.destination);
+  W.ctx.onstatechange = () => { renderMarks(); restartPoll(); };
+  return W.ctx;
+}
+// A context can say "running" with no device behind it (a headless browser, an unplugged output): its clock
+// then never moves and nothing scheduled is ever heard. Only a clock seen moving counts as able to play.
+function outReady() { return !!W.ctx && W.ctx.state === "running" && W.clockMoves; }
+function watchClock() {
+  let last = -1;
+  setInterval(() => {
+    const t = W.ctx ? W.ctx.currentTime : -1;
+    const moves = W.ctx && W.ctx.state === "running" && last >= 0 && t > last;
+    last = t;
+    if (moves !== W.clockMoves) { W.clockMoves = moves; $("unlock").hidden = moves || !W.ctx || W.ctx.state === "running"; renderMarks(); restartPoll(); }
+  }, 400);
+}
+async function unlockSound() {
+  if (W.audioAt !== "page") return;
+  try { await ensureOut().resume(); } catch (e) {}
+  $("unlock").hidden = W.ctx.state === "running";
+  renderMarks();
+}
+function audiblePerf(when) {
+  // the performance.now() at which a sample scheduled for `when` (context time) leaves the speaker
+  const c = W.ctx;
+  if (c.getOutputTimestamp) {
+    const ts = c.getOutputTimestamp();
+    if (ts && ts.contextTime > 0 && ts.performanceTime > 0) return ts.performanceTime + (when - ts.contextTime) * 1000;
+  }
+  return performance.now() + (when - c.currentTime) * 1000 + ((c.outputLatency || c.baseLatency || 0) * 1000);
+}
+async function playLine(line) {
+  if (W.playing[line.id] || !outReady()) return;
+  W.playing[line.id] = {src: null};
+  try {
+    const r = await fetch("/v1/page-audio/" + line.id + ".wav", {cache: "no-store"});
+    if (!r.ok) throw new Error("wav " + r.status);
+    const buf = await W.ctx.decodeAudioData(await r.arrayBuffer());
+    if (!W.playing[line.id]) return;                  // stopped while it loaded
+    const src = W.ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(W.gain);
+    const when = W.ctx.currentTime + 0.12;
+    src.start(when);
+    W.playing[line.id].src = src;
+    const startAt = (performance.timeOrigin + audiblePerf(when)) / 1000 + W.offset;
+    src.onended = () => {
+      if (W.playing[line.id]) {
+        delete W.playing[line.id];
+        fetch("/v1/page-audio/" + line.id + "/done", {method: "POST", body: "{}"}).catch(() => {});
+      }
+    };
+    const got = await getJSON("/v1/page-audio/" + line.id + "/air", {method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({start_at: startAt, page: PAGE_ID, until: startAt + buf.duration})});
+    if (got.page && got.page !== PAGE_ID) stopLine(line.id);   // another page took it first
+    else { W.heard += 1; W.lastLine = {id: line.id, start_at: startAt, s: buf.duration}; renderMarks(); }
+  } catch (e) {
+    delete W.playing[line.id];
+    msg("Her line did not play here (" + e.message + "): it plays on the computer instead.");
+  }
+}
+function stopLine(id) {
+  const p = W.playing[id];
+  delete W.playing[id];
+  if (p && p.src) { try { p.src.stop(); } catch (e) {} }
+}
+async function pollLoop() {
+  const me = W.polling = new AbortController();
+  while (W.polling === me) {
+    try {
+      const q = "?v=" + W.v + "&wait=20&page=" + PAGE_ID + "&ready=" + (outReady() ? 1 : 0);
+      const d = await getJSON("/v1/page-audio" + q, {signal: me.signal});
+      W.v = d.v;
+      for (const id of d.stopped || []) if (W.playing[id]) stopLine(id);
+      if (d.line && d.line.state === "queued" && outReady()) playLine(d.line);
+    } catch (e) {
+      if (e.name === "AbortError") return;
+      await new Promise((r) => setTimeout(r, 1500));
+    }
+  }
+}
+function restartPoll() {
+  if (W.audioAt !== "page") return;
+  if (W.polling) W.polling.abort();
+  W.polling = null;
+  pollLoop();
+}
+
+// ---- this page's microphone --------------------------------------------
+const MIC_WORKLET = `
+class CrissaMic extends AudioWorkletProcessor {
+  constructor() { super(); this.r = sampleRate / 16000; this.t = 0; this.last = 0; this.buf = []; }
+  process(inputs) {
+    const x = inputs[0] && inputs[0][0];
+    if (!x || !x.length) return true;
+    let t = this.t;
+    while (t < x.length - 1) {                       // linear resample to 16 kHz, phase carried across blocks
+      const i = Math.floor(t), f = t - i;
+      const a = i < 0 ? this.last : x[i], b = x[i + 1];
+      this.buf.push(a + (b - a) * f);
+      t += this.r;
+    }
+    this.t = t - x.length; this.last = x[x.length - 1];
+    if (this.buf.length >= 1600) {                   // 100 ms a post
+      const out = new Int16Array(this.buf.length);
+      for (let k = 0; k < out.length; k++) out[k] = Math.max(-32768, Math.min(32767, Math.round(this.buf[k] * 32767)));
+      this.port.postMessage(out.buffer, [out.buffer]);
+      this.buf = [];
+    }
+    return true;
+  }
+}
+registerProcessor("crissa-mic", CrissaMic);`;
+
+async function micOn() {
+  if (W.audioAt !== "page") return;
+  try {
+    W.micStream = await navigator.mediaDevices.getUserMedia({audio: {
+      echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1}});
+  } catch (e) {
+    W.mic = (e && e.name === "NotAllowedError") ? "denied" : "none";
+    renderMarks();
+    msg(W.mic === "denied" ? "The browser was not allowed to use the microphone." : "No microphone found.");
+    return;
+  }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  W.micCtx = new AC();
+  const url = URL.createObjectURL(new Blob([MIC_WORKLET], {type: "application/javascript"}));
+  await W.micCtx.audioWorklet.addModule(url);
+  const srcNode = W.micCtx.createMediaStreamSource(W.micStream);
+  W.micNode = new AudioWorkletNode(W.micCtx, "crissa-mic");
+  W.micNode.port.onmessage = (ev) => {
+    fetch("/v1/mic", {method: "POST", body: ev.data,
+      headers: {"Content-Type": "application/octet-stream", "X-Sample-Rate": "16000"}})
+      .then((r) => { if (r.ok) { W.micSent += 1; if (W.mic !== "on") { W.mic = "on"; renderMarks(); } }
+                     else if (W.mic !== "error") { W.mic = "error"; renderMarks(); msg("The voice module is not listening (" + r.status + ")."); } })
+      .catch(() => {});
+  };
+  srcNode.connect(W.micNode);
+  // a worklet with no path to the destination is not pulled in some browsers: send it through a silent gain
+  const sink = W.micCtx.createGain(); sink.gain.value = 0;
+  W.micNode.connect(sink); sink.connect(W.micCtx.destination);
+  await W.micCtx.resume();
+  W.mic = "on";
+  $("talk").setAttribute("aria-pressed", "true");
+  renderMarks();
+}
+function micOff() {
+  if (W.micStream) W.micStream.getTracks().forEach((t) => t.stop());
+  if (W.micCtx) W.micCtx.close().catch(() => {});
+  W.micStream = W.micCtx = W.micNode = null;
+  W.mic = "off";
+  $("talk").setAttribute("aria-pressed", "false");
+  renderMarks();
+}
+
+// ---- marks --------------------------------------------------------------
+function renderMarks() {
+  const out = [];
+  if (W.audioAt === "page") {
+    const voice = !W.ctx || W.ctx.state !== "running" ? "click to hear her"
+      : (!W.clockMoves ? "no sound device here: plays on the computer" : (W.muted ? "muted here" : "plays here"));
+    out.push(["voice", voice, !outReady()]);
+    out.push(["microphone", {off: "off", on: "this page", denied: "not allowed", none: "none found",
+              error: "voice module not listening"}[W.mic] || W.mic, ["denied", "none", "error"].includes(W.mic)]);
+  } else {
+    out.push(["voice", "plays on the computer", false]);
+  }
+  for (const m of W.marks) out.push([m.piece, (m.mark ? m.mark + " " : "") + (m.note || m.state), false]);
+  const box = $("marks");
+  box.textContent = "";
+  for (const [k, v, bad] of out) {
+    const s = document.createElement("span");
+    s.textContent = k + ": " + v;
+    if (bad) s.className = "bad";
+    box.appendChild(s);
+  }
+  const page = W.audioAt === "page";
+  $("talk").disabled = !page;
+  $("mute").disabled = !page;
+  $("talk").title = page ? "Use this page's microphone" : "The computer's own microphone is used (CRISSA_AUDIO_AT=host)";
+  $("mute").title = page ? "Mute her voice in this page" : "Her voice plays on the computer (CRISSA_AUDIO_AT=host)";
+}
+async function refreshMarks() {
+  try { W.marks = (await getJSON("/v1/marks")).marks || []; } catch (e) { W.marks = []; }
+  renderMarks();
+}
+// ---- the card beside her (GET /v1/screen) ------------------------------------
+async function refreshCard() {
+  let c = {};
+  try { c = (await getJSON("/v1/screen")).screen || {}; } catch (e) { return; }
+  const card = $("card"), body = $("card-b"), frame = $("card-f");
+  card.hidden = !c.up;
+  placeRender();                      // her render follows the card: onto the Oracle live tile, or home
+  if (!c.up) { frame.removeAttribute("src"); frame.removeAttribute("srcdoc"); return; }
+  $("card-t").textContent = c.title || c.doc_title || c.notes_title || c.art_label || "";
+  body.textContent = "";
+  for (const k of ["doc", "notes"]) {
+    if (c[k]) { const d = document.createElement("div"); d.textContent = c[k]; body.appendChild(d); }
+  }
+  if (c.art) { const pre = document.createElement("pre"); pre.textContent = c.art; body.appendChild(pre); }
+  body.hidden = !(c.doc || c.notes || c.art);
+  frame.hidden = !(c.url || c.html);
+  if (c.html) {                       // a whole page: no scripts, no access to the player
+    frame.setAttribute("sandbox", ""); frame.removeAttribute("src"); frame.srcdoc = c.html;
+  } else if (c.url) {                 // a web address: its own scripts, never this page's origin
+    frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups"); frame.removeAttribute("srcdoc"); frame.src = c.url;
+  } else { frame.removeAttribute("src"); frame.removeAttribute("srcdoc"); }
+}
+// ---- her render's place (GET /v1/layout) ------------------------------------
+// Asked when the card changes (no timer of its own). "screen_px" boxes are the ASCII Wall's own anchors in
+// screen pixels; "fraction" boxes are parts of this page. Home = the stylesheet's own place.
+async function placeRender() {
+  let lay = {};
+  try { lay = (await getJSON("/v1/layout")).layout || {}; } catch (e) { lay = {}; }
+  const img = $("face"), b = lay.box;
+  if (lay.render !== "on_tile" || !b) { img.classList.remove("on-tile"); img.removeAttribute("style"); return; }
+  let x, y, w, h;
+  if (lay.unit === "fraction") {
+    x = b[0] * innerWidth; y = b[1] * innerHeight; w = b[2] * innerWidth; h = b[3] * innerHeight;
+  } else {
+    const dpr = window.devicePixelRatio || 1;
+    x = b[0] / dpr - window.screenX; y = b[1] / dpr - window.screenY; w = b[2] / dpr; h = b[3] / dpr;
+  }
+  img.classList.add("on-tile");
+  img.style.left = x + "px"; img.style.top = y + "px"; img.style.width = w + "px"; img.style.height = h + "px";
+}
+$("card-x").onclick = async () => {
+  try { await fetch("/v1/screen", { method: "POST", headers: { "Content-Type": "application/json" },
+                                   body: JSON.stringify({ clear: "all", by: "wall" }) }); } catch (e) {}
+  refreshCard();
+};
+
+// ---- BACK BY ITSELF (the User 2026-10-10, .101: after a restart the page said "off air" until it was refreshed) --
+// The picture is one long /frame.mjpg answer, and a player that went away ended it for good. When the player answers
+// again after not answering, or answers as a new process (its boot stamp), the page opens the picture again and
+// takes the player's clock, card and marks afresh - no refresh by hand.
+function reconnect(why) {
+  W.reconnects = (W.reconnects || 0) + 1;
+  const img = $("face");
+  img.src = "/frame.mjpg?r=" + Date.now();
+  if (W.glass) $("glass").src = W.glass;          // the glass draws the player's frames too
+  syncClock().catch(() => {});
+  refreshCard();
+  refreshMarks();
+  if (W.audioAt === "page") restartPoll();
+}
+async function refreshAir() {
+  try {
+    const s = await getJSON("/v1/state");
+    const boot = (s.transport && s.transport.boot) || s.boot || null;
+    if (W.down || (boot && W.boot && boot !== W.boot)) reconnect(W.down ? "back" : "boot");
+    W.down = false;
+    if (boot) W.boot = boot;
+    const on = !!s.on_air;
+    // the endpoint is slow: say so while it lasts (no timeout - the answer still lands when it comes)
+    if (s.agent_waiting && s.agent_waiting.note) { msg(s.agent_waiting.note); W.waitShown = true; }
+    else if (W.waitShown) { msg(""); W.waitShown = false; }
+    // anything that cut a reply or a line says so here, with the whole text a click away (2026-10-06)
+    const cut = s.last_cut;
+    $("cut").hidden = !(cut && cut.name);
+    if (cut && cut.name) {
+      $("cut-t").textContent = (cut.what ? cut.what + ": " : "") + cut.note;
+      $("cut-a").href = "/v1/cut/" + encodeURIComponent(cut.name);
+    }
+    if ((s.screen_at || 0) !== W.screenAt) { W.screenAt = s.screen_at || 0; refreshCard(); }
+    $("air").classList.toggle("on", on);
+    $("air-t").textContent = on ? "on air" : "off air";
+  } catch (e) {
+    W.down = true;
+    $("air-t").textContent = "player not answering - this page reconnects by itself";
+  }
+}
+
+// ---- controls -----------------------------------------------------------
+$("talk").onclick = async () => { await unlockSound(); if (W.mic === "on") micOff(); else await micOn(); };
+$("mute").onclick = async () => {
+  await unlockSound();
+  W.muted = !W.muted;
+  if (W.gain) W.gain.gain.value = W.muted ? 0 : 1;
+  $("mute").setAttribute("aria-pressed", String(W.muted));
+  $("mute").textContent = W.muted ? "Unmute" : "Mute";
+  renderMarks();
+};
+$("unlock").onclick = unlockSound;
+document.addEventListener("pointerdown", unlockSound, {once: false, passive: true});
+$("say").addEventListener("keydown", async (ev) => {
+  if (ev.key !== "Enter") return;
+  const text = $("say").value.trim();
+  if (!text) return;
+  await unlockSound();
+  $("say").value = "";
+  try {
+    const r = await fetch("/v1/ask", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({text: text, by: "wall"})});
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 409 && j.connect) msg("No agent connected yet: open Connect.");
+    else if (!r.ok) msg(j.error || ("Not asked (" + r.status + ")."));
+    else msg(j.note || "Asked.");
+  } catch (e) { msg("The player is not answering."); }
+});
+const faceEl = $("face");
+if (faceEl) faceEl.addEventListener("error", () => setTimeout(() => { faceEl.src = "/frame.mjpg?t=" + Date.now(); }, 2000));
+
+// Store opens the store's catalog and names THIS page's origin. The store will not return to any other address.
+// (One name for the key on both Walls, the User 2026-10-12: it was "Create", and it opened the Director upload.)
+(function () {
+  const create = $("create");
+  if (!create) return;
+  const own = (location.protocol === "http:" || location.protocol === "https:") ? location.origin : "";
+  create.href = "https://store.zoeyos.dev/store/" + (own ? ("?from=" + encodeURIComponent(own)) : "");
+})();
+
+// A try from the store loads the work-loop film only. Talk stays this player's.
+function allowedTry(raw) {
+  let u;
+  try { u = new URL(raw); } catch (e) { return ""; }
+  if (u.origin !== "https://store.zoeyos.dev") return "";
+  if (!/^\/imagine\/store\/file\/[a-z0-9-]+\/store\/previews\/[a-z0-9-]+\.mp4$/.test(u.pathname)) return "";
+  const key = u.pathname.split("/").pop().replace(/\.mp4$/, "");
+  if (!(key === "fri-work" || key === "bash-work-loop" || key.endsWith("-work") || key.endsWith("-work-loop"))) return "";
+  return u.origin + u.pathname;
+}
+const tryFilm = allowedTry(Q.get("try") || "");
+if (tryFilm) {
+  const v = document.createElement("video");
+  v.id = "try-loop";
+  v.src = tryFilm;
+  v.loop = true;
+  v.muted = true;
+  v.autoplay = true;
+  v.playsInline = true;
+  v.setAttribute("playsinline", "");
+  const face = $("face");
+  face.replaceWith(v);
+  v.play().catch(() => {});
+  msg("This work loop is the one loaded. Talk uses this loop only.");
+  document.addEventListener("pointerdown", () => { v.muted = false; }, {once: true});
+}
+
+// ---- Close Agent shows (round 15): the menu's agent state, read every 5 s ------
+const START = {key: null, shown: false, readyAt: 0, done: false, t: 0};
+async function agentWatch() {
+  try {
+    const r = await fetch("/v1/menu", {cache: "no-store"});
+    const v = await r.json();
+    const closed = !!((v && v.agent) || {}).closed;
+    document.body.classList.toggle("agent-closed", closed);
+    // the start bar (round 15): one plate, the same rule as the desk Wall's (lib/crissa_wall_key plate_state)
+    const st = (v && v.start) || {};
+    let kind = "";
+    if (!closed && st.applies) {
+      if (START.key !== st.started) Object.assign(START, {key: st.started, shown: false, readyAt: 0, done: false});
+      if (!START.done && !st.ready) { START.shown = true; kind = "starting"; }
+      else if (!START.done && START.shown) {
+        START.readyAt = START.readyAt || Date.now();
+        if (Date.now() - START.readyAt < 4000) kind = "started"; else START.done = true;
+      } else START.done = true;
+    }
+    // then her pictures for this screen being built (round 15, lib/crissa_menu build_view): the same order as the desk
+    const bd = (v && v.build) || {};
+    if (!closed && !kind && bd.show && bd.title) kind = "building";
+    document.body.classList.toggle("building", kind === "building");
+    document.body.classList.toggle("starting", kind === "starting");
+    document.body.classList.toggle("started", kind === "started");
+    const t = document.querySelector("#agentPlate span");
+    if (t) t.textContent = closed ? "Agent closed" : kind === "starting" ? (st.line || "Starting Crissa…")
+      : kind === "started" ? "Crissa is ready" : kind === "building" ? bd.title + "  ·  " + (bd.line || "")
+      : "Agent closed";
+    if (kind && !START.t) START.t = setTimeout(() => { START.t = 0; agentWatch(); }, 1500);   // closely, while it shows
+  } catch (e) { /* the player not answering: leave the page as it is */ }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const b = $("agentOpen");
+  if (b) b.addEventListener("click", async () => {
+    b.disabled = true;
+    const got = await menuPost({action: "agent_open", by: "her window"});
+    msg(got.ok ? (got.note || "Opening the agent.") : (got.error || "The launcher did not answer."));
+    b.disabled = false;
+    agentWatch();
+  });
+  agentWatch();
+  setInterval(agentWatch, 5000);
+});
+
+// ---- the Crissa key: the menu both Walls share (GET/POST /v1/menu) --------------
+// THE ASK BEFORE A LOCKED CHANGE (round 17 follow-ups, the User 2026-10-13): while Security is On or above the player
+// runs the face-match sequence before a change (lib/crissa_home); this Wall says the ask first. A stop never asks.
+let MENU_VIEW = {};
+function menuAsk(body) {
+  const sec = (MENU_VIEW && MENU_VIEW.security) || {};
+  const b = body || {};
+  const a = String(b.action || "");
+  if (!sec.lock || ["agent_close", "stop", "wall_close", "voice_id", "desk", "face_again"].includes(a)) return "";
+  if (a === "mic" && b.on === false) return "";
+  if (a === "security" && !(sec.modes || []).some(m => m.mode === b.mode && m.face)) return "";
+  return sec.ask || "Look at the camera for a moment.";
+}
+async function menuPost(body) {
+  const ask = menuAsk(body);
+  if (ask) msg(ask);
+  try {
+    const r = await fetch("/v1/menu", {method: "POST", headers: {"Content-Type": "application/json"},
+                                       body: JSON.stringify(body)});
+    return await r.json();
+  } catch (e) { return {ok: false, error: "The player is not answering."}; }
+}
+function menuItem(label, onClick, opts) {
+  const o = opts || {};
+  const el = document.createElement(o.href ? "a" : "button");
+  el.setAttribute("role", "menuitem");
+  el.textContent = label;
+  if (o.id) el.id = o.id;
+  if (o.cls) el.className = o.cls;
+  if (o.href) { el.href = o.href; if (o.blank) { el.target = "_blank"; el.rel = "noopener"; } }
+  else { el.type = "button"; if (o.disabled) el.disabled = true; }
+  if (onClick) el.addEventListener("click", onClick);
+  return el;
+}
+// VOICE ID AGAIN (the User 2026-10-11, .101 round 9): one page, /init?voice_id=1, with the name (the User's, ready to
+// change), this computer's login password when the player asks for it, and Begin - the same page the desk Wall's key
+// opens in her own window. The old box here took the password only and left the take to the Wall, where no name could
+// be typed and none started.
+const VOICE_ID_PAGE = "/init?voice_id=1";
+// LIP SYNC (the User 2026-10-11, before the .101 demo): this machine's one timing dial. - / + move half a film frame and
+// save at once in this computer's own state (never the library's tune); her next line wears it. The range is the
+// player's honest answer (the library's own lead inside what a line can carry). The test line goes through /v1/speak.
+function lipSync(box, ls) {
+  box.textContent = "";
+  let cur = ls || {};
+  const title = Object.assign(document.createElement("div"), {className: "lip-value", id: "m-lip-value"});
+  const row = Object.assign(document.createElement("div"), {className: "lip-row"});
+  const rng = Object.assign(document.createElement("div"), {className: "help", id: "m-lip-range"});
+  const note = Object.assign(document.createElement("div"), {className: "help", id: "m-lip-note", role: "status"});
+  let minus = null, plus = null;
+  const paint = () => {
+    title.textContent = "Lip sync: " + (cur.value || "0");
+    rng.textContent = ((cur.range || "") + " " + (cur.how || "")).trim();
+    const k = Number(cur.halves || 0);
+    minus.disabled = cur.min_halves != null && k <= Number(cur.min_halves);
+    plus.disabled = cur.max_halves != null && k >= Number(cur.max_halves);
+  };
+  const send = async (body) => {
+    const got = await menuPost(Object.assign({action: "lip_sync"}, body));
+    if (got.lip_sync && Object.keys(got.lip_sync).length) cur = got.lip_sync;
+    note.textContent = got.note || (got.ok ? "" : (got.error || "Not saved."));
+    paint();
+  };
+  minus = menuItem("-  later", () => send({step: -1}), {id: "m-lip-minus"});
+  plus = menuItem("+  earlier", () => send({step: 1}), {id: "m-lip-plus"});
+  row.append(minus, plus);
+  box.append(title, row, rng);
+  box.appendChild(menuItem("Say a test line", async () => {
+    try {
+      const r = await fetch("/v1/speak", {method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({text: cur.test_line || "Watch my lips meet on every p, b and m.", by: "lip sync"})});
+      const j = await r.json();
+      note.textContent = r.ok ? "Saying the test line…" : (j.error || "She could not say it.");
+    } catch (e) { note.textContent = "The player is not answering."; }
+  }, {id: "m-lip-test"}));
+  box.appendChild(menuItem("Back to 0", () => send({reset: true}), {id: "m-lip-reset"}));
+  box.appendChild(note);
+  box.appendChild(menuItem("Done", () => menuClose(), {id: "m-lip-done"}));
+  paint();
+  minus.focus();
+}
+// POP-UPS IN THE MENU'S OWN PANEL (the User 2026-10-12, .101 round 15: "format update to popups, more like menu
+// maybe"): a confirm (Close Agent, All OS Off) is asked inside the Crissa menu, the question and its choice as menu
+// rows (the choice first, Cancel last; Enter takes the focused one, Escape closes), never the browser's own confirm
+// box. The desk Wall draws the same (lib/crissa_wall_key.py _dialog, on the Wall).
+function menuConfirm(box, title, ask, okLabel, onOk) {
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-confirm-title", textContent: title}));
+  box.append(Object.assign(document.createElement("div"), {className: "help", id: "m-confirm-ask", textContent: ask}));
+  box.append(document.createElement("hr"));
+  const ok = menuItem(okLabel, onOk, {id: "m-confirm-ok"});
+  box.append(ok, menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-confirm-cancel"}));
+  ok.focus();
+}
+// SECURITY: ON / ID-ONLY / OFF (round 17, the User 2026-10-13): who may talk to her and act through her, in the menu's
+// own panel - each mode with its one line, the current one marked; a choice is saved by the player (POST /v1/menu
+// {"action": "security", "mode"}) and her next turn wears it. The desk Wall shows the same (lib/crissa_wall_key.py).
+function security(box, sec) {
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-sec-title", textContent: sec.label || "Security"}));
+  // ONE TOGGLE (round 17 follow-ups): Secure and Double Secure where the camera turns; Double Secure asks for the
+  // login password here (sent once with the choice, never kept); the toggle's note under the modes
+  for (const m of (sec.modes || [])) {
+    box.append(menuItem((m.on ? "\u2713 " : "") + (m.label || m.mode), async () => {
+      if (m.password) { securityPassword(box, m); return; }
+      const got = await menuPost({action: "security", mode: m.mode, by: "browser wall"});
+      msg(got.ok ? (got.note || "") : (got.error || "Not saved."));
+      menuClose();
+    }, {id: "m-sec-" + m.mode, cls: m.on ? "on" : ""}));
+    box.append(Object.assign(document.createElement("div"), {className: "help", textContent: m.about || ""}));
+  }
+  if (sec.note) box.append(Object.assign(document.createElement("div"), {className: "help", id: "m-sec-note",
+                                                                          textContent: sec.note}));
+  box.append(document.createElement("hr"));
+  const c = menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-sec-cancel"});
+  box.append(c);
+  const cur = box.querySelector("button.on") || c;
+  cur.focus();
+}
+// AGENT LOOK: her looks in the menu's own panel, the one she wears marked; a tap wears one (POST /v1/menu {"action": "look",
+// "key"}: the Control Panel's own pick path) and the Wall says "Changing to ..." while her player restarts. The Control
+// Panel's Choose skin stays one tap away for adding or removing a look. The desk Wall shows the same (lib/crissa_wall_key.py).
+function agentLook(box, lk) {
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-look-title", textContent: lk.label || "Agent Look"}));
+  for (const l of (lk.looks || [])) {
+    box.append(menuItem((l.on ? "\u2713 " : "") + (l.title || l.key), async () => {
+      if (l.on) { msg("She wears " + (l.title || l.key) + " already."); menuClose(); return; }
+      const got = await menuPost({action: "look", key: l.key, by: "browser wall"});
+      msg(got.ok ? (got.note || "") : (got.error || "Not changed."));
+      menuClose();
+    }, {id: "m-look-" + l.key, cls: l.on ? "on" : ""}));
+  }
+  if (!(lk.looks || []).length) box.append(Object.assign(document.createElement("div"), {className: "help", id: "m-look-none",
+                                                                                     textContent: "No other look is installed yet."}));
+  if (lk.pending) box.append(Object.assign(document.createElement("div"), {className: "help", id: "m-look-pending",
+    textContent: lk.pending + (lk.pending === 1 ? " look is" : " looks are") + " still being built."}));
+  box.append(document.createElement("hr"));
+  if (lk.more) box.append(menuItem("More in the Control Panel", null, {href: lk.more, blank: true, id: "m-look-more"}));
+  const c = menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-look-cancel"});
+  box.append(c);
+  (box.querySelector("button.on") || c).focus();
+}
+function securityPassword(box, m) {
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", textContent: m.label || m.mode}));
+  box.append(Object.assign(document.createElement("div"), {className: "help",
+    textContent: "Account password: holds Secure until you lower it. It is used once and never kept."}));
+  const pw = Object.assign(document.createElement("input"), {type: "password", id: "m-sec-pw", autocomplete: "off"});
+  box.append(pw);
+  box.append(menuItem("Hold", async () => {
+    const secret = pw.value; pw.value = "";
+    if (!secret) { msg("Type this computer's login password."); return; }
+    const got = await menuPost({action: "security", mode: m.mode, password: secret, by: "browser wall"});
+    msg(got.ok ? (got.note || "") : (got.error || "Not saved."));
+    menuClose();
+  }, {id: "m-sec-pw-ok"}));
+  box.append(menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-sec-pw-cancel"}));
+  pw.focus();
+}
+// ADD A VISITOR (round 20, the User 2026-10-14: "We need to for added visitors"): the visitor's name, then the same
+// spoken Voice ID for them - a new person kept as a visitor, labels only, never the User. Visitors… lists them, each with
+// Remove. The player applies the face rule (Security On: his face first), as for every change.
+const VISITOR_ASK = "Who is the visitor? Crissa learns their voice and face so she can name them on the log. " +
+                    "They sit in front of the camera, listen, and count to six at each beep.";
+// ONE BUTTON (round 21, the User 2026-10-14: "Voice ID and Add a visitor become one button"; "Only the User can register
+// them, but never as the User"): Voice ID / add a person… asks "Is this you, or someone new?". It's me runs his own
+// Voice ID as before; Someone new is the name box below, with the login password while his face is not seen.
+const PERSON_ASK = "Who is it? Crissa learns their voice and face so she can name them on the log. They are never you. " +
+                   "They sit in front of the camera, listen to Lila, and count to six at each beep.";
+function whoAsk(box, vid, me) {
+  const who = vid.who || {};
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-who-title",
+                                                           textContent: who.ask || "Is this you, or someone new?"}));
+  box.append(document.createElement("hr"));
+  const m = who.me || {}, n = who.new || {};
+  box.append(menuItem(m.label || "It's me", me, {id: "m-who-me"}));
+  box.append(menuItem(n.label || "Someone new", () => {
+    if (!n.ok) { msg(n.why || "Adding a person cannot run now."); menuClose(); return; }
+    visitorAdd(box, {person: true, password: !!n.password, why: n.why || "", proved: !!n.proved});
+  }, {id: "m-who-new"}));
+  box.append(menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-who-cancel"}));
+}
+// THE NAME ONLY (round 23, the User 2026-10-15, the third time asked: "skip this is it you ... just ask the name and
+// you will determine conflict"): one name box; the player decides - his own name is his own Voice ID again, another is
+// a new person, a name already kept is said and Begin again records them again.
+function nameOnly(box, vid, again, lead) {
+  const no = vid.name_only || {};
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-name-title",
+                                                           textContent: no.ask || "Whose voice?"}));
+  if (lead) box.append(Object.assign(document.createElement("div"), {className: "why", id: "m-name-why", textContent: lead}));
+  box.append(Object.assign(document.createElement("div"), {className: "help", textContent: no.help || ""}));
+  const nm = Object.assign(document.createElement("input"), {type: "text", id: "m-name", autocomplete: "off",
+                                                             maxLength: 40, placeholder: "Name", value: again || ""});
+  box.append(nm);
+  let pw = null;
+  if (no.password) {
+    pw = Object.assign(document.createElement("input"), {type: "password", id: "m-name-pw",
+                                                         autocomplete: "current-password", placeholder: "Login password"});
+    box.append(pw);
+  }
+  const go = async () => {
+    const name = nm.value.trim().replace(/\s+/g, " ");
+    if (!name) { msg("Type a name. A first name is fine."); nm.focus(); return; }
+    const body = {action: "voice_id", who: "name", name: name, by: "browser wall"};
+    if (again && name.toLowerCase() === again.toLowerCase()) body.again = true;
+    if (pw && pw.value) { body.password = pw.value; pw.value = ""; }
+    const got = await menuPost(body);
+    if (got.ask_again) { nameOnly(box, vid, name, got.error || ""); return; }
+    msg(got.ok ? (got.note || "Voice ID is starting.") : (got.error || "Voice ID did not start."));
+    if (got.ok || !got.name_error) menuClose(); else nm.focus();
+  };
+  nm.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+  box.append(document.createElement("hr"));
+  box.append(menuItem("Begin", go, {id: "m-name-go"}));
+  box.append(menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-name-cancel"}));
+  nm.focus();
+}
+function visitorAdd(box, opt) {
+  opt = opt || {};
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-visitor-title",
+                                                           textContent: opt.person ? "Add a person" : "Add a visitor"}));
+  box.append(Object.assign(document.createElement("div"), {className: "help",
+                                                           textContent: opt.person ? PERSON_ASK : VISITOR_ASK}));
+  const nm = Object.assign(document.createElement("input"), {type: "text", id: "m-visitor-name", autocomplete: "off",
+                                                             maxLength: 40, placeholder: "Name"});
+  box.append(nm);
+  let pw = null;
+  if (opt.password) {
+    if (opt.why) box.append(Object.assign(document.createElement("div"), {className: "why", textContent: opt.why}));
+    pw = Object.assign(document.createElement("input"), {type: "password", id: "m-visitor-pw",
+                                                         autocomplete: "current-password", placeholder: "Login password"});
+    box.append(pw);
+  }
+  const go = async () => {
+    const name = nm.value.trim().replace(/\s+/g, " ");
+    if (!name) { msg("Type the person's name."); nm.focus(); return; }
+    const body = opt.person ? {action: "voice_id", who: "new", name: name, by: "browser wall"}
+                            : {action: "add_visitor", name: name, by: "browser wall"};
+    if (pw && pw.value) { body.password = pw.value; pw.value = ""; }
+    if (opt.person && !opt.proved && !body.password) msg("Look at the camera for a moment.");   // the player checks his face
+    const got = await menuPost(body);
+    msg(got.ok ? (got.note || ("Adding " + name + ".")) : (got.error || "Add a visitor did not start."));
+    if (got.ok || !got.name_error) menuClose(); else nm.focus();
+  };
+  nm.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+  box.append(document.createElement("hr"));
+  box.append(menuItem("Begin", go, {id: "m-visitor-go"}));
+  box.append(menuItem("Cancel", () => { menuClose(); $("ckey").focus(); }, {id: "m-visitor-cancel"}));
+  nm.focus();
+}
+function visitorList(box, rows) {
+  box.textContent = "";
+  box.append(Object.assign(document.createElement("div"), {className: "lip-value", id: "m-visitors-title",
+                                                           textContent: "Visitors"}));
+  for (const r of rows || []) {
+    const who = r.display || r.person_id;
+    const v = r.voice || 0, f = r.face || 0;
+    box.append(Object.assign(document.createElement("div"), {className: "help",
+      textContent: who + ": " + v + " voice print" + (v === 1 ? "" : "s") + ", " + f + " photo" + (f === 1 ? "" : "s")}));
+    box.append(menuItem("Remove " + who + "…", () => menuConfirm(box, "Remove a visitor",
+      "Remove " + who + "? Their voice prints and photos are deleted from this computer.", "Remove", async () => {
+        const got = await menuPost({action: "visitor_remove", person_id: r.person_id, by: "browser wall"});
+        msg(got.ok ? (got.note || (who + " is forgotten.")) : (got.error || "Not removed."));
+        menuClose();
+      }), {cls: "m-visitor-remove"}));
+  }
+  box.append(document.createElement("hr"));
+  const c = menuItem("Close", () => { menuClose(); $("ckey").focus(); }, {id: "m-visitors-close"});
+  box.append(c);
+  c.focus();
+}
+function menuClose() {
+  $("cmenu").hidden = true;
+  $("ckey").setAttribute("aria-expanded", "false");
+}
+async function menuOpen() {
+  const box = $("cmenu");
+  let v = {};
+  try { const r = await fetch("/v1/menu", {cache: "no-store"}); v = await r.json(); }
+  catch (e) { v = {}; }
+  MENU_VIEW = v || {};
+  box.textContent = "";
+  if (!v || v.ok !== true) {
+    box.appendChild(Object.assign(document.createElement("div"), {className: "why",
+      textContent: "The player did not answer the menu. Is Crissa running?"}));
+  }
+  // THE PLACES ROW (2026-10-28): Store or Composer, the Control Panel, Krew - the dock keys' glyphs, one key each;
+  // a place this install does not have stands greyed with its reason, never gone
+  const places = document.createElement("div"); places.className = "places"; places.id = "m-places";
+  const na0 = (v.unavailable || []).find(x => x.id === "krew");
+  const cp0 = v.composer || {}, pn0 = v.panel || {}, kw = v.krew || {};
+  const kurl = na0 ? "" : (kw.url || pn0.url || "");
+  places.appendChild(cp0.url ? menuItem("\u25b6 " + (cp0.label || "Composer"), null, {href: cp0.url, blank: true, id: "m-composer"})
+                             : menuItem("\u25b6 " + (cp0.label || "Composer"), null, {disabled: true, id: "m-composer"}));
+  places.appendChild(pn0.url ? menuItem("\u2699 " + (pn0.label || "Control Panel"), null, {href: pn0.url, blank: true, id: "m-panel"})
+                             : menuItem("\u2699 " + (pn0.label || "Control Panel"), null, {disabled: true, id: "m-panel"}));
+  const kkey = kurl ? menuItem("\u2692 " + (kw.label || "Krew"), null, {href: kurl, blank: true, id: "m-krew"})
+                    : menuItem("\u2692 " + (kw.label || "Krew"), null, {disabled: true, id: "m-krew"});
+  if (kw.why || na0) kkey.title = kw.why || na0.why || "";
+  places.appendChild(kkey);
+  box.appendChild(places);
+  // CHOOSE SKIN (the User 2026-10-31): the Control Panel's own section, one press away (absent unless the player says so)
+  // THE AGENT LOOK POP-UP (the User 2026-10-31: "quick switch outfit for crissa here in release 1.0"): with the player's
+  // `look` item the key opens her looks, one tap each (agentLook below); without it, the Control Panel's section as before
+  if (v.look && v.look.action) box.appendChild(menuItem("\u25c8 " + (v.look.label || "Agent Look"), () => agentLook(box, v.look), {id: "m-skin"}));
+  else if (v.skin && v.skin.url) box.appendChild(menuItem("\u25c8 " + (v.skin.label || "Agent Look"), null, {href: v.skin.url, blank: true, id: "m-skin"}));
+  box.appendChild(document.createElement("hr"));
+  const mic = v.mic || {};
+  box.appendChild(menuItem(mic.label || "Microphone", async () => {
+    const got = await menuPost({action: "mic", on: !mic.on});
+    msg(got.ok ? (got.mic && got.mic.on ? "Microphone on: say \"Hey Crissa\"." : "Microphone off.") : (got.error || ""));
+    menuClose();
+  }, {id: "m-mic", cls: mic.on ? "on" : "", disabled: !mic.ear && !mic.on}));
+  if ((v.desk || {}).action) box.appendChild(menuItem(v.desk.label || "Back to her desk", async () => {
+    const got = await menuPost({action: "desk", by: "her window"});   // round 33: out of the close view
+    msg(got.ok ? (got.note || "") : (got.error || ""));
+    menuClose();
+  }, {id: "m-desk"}));
+  // AGENT ONLY (the User 2026-10-28: "closes ascii and leaves render window for agent only view"): the desk Wall
+  // closes on purpose and her face stays on top; Open the Wall (below, or the Control Panel) brings the glass back
+  const ao = v.agent_only;
+  if (ao && ao.action) box.appendChild(menuItem(ao.label || "Agent only", () => {
+    menuConfirm(box, "Agent only", ao.ask || "Agent only: the desk Wall closes and her face stays on top.", "Agent only", async () => {
+      const got = await menuPost({action: ao.action, by: "her window (Agent only)"});
+      msg(got.ok ? (got.note || "") : (got.error || "The launcher did not answer."));
+      menuClose();
+    });
+  }, {id: "m-agent-only"}));
+  const ph0 = v.phone;              // round 29: her phone's address (the QR card), a quick key since 2026-10-28
+  if (ph0 && ph0.label) {
+    const it = menuItem(ph0.label, null, ph0.url ? {href: ph0.url, blank: true, id: "m-phone"} : {disabled: true, id: "m-phone"});
+    if (ph0.how) it.title = ph0.how;
+    box.appendChild(it);
+  }
+  const sec0 = v.security;          // round 17: Security On / ID-only / Off, its own small panel in this menu
+  if (sec0) box.appendChild(menuItem(sec0.label || "Security…", () => security(box, sec0), {id: "m-security"}));
+  box.appendChild(document.createElement("hr"));
+  // ONE CONNECT BUTTON (round 29): green "Connected" when an agent is connected, else "Connect an agent"
+  box.appendChild(menuItem((v.connect || {}).label || "Connect an agent", null, {href: (v.connect || {}).url || "/connect",
+    id: "m-connect", cls: (v.connect || {}).connected ? "connected" : ""}));
+  if ((v.face || {}).action) box.appendChild(menuItem(v.face.label || "Face only", async () => {
+    const got = await menuPost({action: "face"});           // 2026-10-16: her face in a window of its own
+    msg(got.ok ? (got.note || "") : (got.error || ""));
+    menuClose();
+  }, {id: "m-face"}));
+  const vid = v.voice_id || {};
+  const voiceIdMe = async () => {
+    const me = (vid.who || {}).me || vid;
+    if (me.ok === false && !me.password) { msg(me.why || "Voice ID cannot run now."); menuClose(); return; }
+    // SPOKEN (the User 2026-10-12, .101 round 10): with the player's routine "verbal" a Voice ID that needs no proof
+    // starts from here, by ear - no page; one that needs the login password goes to the page, in this tab
+    if ((vid.routine || "verbal") === "verbal" && me.ok !== false) {
+      // ONE PLATE (2026-10-12, .101: three, one closed by hand): it starts at once, no confirm box; the announcer says
+      // what to do and the coach's small plate is on the glass
+      const got = await menuPost(vid.who ? {action: "voice_id", who: "me", by: "browser wall"}
+                                         : {action: "voice_id", by: "browser wall"});
+      msg(got.ok ? (got.note || "Voice ID is starting.") : (got.error || "Voice ID did not start."));
+      menuClose();
+      return;
+    }
+    location.href = VOICE_ID_PAGE;           // the name, the password when asked, Begin: all on that page
+  };
+  box.appendChild(menuItem(vid.label || "Voice ID again…",
+                           () => (vid.name_only ? nameOnly(box, vid) : vid.who ? whoAsk(box, vid, voiceIdMe) : voiceIdMe()),
+                           {id: "m-voice-id"}));
+  const fa = v.face_again;          // round 34: Face photos again (Voice ID again's proof)
+  if (fa && fa.action) box.appendChild(menuItem(fa.label || "Face photos again", async () => {
+    if (fa.ok === false) {           // the password box is on the desk key's menu; here the reason is said
+      msg((fa.why || "Face photos again cannot run now.") + (fa.password ? " (the login password: the desk Wall's key menu)" : ""));
+      menuClose(); return;
+    }
+    const got = await menuPost({action: "face_again", by: "browser wall"});
+    msg(got.ok ? (got.note || "") : (got.error || ""));
+    menuClose();
+  }, {id: "m-face-again"}));
+  const vs = v.visitors || {};      // round 20: Add a visitor (the same Voice ID, a new person kept as a visitor)
+  if (vs.label) {                   // round 21's one button folds it into Voice ID / add a person… (no label then)
+    box.appendChild(menuItem(vs.label, () => {
+      if (vs.ok === false) { msg(vs.why || "Add a visitor cannot run now."); menuClose(); return; }
+      visitorAdd(box);
+    }, {id: "m-visitor"}));
+  }
+  if ((vs.list || []).length) box.appendChild(menuItem(vs.list_label || "Visitors…", () => visitorList(box, vs.list),
+                                                       {id: "m-visitors"}));
+  const ls = v.lip_sync;            // this machine's lip sync (2026-10-11): its own small panel in this menu
+  if (ls) box.appendChild(menuItem(ls.label || "Lip sync…", () => lipSync(box, ls), {id: "m-lip"}));
+  box.appendChild(document.createElement("hr"));
+  const help = document.createElement("div");
+  help.className = "help"; help.id = "m-help-text"; help.hidden = true;
+  for (const ln of ((v.help || {}).lines || [])) help.appendChild(Object.assign(document.createElement("p"), {textContent: ln}));
+  box.appendChild(menuItem((v.help || {}).label || "Help", () => { help.hidden = !help.hidden; }, {id: "m-help"}));
+  box.appendChild(help);
+  const wl = v.wall || {};          // the desk Wall: closed on purpose stays closed until opened here or on the panel
+  // CLOSE AGENT, NOT CLOSE THE WALL (the User 2026-10-12): this menu opens a closed desk Wall; it no longer closes it
+  if (wl.action && wl.closed) box.appendChild(menuItem(wl.label || "Open the Wall", async () => {
+    const got = await menuPost({action: wl.action});
+    msg(got.ok ? (got.note || "") : (got.error || "The launcher did not answer."));
+    menuClose();
+  }, {id: "m-wall"}));
+  const ag = v.agent || {};         // Close Agent: she stops listening and speaking, this window closes, the Wall stays
+  const agentGo = async () => {
+    const got = await menuPost({action: ag.action || "agent_close", by: "her window"});
+    msg(got.ok ? (got.note || "") : (got.error || "The launcher did not answer."));
+    menuClose();
+  };
+  box.appendChild(menuItem(ag.label || "Close Agent", () => {
+    if (ag.closed) { agentGo(); return; }
+    menuConfirm(box, "Close Agent", ag.ask || "Close Agent? Crissa stops listening and speaking; the Wall stays.",
+                "Close Agent", agentGo);
+  }, {id: "m-agent"}));
+  const gl = v.glass || {};         // the two looks of this page: the ASCII glass (the feed's) and the film
+  if (W.glass) box.appendChild(menuItem("Film view (this tab)", null, {href: "/wall?film=1&noinit=1", id: "m-view"}));
+  else if (gl.on && gl.up) box.appendChild(menuItem("ASCII glass view", null, {href: "/wall", id: "m-view"}));
+  // THE LABEL FOLLOWS THE STATE (the User 2026-10-10, .101 round 4 EE: "Exit full screen" while nothing was full
+  // screen): this page's own full screen, read when the menu opens
+  box.appendChild(menuItem(document.fullscreenElement ? "Exit full screen" : "Full screen", () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else document.documentElement.requestFullscreen().catch(() => {});
+    menuClose();
+  }, {id: "m-fullscreen"}));
+  const na = (v.unavailable || []);
+  if (na.length) {                 // what this computer cannot do, with its reason (the same as both Control Panels)
+    // ONE HOVER (round 29, the User 2026-10-17: "Not on this computer" as a hover i, not a visible group)
+    const g = document.createElement("p");
+    g.className = "help na-i"; g.id = "m-na"; g.tabIndex = 0;
+    g.textContent = "\u24d8 Not on this computer (" + na.length + ")";
+    g.title = na.map(x => (x.label || x.id) + " - " + (x.why || "")).join("\n");
+    box.appendChild(g);
+  }
+  box.appendChild(document.createElement("hr"));
+  const st = v.stop || {};
+  box.appendChild(menuItem(st.label || "All OS Off", () => {
+    menuConfirm(box, "All OS Off", st.ask || "All OS Off? Everything of Crissa stops.", "All OS Off", async () => {
+      const got = await menuPost({action: "stop", confirm: true});
+      msg(got.ok ? "All OS Off: Crissa is stopping. This window closes when she has." : (got.error || "Crissa did not stop."));
+      menuClose();
+    });
+  }, {id: "m-stop"}));
+  box.hidden = false;
+  $("ckey").setAttribute("aria-expanded", "true");
+  if (document.body.classList.contains("glass")) {         // the key is in the middle row: the menu opens above it
+    const r = $("ckey").getBoundingClientRect();
+    box.style.left = Math.max(16, Math.min(r.left, innerWidth - box.offsetWidth - 16)) + "px";
+    box.style.bottom = Math.round(innerHeight - r.top + 8) + "px";
+  }
+  const first = box.querySelector("button:not(:disabled), a");
+  if (first) first.focus();
+}
+$("ckey").addEventListener("click", () => { if ($("cmenu").hidden) menuOpen(); else menuClose(); });
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && !$("cmenu").hidden) { menuClose(); $("ckey").focus(); } });
+document.addEventListener("pointerdown", (ev) => {
+  if (!$("cmenu").hidden && !$("cmenu").contains(ev.target) && ev.target !== $("ckey")) menuClose();
+});
+
+// ---- a first boot goes to setup (/init) ----------------------------------
+async function initGate() {
+  if (Q.get("noinit") === "1") return false;
+  try {
+    const r = await fetch("/v1/init", {cache: "no-store"});
+    if (!r.ok) return false;                    // Init is off here (404): this page is the Wall
+    const j = await r.json();
+    if (j.needed || j.status === "running") { location.replace("/init"); return true; }
+  } catch (e) {}
+  return false;
+}
+
+// ---- the ASCII glass when the feed is up (lib/crissa_menu.glass_view) -------
+async function glassGate() {
+  if (Q.get("film") === "1") return false;
+  let g = {};
+  try { g = (await getJSON("/v1/menu")).glass || {}; } catch (e) { return false; }
+  if (!g.on || !g.up || !g.port) return false;
+  const url = location.protocol + "//" + location.hostname + ":" + g.port + (g.path || "/");
+  $("glass").src = url;
+  document.body.classList.add("glass");
+  W.glass = url;
+  shareTheMiddle();
+  return true;
+}
+
+// the Crissa key and the Say bar as one row in the middle (see #dockRow above)
+function shareTheMiddle() {
+  let row = $("dockRow");
+  if (!row) { row = document.createElement("div"); row.id = "dockRow"; document.body.appendChild(row); }
+  const bar = document.querySelector(".bar");
+  row.appendChild($("ckey"));
+  if (bar) row.appendChild(bar);
+}
+// the key goes with the idle chrome and comes back on a pointer or a key (2026-10-12; it dimmed and stayed before)
+const IDLE_MS = 1000;
+let idleTimer = null;
+function keyAwake() {
+  $("ckey").classList.remove("idle");
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => { if ($("cmenu").hidden) $("ckey").classList.add("idle"); }, IDLE_MS);
+}
+["mousemove", "pointerdown", "keydown", "touchstart"].forEach((ev) => document.addEventListener(ev, keyAwake, {passive: true}));
+// over the glass the pointer is in the glass's own page (another origin): it says so with one message
+window.addEventListener("message", (ev) => {
+  if (ev.data && ev.data.crissa === "pointer" && ev.source === ($("glass") || {}).contentWindow) keyAwake();
+});
+keyAwake();
+
+// ---- start --------------------------------------------------------------
+window.crissaWall = W;            // for a test that reads what the page did
+(async () => {
+  if (Q.get("voice_id") === "1") {          // an older desk Wall's Voice ID again sent typing here: the page is /init now
+    location.replace(VOICE_ID_PAGE);
+    return;
+  }
+  if (await initGate()) return;
+  await glassGate();
+  await syncClock();
+  setInterval(syncClock, 60000);
+  renderMarks();
+  refreshMarks(); setInterval(refreshMarks, 10000);
+  refreshAir(); setInterval(refreshAir, 500);
+  if (W.audioAt === "page") {
+    ensureOut();
+    $("unlock").hidden = W.ctx.state === "running";
+    watchClock();
+    pollLoop();
+    if (Q.get("start") === "1") { await unlockSound(); await micOn(); }
+  }
+})();
+</script>
+</body>
+</html>
